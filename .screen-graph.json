@@ -1,0 +1,159 @@
+{
+  "nodes": [
+    {
+      "id": "src/screens/Corementors/Corementors.jsx",
+      "label": "Corementors",
+      "routes": [
+        "/"
+      ],
+      "dataModelId": "1:308",
+      "isRoot": true
+    },
+    {
+      "id": "src/pages/Login.jsx",
+      "label": "Login",
+      "routes": [
+        "/login"
+      ]
+    },
+    {
+      "id": "src/pages/Signup.jsx",
+      "label": "Signup",
+      "routes": [
+        "/signup"
+      ]
+    },
+    {
+      "id": "src/pages/VerifyOTP.jsx",
+      "label": "VerifyOTP",
+      "routes": [
+        "/verify-otp"
+      ]
+    },
+    {
+      "id": "src/components/ProtectedRoute.jsx",
+      "label": "ProtectedRoute",
+      "routes": [
+        "/onboarding/step1",
+        "/onboarding/step2",
+        "/onboarding/step3",
+        "/onboarding/step4",
+        "/onboarding/step5"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "src\\screens\\Corementors\\Corementors.jsx:157:14-to-src\\pages\\Login.jsx",
+      "source": "src\\screens\\Corementors\\Corementors.jsx",
+      "target": "src\\pages\\Login.jsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#800188\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
+          "line": 157,
+          "endLine": 165,
+          "column": 14,
+          "endColumn": 27,
+          "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Corementors\\Corementors.jsx:178:18-to-src\\pages\\Signup.jsx",
+      "source": "src\\screens\\Corementors\\Corementors.jsx",
+      "target": "src\\pages\\Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a\n                    href=\"/signup\"\n                  >\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                      Try it for free\n                    </span>\n                  </a>",
+          "line": 178,
+          "endLine": 184,
+          "column": 18,
+          "endColumn": 22,
+          "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Corementors\\sections\\HeroSection\\HeroSection.jsx:314:14-to-src\\pages\\Signup.jsx",
+      "source": "src\\screens\\Corementors\\Corementors.jsx",
+      "target": "src\\pages\\Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a\r\n              href=\"/signup\"\r\n                className=\"inline-flex items-center gap-2 [font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] text-wwwsightfulcomwhite\"\r\n            >\r\n              Get Started\r\n              <ArrowRight className=\"w-5 h-5\" />\r\n              </a>",
+          "line": 314,
+          "endLine": 320,
+          "column": 14,
+          "endColumn": 18,
+          "sourceFile": "src\\screens\\Corementors\\sections\\HeroSection\\HeroSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Corementors\\sections\\PricingSection\\PricingSection.jsx:173:22-to-src\\pages\\Signup.jsx",
+      "source": "src\\screens\\Corementors\\Corementors.jsx",
+      "target": "src\\pages\\Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a href=\"/signup\" className=\"flex items-center justify-center gap-2 pt-[11px] pb-3 px-6\">\r\n                        <span className=\"font-medium text-sm\">Get Started</span>\r\n                        <ArrowRightIcon className=\"w-5 h-5\" />\r\n                      </a>",
+          "line": 173,
+          "endLine": 176,
+          "column": 22,
+          "endColumn": 26,
+          "sourceFile": "src\\screens\\Corementors\\sections\\PricingSection\\PricingSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\screens\\Corementors\\sections\\FooterSection\\FooterSection.jsx:112:21-to-src\\pages\\Signup.jsx",
+      "source": "src\\screens\\Corementors\\Corementors.jsx",
+      "target": "src\\pages\\Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a href=\"/signup\">\n                       <span className=\"[font-family:'Inter',Helvetica] font-medium text-black text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                         Try it for free\n                       </span>\n                     </a>",
+          "line": 112,
+          "endLine": 116,
+          "column": 21,
+          "endColumn": 25,
+          "sourceFile": "src\\screens\\Corementors\\sections\\FooterSection\\FooterSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\Login.jsx:547:13-to-src\\screens\\Corementors\\Corementors.jsx",
+      "source": "src\\pages\\Login.jsx",
+      "target": "src\\screens\\Corementors\\Corementors.jsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link \r\n               to=\"/\" \r\n               className=\"inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors\"\r\n             >\r\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\r\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\r\n              </svg>\r\n              Back to home\r\n            </Link>",
+          "line": 547,
+          "endLine": 555,
+          "column": 13,
+          "endColumn": 19,
+          "sourceFile": "src\\pages\\Login.jsx"
+        }
+      }
+    },
+    {
+      "id": "src\\pages\\Signup.jsx:395:12-to-src\\screens\\Corementors\\Corementors.jsx",
+      "source": "src\\pages\\Signup.jsx",
+      "target": "src\\screens\\Corementors\\Corementors.jsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link \r\n              to=\"/\" \r\n              className=\"inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors\"\r\n            >\r\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\r\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\r\n              </svg>\r\n              Back to home\r\n            </Link>",
+          "line": 395,
+          "endLine": 403,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src\\pages\\Signup.jsx"
+        }
+      }
+    }
+  ]
+}

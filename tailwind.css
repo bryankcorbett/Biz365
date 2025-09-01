@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
+}
+
+:root {
+  --muskymore-biz365-ai-inter-regular-font-family: "Inter", Helvetica;
+  --muskymore-biz365-ai-inter-regular-font-size: 16px;
+  --muskymore-biz365-ai-inter-regular-font-style: normal;
+  --muskymore-biz365-ai-inter-regular-font-weight: 400;
+  --muskymore-biz365-ai-inter-regular-letter-spacing: 0px;
+  --muskymore-biz365-ai-inter-regular-line-height: 24px;
+  --orbai-template-framer-website-inter-medium-font-family: "Inter", Helvetica;
+  --orbai-template-framer-website-inter-medium-font-size: 11.4375px;
+  --orbai-template-framer-website-inter-medium-font-style: normal;
+  --orbai-template-framer-website-inter-medium-font-weight: 500;
+  --orbai-template-framer-website-inter-medium-letter-spacing: 0px;
+  --orbai-template-framer-website-inter-medium-line-height: 14.399999618530273px;
+  --orbai-template-framer-website-semantic-heading-1-font-family: "Inter",
+    Helvetica;
+  --orbai-template-framer-website-semantic-heading-1-font-size: 100px;
+  --orbai-template-framer-website-semantic-heading-1-font-style: normal;
+  --orbai-template-framer-website-semantic-heading-1-font-weight: 400;
+  --orbai-template-framer-website-semantic-heading-1-letter-spacing: -6px;
+  --orbai-template-framer-website-semantic-heading-1-line-height: 120px;
+  --orbai-template-framer-website-semantic-heading-2-font-family: "Inter",
+    Helvetica;
+  --orbai-template-framer-website-semantic-heading-2-font-size: 53.15625px;
+  --orbai-template-framer-website-semantic-heading-2-font-style: normal;
+  --orbai-template-framer-website-semantic-heading-2-font-weight: 500;
+  --orbai-template-framer-website-semantic-heading-2-letter-spacing: -0.5600000023841858px;
+  --orbai-template-framer-website-semantic-heading-2-line-height: 67.19999694824219px;
+  --orbai-template-framer-website-semantic-heading-4-font-family: "Inter",
+    Helvetica;
+  --orbai-template-framer-website-semantic-heading-4-font-size: 21.5625px;
+  --orbai-template-framer-website-semantic-heading-4-font-style: normal;
+  --orbai-template-framer-website-semantic-heading-4-font-weight: 500;
+  --orbai-template-framer-website-semantic-heading-4-letter-spacing: 0px;
+  --orbai-template-framer-website-semantic-heading-4-line-height: 36px;
+  --orbai-template-framer-website-semantic-link-font-family: "Inter", Helvetica;
+  --orbai-template-framer-website-semantic-link-font-size: 14px;
+  --orbai-template-framer-website-semantic-link-font-style: normal;
+  --orbai-template-framer-website-semantic-link-font-weight: 500;
+  --orbai-template-framer-website-semantic-link-letter-spacing: 0px;
+  --orbai-template-framer-website-semantic-link-line-height: 22.399999618530273px;
+  --orbai-templateframerwebsiteblack-40: rgba(0, 0, 0, 0.4);
+  --orbai-templateframerwebsiteblack-55: rgba(0, 0, 0, 0.55);
+  --orbai-templateframerwebsitelink-water-7: rgba(216, 231, 242, 0.07);
+  --orbai-templateframerwebsitewhite-30: rgba(255, 255, 255, 0.3);
+  --orbai-templateframerwebsitewhite-wild-sand: rgba(255, 255, 255, 1);
+  --orbai-templateframerwebsitewild-sand: rgba(245, 245, 245, 1);
+  --orbai-templateframerwebsitewild-sand-20: rgba(245, 245, 245, 0.2);
+  --wwwsightfulcomblack: rgba(0, 0, 0, 1);
+  --wwwsightfulcomwhite: rgba(255, 255, 255, 1);
+  --wwwsightfulcomwhite-02: rgba(255, 255, 255, 0.0);
+}
+
+:root {
+  --animate-spin: spin 1s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-fade-up {
+  animation: fade-up 1s var(--animation-delay, 0s) ease forwards;
+}
+
+.animate-marquee {
+  animation: marquee var(--duration) infinite linear;
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration) linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 8s infinite;
+}
+
+.animate-spin {
+  animation: var(--animate-spin);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes image-glow {
+  0% {
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.74, 0.25, 0.76, 1);
+  }
+
+  10% {
+    opacity: 0.7;
+    animation-timing-function: cubic-bezier(0.12, 0.01, 0.08, 0.99);
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  90%,
+  to {
+    background-position: calc(-100% - var(--shimmer-width)) 0;
+  }
+
+  30%,
+  60% {
+    background-position: calc(100% + var(--shimmer-width)) 0;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+
+    --card: transparent;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 215 20.2% 65.1%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+
+    --accent: 216 34% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 215 20.2% 65.1%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+
+    --card: transparent;
+    --card-foreground: 213 31% 91%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 1.2%;
+
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 216 34% 17%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
