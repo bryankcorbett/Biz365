@@ -1,92 +1,121 @@
-import { useState, useEffect, useRef } from "react";
+import React from "react";
 
-const StarBorder = ({
-    as: Component = 'button',
-    className = '',
-    color = '#E0BC00',
-    speed = '2s',
-    thickness = 2,
-    children,
-    ...rest
-  }) => {
-    return (
-      <Component
-        className={`relative inline-block overflow-hidden rounded-[20px] transition-all duration-300 hover:scale-105 ${className}`}
-        style={{
-          padding: `${thickness}px`,
-          ...rest.style
-        }}
+/**
+ * Login Pulse Button - Final React component matching HTML demo exactly
+ * Features:
+ * - Black pill button with continuous black pulse ring animation
+ * - Hover: lift + scale + enhanced shadow + glow
+ * - Active press state with scale down
+ * - Keyboard focus ring for accessibility
+ * - Respects prefers-reduced-motion
+ */
+const LoginPulseButton = ({
+  children = "Login",
+  className = "",
+  speed = "2s",
+  onClick,
+  disabled = false,
+  type = "button",
+  ...rest
+}) => {
+  return (
+    <>
+      <style jsx>{`
+        .login-pulse-btn {
+          --btn-bg: #000;
+          --btn-fg: #fff;
+          --pulse: rgba(0, 0, 0, .30);
+          --shadow: rgba(0, 0, 0, .20);
+          --shadow-strong: rgba(0, 0, 0, .35);
+
+          appearance: none;
+          border: none;
+          outline: none;
+          cursor: pointer;
+
+          background: var(--btn-bg);
+          color: var(--btn-fg);
+          border-radius: 9999px;
+          padding: 14px 32px;
+          font-weight: 700;
+          letter-spacing: .2px;
+          font-size: 1rem;
+          line-height: 1;
+
+          position: relative;
+          isolation: isolate;
+          transition: transform .22s cubic-bezier(.2, .8, .2, 1), 
+                      box-shadow .22s cubic-bezier(.2, .8, .2, 1), 
+                      filter .22s ease;
+
+          box-shadow: 0 6px 18px -6px var(--shadow);
+        }
+
+        .login-pulse-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .login-pulse-btn::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          z-index: -1;
+          box-shadow: 0 0 0 0 var(--pulse);
+          animation: pulse-ring var(--speed, ${speed}) infinite;
+        }
+
+        .login-pulse-btn:hover:not(:disabled),
+        .login-pulse-btn:focus-visible:not(:disabled) {
+          transform: translateY(-3px) scale(1.03);
+          box-shadow: 0 18px 34px -10px var(--shadow-strong);
+          filter: drop-shadow(0 0 10px rgba(0, 0, 0, .12));
+        }
+
+        .login-pulse-btn:active:not(:disabled) {
+          transform: translateY(-1px) scale(0.99);
+        }
+
+        .login-pulse-btn:focus-visible {
+          outline: 3px solid rgba(0, 0, 0, .35);
+          outline-offset: 3px;
+        }
+
+        @keyframes pulse-ring {
+          0% {
+            box-shadow: 0 0 0 0 var(--pulse);
+          }
+          60% {
+            box-shadow: 0 0 0 18px rgba(0, 0, 0, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .login-pulse-btn::after {
+            animation: none;
+          }
+          .login-pulse-btn {
+            transition: none;
+          }
+        }
+      `}</style>
+      
+      <button
+        className={`login-pulse-btn ${className}`}
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+        style={{ '--speed': speed }}
         {...rest}
       >
-        {/* Animated border effect - bottom (Gold) */}
-        <div
-          className="absolute w-[400%] h-[90%] opacity-90 bottom-[-35px] right-[-300%] rounded-full animate-star-movement-bottom z-0"
-          style={{
-            background: `radial-gradient(circle, #f59e0b, transparent 15%)`,
-            animationDuration: speed,
-            animationDelay: '0s'
-          }}
-        ></div>
-        
-        {/* Animated border effect - top (Purple) */}
-        <div
-          className="absolute w-[400%] h-[90%] opacity-90 top-[-35px] left-[-300%] rounded-full animate-star-movement-top z-0"
-          style={{
-            background: `radial-gradient(circle, #8b5cf6, transparent 15%)`,
-            animationDuration: speed,
-            animationDelay: '1s'
-          }}
-        ></div>
-        
-        {/* Additional side animations - right (Blue) */}
-        <div
-          className="absolute w-[90%] h-[400%] opacity-70 right-[-35px] top-[-300%] rounded-full animate-star-movement-right z-0"
-          style={{
-            background: `radial-gradient(circle, #3b82f6, transparent 15%)`,
-            animationDuration: speed,
-            animationDelay: '0.5s'
-          }}
-        ></div>
-        
-        {/* Additional side animations - left (Pink) */}
-        <div
-          className="absolute w-[90%] h-[400%] opacity-70 left-[-35px] bottom-[-300%] rounded-full animate-star-movement-left z-0"
-          style={{
-            background: `radial-gradient(circle, #ec4899, transparent 15%)`,
-            animationDuration: speed,
-            animationDelay: '1.5s'
-          }}
-        ></div>
-        
-        {/* Button content */}
-        <div className="relative z-10 bg-gradient-to-b from-black to-black text-yellow-600 text-center text-[18px] py-[10px] px-[28px] rounded-[18px] font-bold shadow-lg hover:shadow-xl transition-all duration-300">
-          {children}
-        </div>
-      </Component>
-    );
-  };
-  
-  export default StarBorder;
-  
-  // tailwind.config.js
-  // module.exports = {
-  //   theme: {
-  //     extend: {
-  //       animation: {
-  //         'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
-  //         'star-movement-top': 'star-movement-top linear infinite alternate',
-  //       },
-  //       keyframes: {
-  //         'star-movement-bottom': {
-  //           '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-  //           '100%': { transform: 'translate(-100%, 0%)', opacity: '0' },
-  //         },
-  //         'star-movement-top': {
-  //           '0%': { transform: 'translate(0%, 0%)', opacity: '1' },
-  //           '100%': { transform: 'translate(100%, 0%)', opacity: '0' },
-  //         },
-  //       },
-  //     },
-  //   }
-  // }
-  
+        {children}
+      </button>
+    </>
+  );
+};
+
+export default LoginPulseButton;

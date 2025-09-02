@@ -161,7 +161,7 @@ export const Corementors = () => {
                 as="a"
                 href="/login"
                 className="custom-class"
-                color="#800188"
+                color="#ffffff"
                 speed="2s"
               >
                 Log in
