@@ -3,6 +3,7 @@ import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
+import ShinyText from '../components/ShinyText';
 
 const VerifyOTP = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -190,10 +191,12 @@ const VerifyOTP = () => {
           {/* Logo */}
           <div className="text-center mb-8 animate-fade-in">
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
-              <img 
-                className="w-full h-full object-contain" 
-                alt="Biz365 Logo" 
-                src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+              <ShinyText 
+                src="./public/logo.png"
+                alt="Biz365 Logo"
+                disabled={false} 
+                speed={3} 
+                className="w-full h-full"
               />
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Verify Your Mobile</h1>

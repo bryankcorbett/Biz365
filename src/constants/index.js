@@ -165,6 +165,7 @@ export const ROUTES = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   VERIFY_OTP: '/verify-otp',
+  FORGOT_PASSWORD: '/forgot-password',
   ONBOARDING: {
     STEP1: '/onboarding/step1',
     STEP2: '/onboarding/step2',

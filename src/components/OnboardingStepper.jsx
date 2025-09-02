@@ -1,6 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../constants';
 
 const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
+  const navigate = useNavigate();
+
+  // Handle step navigation
+  const handleStepClick = (stepNumber) => {
+    // Only allow navigation to completed steps or the current step
+    if (stepNumber <= currentStep) {
+      const routeMap = {
+        1: ROUTES.ONBOARDING.STEP1,
+        2: ROUTES.ONBOARDING.STEP2,
+        3: ROUTES.ONBOARDING.STEP3,
+        4: ROUTES.ONBOARDING.STEP4,
+        5: ROUTES.ONBOARDING.STEP5,
+      };
+      
+      const targetRoute = routeMap[stepNumber];
+      if (targetRoute) {
+        navigate(targetRoute);
+      }
+    }
+  };
   return (
     <div className="w-full max-w-4xl mx-auto mb-8">
       <div className="flex items-center justify-center">
@@ -15,13 +37,14 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                 {/* Step Circle */}
                 <div className="flex flex-col items-center">
                   <div
+                    onClick={() => handleStepClick(stepNumber)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       isActive
                         ? 'bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30 border-2 border-purple-400'
                         : isCompleted
-                        ? 'bg-gradient-to-br from-gold-500 to-gold-600 shadow-lg shadow-gold-500/30 border-2 border-gold-400'
+                        ? 'bg-gradient-to-br from-gold-500 to-gold-600 shadow-lg shadow-gold-500/30 border-2 border-gold-400 cursor-pointer hover:scale-110 hover:shadow-xl hover:shadow-gold-500/40'
                         : 'bg-gray-700 border-2 border-gray-600'
-                    }`}
+                    } ${stepNumber <= currentStep ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                   >
                     {isCompleted ? (
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -37,9 +60,16 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                   </div>
                   
                   {/* Step Label */}
-                  <span className={`text-xs mt-2 font-medium ${
-                    isActive ? 'text-purple-300' : isCompleted ? 'text-gold-300' : 'text-gray-400'
-                  }`}>
+                  <span 
+                    onClick={() => handleStepClick(stepNumber)}
+                    className={`text-xs mt-2 font-medium transition-colors duration-200 ${
+                      isActive 
+                        ? 'text-purple-300' 
+                        : isCompleted 
+                        ? 'text-gold-300 hover:text-gold-200 cursor-pointer' 
+                        : 'text-gray-400'
+                    } ${stepNumber <= currentStep ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+                  >
                     Step {stepNumber}
                   </span>
                 </div>
@@ -58,10 +88,10 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
       
       {/* Current Step Title */}
       <div className="text-center mt-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-2">
           {getStepTitle(currentStep)}
         </h2>
-        <p className="text-gray-300 text-sm md:text-base">
+        <p className="text-blue-700 text-sm md:text-base">
           {getStepDescription(currentStep)}
         </p>
       </div>
@@ -73,7 +103,7 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
 const getStepTitle = (step) => {
   switch (step) {
     case 1:
-      return 'Business Information';
+      return 'Company Information';
     case 2:
       return 'Industry & Location';
     case 3:
@@ -91,7 +121,7 @@ const getStepTitle = (step) => {
 const getStepDescription = (step) => {
   switch (step) {
     case 1:
-      return 'Tell us about your business basics';
+      return 'Enter your company name';
     case 2:
       return 'Select your industry and location';
     case 3:

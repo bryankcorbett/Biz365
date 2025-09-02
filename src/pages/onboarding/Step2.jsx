@@ -5,11 +5,13 @@ import { ROUTES, SUCCESS_MESSAGES, INDUSTRIES } from '../../constants';
 
 import onboardingService from '../../services/onboardingService';
 import OnboardingStepper from '../../components/OnboardingStepper';
+import ShinyText from '../../components/ShinyText';
 
 const OnboardingStep2 = () => {
   const [formData, setFormData] = useState({
     industry: '',
     subIndustry: '',
+    location: '',
   });
   const [errors, setErrors] = useState({});
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -48,6 +50,10 @@ const OnboardingStep2 = () => {
 
     if (formData.industry && subIndustries.length > 0 && !formData.subIndustry.trim()) {
       newErrors.subIndustry = 'Please select your sub-industry';
+    }
+
+    if (!formData.location.trim()) {
+      newErrors.location = 'Please enter your branch location';
     }
 
     setErrors(newErrors);
@@ -97,10 +103,12 @@ const OnboardingStep2 = () => {
           {/* Logo */}
           <div className="text-center mb-6 animate-fade-in">
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
-              <img 
-                className="w-full h-full object-contain" 
-                alt="Biz365 Logo" 
-                src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+              <ShinyText 
+                src="./public/logo.png"
+                alt="Biz365 Logo"
+                disabled={false} 
+                speed={3} 
+                className="w-full h-full"
               />
             </div>
           </div>
@@ -177,9 +185,45 @@ const OnboardingStep2 = () => {
                 </div>
               )}
 
+              {/* Location Field */}
+              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
+                <label 
+                  htmlFor="location" 
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  Branch Location *
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
+                    errors.location 
+                      ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
+                      : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
+                  }`}
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  placeholder="Enter your branch location (e.g., Mumbai, Maharashtra)"
+                  disabled={isLoading}
+                />
+                {errors.location && (
+                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {errors.location}
+                  </p>
+                )}
+              </div>
+
               {/* Industry Description */}
               {selectedIndustryData && (
-                <div className="animate-fade-in bg-amber-50 border border-amber-200 rounded-xl p-4">
+                <div className="animate-fade-in bg-amber-50 border border-amber-200 rounded-xl p-4" style={{ animationDelay: '250ms' }}>
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -202,7 +246,7 @@ const OnboardingStep2 = () => {
               )}
 
                              {/* Back and Submit Buttons */}
-               <div className="flex gap-4 animate-slide-in" style={{ animationDelay: '250ms' }}>
+               <div className="flex gap-4 animate-slide-in" style={{ animationDelay: '300ms' }}>
                  {/* Back Button */}
                  <button
                    type="button"
@@ -220,7 +264,7 @@ const OnboardingStep2 = () => {
                  {/* Submit Button */}
                  <button
                    type="submit"
-                   disabled={isLoading || !formData.industry || (subIndustries.length > 0 && !formData.subIndustry)}
+                   disabled={isLoading || !formData.industry || (subIndustries.length > 0 && !formData.subIndustry) || !formData.location}
                                        className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                  >
                   {isLoading && (
@@ -252,7 +296,7 @@ const OnboardingStep2 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className="text-center mt-4 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className="text-center mt-4 animate-fade-in" style={{ animationDelay: '350ms' }}>
             <div className="flex items-center justify-center gap-2">
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>

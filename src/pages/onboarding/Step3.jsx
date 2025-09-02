@@ -5,6 +5,7 @@ import { ROUTES, SUCCESS_MESSAGES, COUNTRIES, INDIAN_STATES } from '../../consta
 
 import onboardingService from '../../services/onboardingService';
 import OnboardingStepper from '../../components/OnboardingStepper';
+import ShinyText from '../../components/ShinyText';
 
 const OnboardingStep3 = () => {
   const [formData, setFormData] = useState({
@@ -119,10 +120,12 @@ const OnboardingStep3 = () => {
           {/* Logo */}
           <div className="text-center mb-6 animate-fade-in">
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
-              <img 
-                className="w-full h-full object-contain" 
-                alt="Biz365 Logo" 
-                src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+              <ShinyText 
+                src="./public/logo.png"
+                alt="Biz365 Logo"
+                disabled={false} 
+                speed={3} 
+                className="w-full h-full"
               />
             </div>
           </div>

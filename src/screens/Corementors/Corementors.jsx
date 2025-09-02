@@ -17,6 +17,7 @@ import { TeamSection } from "./sections/TeamSection/TeamSection";
 import { FooterSection } from "./sections/FooterSection/FooterSection";
 import StarBorder from "../../components/loginButton";
 import AnimatedNavbar from "../../components/AnimatedNavbar";
+import ShinyText from "../../components/ShinyText";
 
 const navigationItems = [
   {
@@ -135,20 +136,22 @@ export const Corementors = () => {
         <nav className="flex justify-center pt-3 pb-4 px-0 self-stretch w-full flex-[0_0_auto] bg-orbai-templateframerwebsitewild-sand-20 backdrop-blur-[2.5px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative">
           <div className="absolute w-[90vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
 
-          <div className="flex w-[100%] items-center justify-between mx-auto relative">
+          <div className="flex w-[100%] items-center justify-between relative">
             {/* Logo - Left Side (Start) */}
             <div className="absolute left-0 flex-shrink-0">
-              <div className="relative w-[180px] h-[50px]">
-                <img
-                  className="w-full h-full object-contain"
+              <div className="relative w-[230px] h-[150px]">
+                <ShinyText 
+                  src="./public/logo.png"
                   alt="Biz365 Logo"
-                  src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550"
+                  disabled={false} 
+                  speed={3} 
+                  className="w-full h-full"
                 />
               </div>
             </div>
 
             {/* Navigation - Center */}
-            <div className="flex-1 flex justify-center ml-16">
+            <div className="flex-1 flex justify-center ml-16 mt-4">
               <AnimatedNavbar navigationItems={navigationItems} />
             </div>
 
