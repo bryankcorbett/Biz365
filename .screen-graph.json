@@ -50,7 +50,7 @@
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#800188\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
+          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"white\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
           "line": 157,
           "endLine": 165,
           "column": 14,
@@ -130,7 +130,7 @@
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link \n               to=\"/\" \n               className=\"inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors\"\n             >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
+          "element": "<Link \n               to=\"/\" \n               className=\"inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors\"\n             >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
           "line": 547,
           "endLine": 555,
           "column": 13,
@@ -146,7 +146,7 @@
       "data": {
         "viaRoute": "/",
         "trigger": {
-          "element": "<Link \n              to=\"/\" \n              className=\"inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors\"\n            >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
+          "element": "<Link \n              to=\"/\" \n              className=\"inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors\"\n            >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
           "line": 395,
           "endLine": 403,
           "column": 12,
