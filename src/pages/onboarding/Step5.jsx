@@ -318,7 +318,7 @@ const Step5 = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Custom Target Cursor for Step 5 */}
       <TargetCursor 
         spinDuration={2}
@@ -358,25 +358,14 @@ const Step5 = () => {
           {/* Onboarding Stepper */}
           <OnboardingStepper currentStep={5} totalSteps={5} />
 
-          {/* Header */}
-          <div className="text-center mb-8 animate-fade-up">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl shadow-lg shadow-gold-200/50 mb-4">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 0l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-              Final Step: Your Business Goals
-            </h1>
-            <p className="text-gray-300">Help us understand what you want to achieve with Biz365</p>
-          </div>
+          
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 border border-gray-700/50 p-5 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Business Aims Selection */}
               <div className="space-y-4 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                <label className="text-sm font-semibold text-gray-200 flex items-center gap-2 mb-4">
+                <label className="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-4">
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
@@ -394,20 +383,20 @@ const Step5 = () => {
                      >
                                              <div className={`p-4 rounded-xl border-2 transition-all duration-300 ${
                          formData.businessAims.includes(aim.id)
-                           ? 'border-gold-400 bg-gold-900/20 shadow-lg shadow-gold-500/30 relative overflow-hidden'
-                           : 'border-gray-600 bg-gray-800/30 hover:border-gold-300 hover:bg-gold-900/20'
+                           ? 'border-amber-400 bg-amber-50 shadow-lg shadow-amber-200/50 relative overflow-hidden'
+                           : 'border-gray-200 bg-gray-50 hover:border-amber-300 hover:bg-amber-50/50'
                        }`}>
                          {/* Bullet hole effect when selected */}
                          {formData.businessAims.includes(aim.id) && (
-                           <div className="absolute top-2 right-2 w-3 h-3 bg-black rounded-full border-2 border-gold-400 shadow-inner">
-                             <div className="w-1 h-1 bg-gold-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                           <div className="absolute top-2 right-2 w-3 h-3 bg-gray-800 rounded-full border-2 border-amber-400 shadow-inner">
+                             <div className="w-1 h-1 bg-amber-300 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                            </div>
                          )}
                         <div className="flex items-start gap-3">
                           <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-200 ${
                             formData.businessAims.includes(aim.id)
-                              ? 'border-gold-500 bg-gold-500'
-                              : 'border-gray-500'
+                              ? 'border-amber-500 bg-amber-500'
+                              : 'border-gray-300'
                           }`}>
                             {formData.businessAims.includes(aim.id) && (
                               <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -418,9 +407,9 @@ const Step5 = () => {
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <span className="text-lg">{aim.icon}</span>
-                              <h3 className="font-semibold text-gray-200">{aim.label}</h3>
+                              <h3 className="font-semibold text-gray-800">{aim.label}</h3>
                             </div>
-                            <p className="text-sm text-gray-300">{aim.description}</p>
+                            <p className="text-sm text-gray-600">{aim.description}</p>
                           </div>
                         </div>
                       </div>
@@ -441,7 +430,7 @@ const Step5 = () => {
               {/* Other Aim Input */}
               {formData.businessAims.includes('other') && (
                 <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
-                  <label htmlFor="otherAim" className="text-sm font-semibold text-gray-200 flex items-center gap-2">
+                                     <label htmlFor="otherAim" className="text-sm font-semibold text-gray-700 flex items-center gap-2">
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
@@ -451,7 +440,7 @@ const Step5 = () => {
                      id="otherAim"
                      name="otherAim"
                      rows={3}
-                     className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-white placeholder-gray-400 cursor-target"
+                     className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-gray-800 placeholder-gray-500 cursor-target"
                      value={formData.otherAim}
                      onChange={handleInputChange}
                      placeholder="Describe your specific business objective..."
@@ -470,9 +459,9 @@ const Step5 = () => {
 
               {/* Selected Aims Summary */}
               {formData.businessAims.length > 0 && (
-                <div className="bg-gradient-to-r from-gold-900/20 to-gold-800/30 border border-gold-600 rounded-xl p-4 animate-fade-in">
-                  <h4 className="font-semibold text-gold-300 mb-2 flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-200 rounded-xl p-4 animate-fade-in">
+                  <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Your Selected Goals ({formData.businessAims.length})
@@ -483,7 +472,7 @@ const Step5 = () => {
                       return aim ? (
                         <span
                           key={aimId}
-                          className="inline-flex items-center gap-1 px-3 py-1 bg-gold-800/50 text-gold-300 text-sm rounded-full border border-gold-600"
+                          className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-gray-800 text-sm rounded-full border border-amber-300"
                         >
                           <span>{aim.icon}</span>
                           {aim.label}
@@ -500,7 +489,7 @@ const Step5 = () => {
                  <button
                    type="button"
                    onClick={() => navigate(ROUTES.ONBOARDING.STEP4, { replace: true })}
-                   className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl border-2 border-gray-600 hover:border-gray-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group cursor-target"
+                                       className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-4 px-6 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group cursor-target"
                  >
                    <div className="relative flex items-center justify-center gap-2">
                      <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -514,7 +503,7 @@ const Step5 = () => {
                  <button
                    type="submit"
                    disabled={isLoading || formData.businessAims.length === 0}
-                   className="flex-1 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold py-4 px-6 rounded-xl shadow-2xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-400/40 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group cursor-target"
+                                       className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group cursor-target"
                  >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
@@ -556,7 +545,7 @@ const Step5 = () => {
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>
             </div>
-            <p className="text-sm text-gray-400 mt-2">Step 5 of 5 - Final Step</p>
+            <p className="text-sm text-gray-600 mt-2">Step 5 of 5 - Final Step</p>
           </div>
         </div>
       </div>

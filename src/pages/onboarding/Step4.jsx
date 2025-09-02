@@ -86,7 +86,7 @@ const OnboardingStep4 = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Hero Section Orb - Full Screen */}
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
         <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -113,17 +113,10 @@ const OnboardingStep4 = () => {
           {/* Onboarding Stepper */}
           <OnboardingStepper currentStep={4} totalSteps={5} />
 
-          {/* Header */}
-          <div className="text-center mb-8 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl shadow-lg shadow-gold-200/30 mb-4">
-              <span className="text-xl font-bold text-white">4</span>
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-2">POS & Software Setup</h1>
-            <p className="text-gray-300">Tell us about your current setup and preferences</p>
-          </div>
+          
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 border border-gray-700/50 p-5 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* POS Usage Selection */}
               <div className="space-y-4 animate-slide-in" style={{ animationDelay: '100ms' }}>
@@ -140,8 +133,8 @@ const OnboardingStep4 = () => {
                       key={option.value}
                       className={`relative flex items-center p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 group ${
                         formData.posUsage === option.value
-                          ? 'border-gold-400 bg-gold-900/20 shadow-sm'
-                          : 'border-gray-600 hover:border-gold-300 hover:bg-gold-900/10'
+                          ? 'border-amber-400 bg-amber-50 shadow-sm'
+                          : 'border-gray-200 hover:border-amber-300 hover:bg-amber-50/50'
                       }`}
                     >
                       <input
@@ -161,8 +154,8 @@ const OnboardingStep4 = () => {
                       
                       <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center transition-all duration-200 ${
                         formData.posUsage === option.value
-                          ? 'border-gold-500 bg-gold-500'
-                          : 'border-gray-500 group-hover:border-gold-400'
+                          ? 'border-amber-500 bg-amber-500'
+                          : 'border-gray-300 group-hover:border-amber-400'
                       }`}>
                         {formData.posUsage === option.value && (
                           <div className="w-2 h-2 bg-white rounded-full"></div>
@@ -173,8 +166,8 @@ const OnboardingStep4 = () => {
                         <div className="flex items-center gap-3">
                           <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 ${
                             formData.posUsage === option.value
-                              ? 'bg-gold-900/30 text-gold-400'
-                              : 'bg-gray-700 text-gray-400 group-hover:bg-gold-900/20 group-hover:text-gold-500'
+                              ? 'bg-amber-100 text-amber-600'
+                              : 'bg-gray-100 text-gray-500 group-hover:bg-amber-50 group-hover:text-amber-600'
                           }`}>
                             {option.value === 'already-using' && (
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,7 +185,7 @@ const OnboardingStep4 = () => {
                               </svg>
                             )}
                           </div>
-                          <span className="font-medium text-gray-200">{option.label}</span>
+                          <span className="font-medium text-gray-800">{option.label}</span>
                         </div>
                       </div>
                     </label>
@@ -205,7 +198,7 @@ const OnboardingStep4 = () => {
                 <div className="space-y-2 animate-fade-in">
                   <label 
                     htmlFor="currentSoftware" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -216,13 +209,13 @@ const OnboardingStep4 = () => {
                     type="text"
                     id="currentSoftware"
                     name="currentSoftware"
-                    className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                                         className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                     value={formData.currentSoftware}
                     onChange={handleInputChange}
                     placeholder="e.g., Square, Toast, Shopify POS, or custom software"
                     disabled={isLoading}
                   />
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     This helps us understand how to integrate with your existing setup
                   </p>
                 </div>
@@ -233,7 +226,7 @@ const OnboardingStep4 = () => {
                 <div className="space-y-2 animate-fade-in">
                   <label 
                     htmlFor="specificNeeds" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -244,13 +237,13 @@ const OnboardingStep4 = () => {
                     id="specificNeeds"
                     name="specificNeeds"
                     rows={4}
-                    className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-white placeholder-gray-400"
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-gray-800 placeholder-gray-500"
                     value={formData.specificNeeds}
                     onChange={handleInputChange}
                     placeholder="e.g., inventory management, customer loyalty, GST billing, multi-location support, offline mode..."
                     disabled={isLoading}
                   />
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     Tell us about your specific requirements so we can tailor Biz365 to your needs
                   </p>
                 </div>
@@ -258,20 +251,20 @@ const OnboardingStep4 = () => {
 
               {/* Info Card Based on Selection */}
               {formData.posUsage && (
-                <div className="animate-fade-in bg-gray-800/50 border border-gray-600 rounded-xl p-4">
+                <div className="animate-fade-in bg-green-50 border border-green-200 rounded-xl p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-200 mb-1">
+                      <h4 className="font-semibold text-gray-800 mb-1">
                         {formData.posUsage === 'already-using' && 'Integration Support'}
                         {formData.posUsage === 'want-biz365' && 'Biz365 POS Features'}
                         {formData.posUsage === 'not-sure' && 'We\'ll Help You Decide'}
                       </h4>
-                      <p className="text-sm text-gray-300">
+                      <p className="text-sm text-gray-600">
                         {formData.posUsage === 'already-using' && 'We offer seamless integration with most popular POS systems. Our team will help you migrate your data and set up smooth workflows.'}
                         {formData.posUsage === 'want-biz365' && 'Biz365 POS includes inventory management, GST billing, customer management, analytics, offline mode, and multi-device sync. Perfect for modern businesses.'}
                         {formData.posUsage === 'not-sure' && 'No worries! Our experts will analyze your business needs and recommend the best solution. We offer free consultation to help you choose.'}
@@ -287,7 +280,7 @@ const OnboardingStep4 = () => {
                  <button
                    type="button"
                    onClick={() => navigate(ROUTES.ONBOARDING.STEP3, { replace: true })}
-                   className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl border-2 border-gray-600 hover:border-gray-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
+                                       className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
                  >
                    <div className="relative flex items-center justify-center gap-2">
                      <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,7 +294,7 @@ const OnboardingStep4 = () => {
                  <button
                    type="submit"
                    disabled={isLoading || !formData.posUsage}
-                   className="flex-1 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold py-3 px-6 rounded-xl shadow-2xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-400/40 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                                       className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                  >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
@@ -340,7 +333,7 @@ const OnboardingStep4 = () => {
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
             </div>
-            <p className="text-sm text-gray-400 mt-2">Step 4 of 5</p>
+            <p className="text-sm text-gray-600 mt-2">Step 4 of 5</p>
           </div>
         </div>
       </div>

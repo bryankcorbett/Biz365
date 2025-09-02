@@ -172,7 +172,7 @@ const VerifyOTP = () => {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Hero Section Orb - Full Screen */}
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
         <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -196,19 +196,19 @@ const VerifyOTP = () => {
                 src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
               />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Verify Your Mobile</h1>
-            <p className="text-gray-300">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Verify Your Mobile</h1>
+            <p className="text-gray-600">
               We've sent a 6-digit code to{' '}
-              <span className="font-semibold text-gold-400">{formatMobile(mobile)}</span>
+              <span className="font-semibold text-amber-600">{formatMobile(mobile)}</span>
             </p>
           </div>
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-3xl shadow-2xl shadow-black/50 border border-gray-700/50 p-8 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-8 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* OTP Input */}
               <div className="space-y-4 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                <label className="text-sm font-semibold text-gray-200 text-center block">
+                <label className="text-sm font-semibold text-gray-700 text-center block">
                   Enter Verification Code
                 </label>
                 
@@ -223,11 +223,11 @@ const VerifyOTP = () => {
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       onPaste={handlePaste}
-                      className={`w-12 h-12 text-center text-lg font-bold bg-gray-800/50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-white placeholder-gray-400 ${
+                      className={`w-12 h-12 text-center text-lg font-bold bg-gray-50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-gray-800 placeholder-gray-500 ${
                         errors.otp 
                           ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                          : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                      } ${digit ? 'border-gold-400 bg-gold-900/20' : ''}`}
+                          : 'border-gray-200 focus:border-amber-400 focus:ring-4 focus:ring-amber-900/20'
+                      } ${digit ? 'border-amber-400 bg-amber-50' : ''}`}
                       disabled={isLoading}
                     />
                   ))}
@@ -242,7 +242,7 @@ const VerifyOTP = () => {
                   </p>
                 )}
 
-                <p className="text-xs text-gray-400 text-center">
+                <p className="text-xs text-gray-600 text-center">
                   Enter the 6-digit code sent to your mobile number
                 </p>
               </div>
@@ -252,7 +252,7 @@ const VerifyOTP = () => {
                                  <button
                    type="submit"
                    disabled={isLoading || otp.join('').length !== 6}
-                   className="w-full bg-gradient-to-b from-gold-400 to-gold-600 hover:from-gold-300 hover:to-gold-500 text-white font-semibold py-4 px-6 rounded-xl shadow-2xl shadow-gold-400/60 hover:shadow-2xl hover:shadow-gold-300/70 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                   className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                  >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-b from-gold-500 to-gold-700">
@@ -284,29 +284,29 @@ const VerifyOTP = () => {
             {/* Resend Section */}
             <div className="mt-8 text-center space-y-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
               <div className="flex items-center">
-                <div className="flex-1 border-t border-gray-600"></div>
-                <span className="px-4 text-sm text-gray-400">Didn't receive the code?</span>
-                <div className="flex-1 border-t border-gray-600"></div>
+                <div className="flex-1 border-t border-gray-300"></div>
+                <span className="px-4 text-sm text-gray-600">Didn't receive the code?</span>
+                <div className="flex-1 border-t border-gray-300"></div>
               </div>
               
               {canResend ? (
                 <button
                   onClick={handleResendOtp}
                   disabled={isLoading}
-                  className="text-gold-600 hover:text-gold-700 font-semibold hover:underline transition-colors disabled:opacity-50"
+                  className="text-amber-600 hover:text-amber-700 font-semibold hover:underline transition-colors disabled:opacity-50"
                 >
                   Resend OTP
                 </button>
               ) : (
-                <p className="text-sm text-gray-400">
-                  Resend OTP in <span className="font-semibold text-gold-400">{countdown}s</span>
+                <p className="text-sm text-gray-600">
+                  Resend OTP in <span className="font-semibold text-amber-600">{countdown}s</span>
                 </p>
               )}
               
               <p className="text-sm">
                 <Link 
                   to={ROUTES.SIGNUP}
-                  className="text-gold-600 hover:text-gold-700 font-medium hover:underline transition-colors"
+                  className="text-amber-600 hover:text-amber-700 font-medium hover:underline transition-colors"
                 >
                   Change mobile number
                 </Link>
@@ -318,7 +318,7 @@ const VerifyOTP = () => {
           <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
             <Link 
               to={ROUTES.LOGIN} 
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-300 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

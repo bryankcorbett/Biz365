@@ -103,7 +103,7 @@ const OnboardingStep3 = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-950 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Hero Section Orb - Full Screen */}
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
         <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -130,23 +130,16 @@ const OnboardingStep3 = () => {
           {/* Onboarding Stepper */}
           <OnboardingStepper currentStep={3} totalSteps={5} />
 
-          {/* Header */}
-          <div className="text-center mb-8 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-2xl shadow-lg shadow-gold-200/30 mb-4">
-              <span className="text-2xl font-bold text-white">3</span>
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Business Address</h1>
-            <p className="text-gray-300">Where is your business located?</p>
-          </div>
+          
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 border border-gray-700/50 p-5 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Address Field */}
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
                 <label 
                   htmlFor="address" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -158,7 +151,7 @@ const OnboardingStep3 = () => {
                   id="address"
                   name="address"
                   rows={3}
-                  className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-white placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-gray-800 placeholder-gray-500"
                   value={formData.address}
                   onChange={handleInputChange}
                   placeholder="Enter your business address"
@@ -172,7 +165,7 @@ const OnboardingStep3 = () => {
                 <div className="space-y-2">
                   <label 
                     htmlFor="city" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -183,7 +176,7 @@ const OnboardingStep3 = () => {
                       type="text"
                       id="city"
                       name="city"
-                      className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                       value={formData.city}
                       onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
                       placeholder="Enter city name"
@@ -195,7 +188,7 @@ const OnboardingStep3 = () => {
                 <div className="space-y-2">
                   <label 
                     htmlFor="country" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -205,7 +198,7 @@ const OnboardingStep3 = () => {
                                       <select
                       id="country"
                       name="country"
-                      className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white"
+                      className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800"
                       value={formData.country}
                       onChange={(e) => setFormData(prev => ({ 
                         ...prev, 
@@ -229,7 +222,7 @@ const OnboardingStep3 = () => {
                 <div className="space-y-2">
                   <label 
                     htmlFor="state" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -240,7 +233,7 @@ const OnboardingStep3 = () => {
                     <select
                       id="state"
                       name="state"
-                      className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white"
+                      className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800"
                       value={formData.state}
                       onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
                       disabled={isLoading}
@@ -257,7 +250,7 @@ const OnboardingStep3 = () => {
                       type="text"
                       id="state"
                       name="state"
-                      className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                       value={formData.state}
                       onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
                       placeholder="Enter state/province"
@@ -270,7 +263,7 @@ const OnboardingStep3 = () => {
                 <div className="space-y-2">
                   <label 
                     htmlFor="pincode" 
-                    className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                   >
                     <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17v4a2 2 0 002 2h4M15 7l-4 4" />
@@ -281,7 +274,7 @@ const OnboardingStep3 = () => {
                     type="text"
                     id="pincode"
                     name="pincode"
-                    className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                    className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                     value={formData.pincode}
                     onChange={(e) => setFormData(prev => ({ ...prev, pincode: e.target.value }))}
                     placeholder={isIndiaSelected ? "Enter pincode" : "Enter postal code"}
@@ -292,16 +285,16 @@ const OnboardingStep3 = () => {
 
               {/* Location Info Card */}
               {formData.country && (
-                <div className="animate-fade-in bg-gray-800/50 border border-gray-600 rounded-xl p-4">
+                <div className="animate-fade-in bg-blue-50 border border-blue-200 rounded-xl p-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-200 mb-1">Address Information</h4>
-                      <p className="text-sm text-gray-300">
+                      <h4 className="font-semibold text-gray-800 mb-1">Address Information</h4>
+                      <p className="text-sm text-gray-600">
                         {formData.country === 'IN' 
                           ? 'We support GST compliance and local regulations for Indian businesses.'
                           : 'International address detected. We support businesses worldwide with localized features.'
@@ -318,7 +311,7 @@ const OnboardingStep3 = () => {
                  <button
                    type="button"
                    onClick={() => navigate(ROUTES.ONBOARDING.STEP2, { replace: true })}
-                   className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-xl border-2 border-gray-600 hover:border-gray-500 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
+                                       className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
                  >
                    <div className="relative flex items-center justify-center gap-2">
                      <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -332,7 +325,7 @@ const OnboardingStep3 = () => {
                  <button
                    type="submit"
                    disabled={isLoading}
-                   className="flex-1 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold py-3 px-6 rounded-xl shadow-2xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-400/40 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                                       className="flex-1 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                  >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
@@ -371,7 +364,7 @@ const OnboardingStep3 = () => {
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
             </div>
-            <p className="text-sm text-gray-400 mt-2">Step 3 of 5</p>
+            <p className="text-sm text-gray-600 mt-2">Step 3 of 5</p>
           </div>
         </div>
       </div>

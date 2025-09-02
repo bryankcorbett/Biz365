@@ -129,7 +129,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Hero Section Orb - Full Screen */}
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
         <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -153,18 +153,18 @@ const Signup = () => {
                 src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
               />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-1">Create Account</h1>
-            <p className="text-gray-300">Join thousands of businesses using Biz365</p>
+            <h1 className="text-2xl font-bold text-gray-800 mb-1">Create Account</h1>
+            <p className="text-gray-600">Join thousands of businesses using Biz365</p>
           </div>
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 border border-gray-700/50 p-5 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name Field */}
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
                 <label 
                   htmlFor="name" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -176,10 +176,10 @@ const Signup = () => {
                     type="text"
                     id="name"
                     name="name"
-                    className={`w-full px-4 py-3 bg-gray-800/50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-white placeholder-gray-400 ${
+                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
                       errors.name 
                         ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
+                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
                     }`}
                     value={formData.name}
                     onChange={handleInputChange}
@@ -201,7 +201,7 @@ const Signup = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '150ms' }}>
                 <label 
                   htmlFor="email" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
@@ -213,10 +213,10 @@ const Signup = () => {
                     type="email"
                     id="email"
                     name="email"
-                    className={`w-full px-4 py-3 bg-gray-800/50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-white placeholder-gray-400 ${
+                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
                       errors.email 
                         ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
+                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
                     }`}
                     value={formData.email}
                     onChange={handleInputChange}
@@ -238,7 +238,7 @@ const Signup = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
                 <label 
                   htmlFor="mobile" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -250,10 +250,10 @@ const Signup = () => {
                     type="tel"
                     id="mobile"
                     name="mobile"
-                    className={`w-full px-4 py-3 bg-gray-800/50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-white placeholder-gray-400 ${
+                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
                       errors.mobile 
                         ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
+                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
                     }`}
                     value={formData.mobile}
                     onChange={handleInputChange}
@@ -275,7 +275,7 @@ const Signup = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '250ms' }}>
                 <label 
                   htmlFor="password" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -287,10 +287,10 @@ const Signup = () => {
                     type="password"
                     id="password"
                     name="password"
-                    className={`w-full px-4 py-3 bg-gray-800/50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-white placeholder-gray-400 ${
+                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
                       errors.password 
                         ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
+                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
                     }`}
                     value={formData.password}
                     onChange={handleInputChange}
@@ -306,7 +306,7 @@ const Signup = () => {
                     {errors.password}
                   </p>
                 )}
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-600">
                   Password must be at least 8 characters with uppercase, lowercase, and number
                 </p>
               </div>
@@ -321,7 +321,7 @@ const Signup = () => {
                     onChange={handleInputChange}
                     className="mt-1 h-4 w-4 text-gold-600 focus:ring-gold-500 border-gray-300 rounded"
                   />
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-gray-600">
                     I agree to the{' '}
                     <Link to="/terms" className="text-gold-600 hover:text-gold-700 font-medium hover:underline" target="_blank">
                       Terms and Conditions
@@ -347,7 +347,7 @@ const Signup = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold py-3 px-6 rounded-xl shadow-2xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-400/40 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                 >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
@@ -378,7 +378,7 @@ const Signup = () => {
 
             {/* Footer Links */}
             <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '400ms' }}>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-600">
                 Already have an account?{' '}
                 <Link 
                   to={ROUTES.LOGIN} 
@@ -394,7 +394,7 @@ const Signup = () => {
           <div className="text-center mt-4 animate-fade-in" style={{ animationDelay: '500ms' }}>
             <Link 
               to="/" 
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-200 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

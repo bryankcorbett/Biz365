@@ -81,7 +81,7 @@ const OnboardingStep1 = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-950">
+    <div className="min-h-screen relative overflow-hidden bg-gray-50">
       {/* Hero Section Orb - Full Screen */}
       <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
         <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -108,23 +108,16 @@ const OnboardingStep1 = () => {
           {/* Onboarding Stepper */}
           <OnboardingStepper currentStep={1} totalSteps={5} />
 
-          {/* Header */}
-          <div className="text-center mb-6 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-xl shadow-lg shadow-gold-200/30 mb-2">
-              <span className="text-xl font-bold text-white">1</span>
-            </div>
-            <h1 className="text-2xl font-bold text-white mb-1">Company Information</h1>
-            <p className="text-gray-300">Tell us about your business to get started</p>
-          </div>
+
 
           {/* Form Card */}
-          <div className="bg-gray-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 border border-gray-700/50 p-5 animate-scale-in">
+          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Company Name */}
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
                 <label 
                   htmlFor="companyName" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -135,7 +128,7 @@ const OnboardingStep1 = () => {
                   type="text"
                   id="companyName"
                   name="companyName"
-                  className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                                       className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                   value={formData.companyName}
                   onChange={handleInputChange}
                   placeholder="Enter your company name"
@@ -147,7 +140,7 @@ const OnboardingStep1 = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '150ms' }}>
                 <label 
                   htmlFor="businessType" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -157,7 +150,7 @@ const OnboardingStep1 = () => {
                 <select
                   id="businessType"
                   name="businessType"
-                  className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white"
+                                       className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800"
                   value={formData.businessType}
                   onChange={handleInputChange}
                   disabled={isLoading}
@@ -179,7 +172,7 @@ const OnboardingStep1 = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
                 <label 
                   htmlFor="website" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
@@ -190,7 +183,7 @@ const OnboardingStep1 = () => {
                   type="url"
                   id="website"
                   name="website"
-                  className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-white placeholder-gray-400"
+                                       className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
                   value={formData.website}
                   onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
                   placeholder="https://yourcompany.com"
@@ -202,7 +195,7 @@ const OnboardingStep1 = () => {
               <div className="space-y-2 animate-slide-in" style={{ animationDelay: '250ms' }}>
                 <label 
                   htmlFor="description" 
-                  className="text-sm font-semibold text-gray-200 flex items-center gap-2"
+                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -213,7 +206,7 @@ const OnboardingStep1 = () => {
                   id="description"
                   name="description"
                   rows={4}
-                  className="w-full px-4 py-3 bg-gray-800/50 border-2 border-gray-600 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-white placeholder-gray-400"
+                  className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-gray-800 placeholder-gray-500"
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="Briefly describe your business..."
@@ -230,7 +223,7 @@ const OnboardingStep1 = () => {
                     console.log('Button clicked!');
                     handleSubmit(e);
                   }}
-                  className="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold py-3 px-6 rounded-xl shadow-2xl shadow-gold-500/30 hover:shadow-2xl hover:shadow-gold-400/40 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                 >
                   {isLoading && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
