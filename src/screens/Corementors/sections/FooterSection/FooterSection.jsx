@@ -150,7 +150,7 @@ export const FooterSection = () => {
          <div className="flex flex-col items-center gap-6 w-full pt-8 border-t border-gray-600">
            <div className="flex flex-col items-center gap-4">
              <p className="[font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 text-center opacity-60">
-               © 2024 Biz365. All rights reserved.
+             © 2025 Biz365. All rights reserved.Powered by CoreMentor
              </p>
              <div className="flex items-center gap-6 mb-0">
                <a href="#privacy" className="[font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 hover:opacity-70 transition-opacity">
