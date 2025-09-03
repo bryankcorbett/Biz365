@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../constants';
 
-const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
+const OnboardingStepper = ({ currentStep, totalSteps = 3, customTitle, customDescription }) => {
   const navigate = useNavigate();
 
   // Handle step navigation
@@ -13,8 +13,6 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
         1: ROUTES.ONBOARDING.STEP1,
         2: ROUTES.ONBOARDING.STEP2,
         3: ROUTES.ONBOARDING.STEP3,
-        4: ROUTES.ONBOARDING.STEP4,
-        5: ROUTES.ONBOARDING.STEP5,
       };
       
       const targetRoute = routeMap[stepNumber];
@@ -40,10 +38,10 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                     onClick={() => handleStepClick(stepNumber)}
                     className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       isActive
-                        ? 'bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30 border-2 border-purple-400'
+                        ? 'bg-black shadow-lg shadow-black/30 border-2 border-gray-800'
                         : isCompleted
-                        ? 'bg-gradient-to-br from-gold-500 to-gold-600 shadow-lg shadow-gold-500/30 border-2 border-gold-400 cursor-pointer hover:scale-110 hover:shadow-xl hover:shadow-gold-500/40'
-                        : 'bg-gray-700 border-2 border-gray-600'
+                        ? 'bg-black shadow-lg shadow-black/30 border-2 border-gray-800 cursor-pointer hover:scale-110 hover:shadow-xl hover:shadow-black/40'
+                        : 'bg-white border-2 border-black'
                     } ${stepNumber <= currentStep ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                   >
                     {isCompleted ? (
@@ -51,8 +49,8 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     ) : (
-                      <span className={`text-sm font-semibold ${
-                        isActive ? 'text-white' : 'text-gray-300'
+                      <span className={`text-sm font-bold ${
+                        isActive ? 'text-white' : 'text-black'
                       }`}>
                         {stepNumber}
                       </span>
@@ -62,11 +60,11 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                   {/* Step Label */}
                   <span 
                     onClick={() => handleStepClick(stepNumber)}
-                    className={`text-xs mt-2 font-medium transition-colors duration-200 ${
+                    className={`text-xs mt-2 font-bold transition-colors duration-200 ${
                       isActive 
-                        ? 'text-purple-300' 
+                        ? 'text-black' 
                         : isCompleted 
-                        ? 'text-gold-300 hover:text-gold-200 cursor-pointer' 
+                        ? 'text-black hover:text-gray-700 cursor-pointer' 
                         : 'text-gray-400'
                     } ${stepNumber <= currentStep ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                   >
@@ -77,7 +75,7 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
                 {/* Connector Line */}
                 {stepNumber < totalSteps && (
                   <div className={`w-16 h-0.5 transition-all duration-300 ${
-                    isCompleted ? 'bg-gradient-to-r from-gold-500 to-gold-600' : 'bg-gray-600'
+                    isCompleted ? 'bg-black' : 'bg-gray-300'
                   }`} />
                 )}
               </React.Fragment>
@@ -88,11 +86,11 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
       
       {/* Current Step Title */}
       <div className="text-center mt-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-2">
-          {getStepTitle(currentStep)}
+        <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">
+          {customTitle || getStepTitle(currentStep)}
         </h2>
-        <p className="text-blue-700 text-sm md:text-base">
-          {getStepDescription(currentStep)}
+        <p className="text-gray-700 text-sm md:text-base">
+          {customDescription || getStepDescription(currentStep)}
         </p>
       </div>
     </div>
@@ -103,15 +101,11 @@ const OnboardingStepper = ({ currentStep, totalSteps = 5 }) => {
 const getStepTitle = (step) => {
   switch (step) {
     case 1:
-      return 'Company Information';
+      return 'Company & Industry Information';
     case 2:
-      return 'Industry & Location';
+      return 'Business Address Details';
     case 3:
-      return 'Business Details';
-    case 4:
-      return 'POS & Requirements';
-    case 5:
-      return 'Business Goals';
+      return 'Business Goals & Objectives';
     default:
       return 'Onboarding';
   }
@@ -121,14 +115,10 @@ const getStepTitle = (step) => {
 const getStepDescription = (step) => {
   switch (step) {
     case 1:
-      return 'Enter your company name';
+      return 'Tell us about your company and industry';
     case 2:
-      return 'Select your industry and location';
+      return 'Provide your business address information';
     case 3:
-      return 'Provide additional business details';
-    case 4:
-      return 'Tell us about your POS needs';
-    case 5:
       return 'Choose your business objectives';
     default:
       return 'Complete your setup';

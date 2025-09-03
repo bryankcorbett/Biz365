@@ -145,8 +145,21 @@ export const DesktopViewSection = () => {
               </div>
             </div>
           </div>
-        </main>
+        </main> 
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
       
     </section>
   );
