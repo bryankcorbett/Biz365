@@ -3,7 +3,26 @@ import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
-import ShinyText from '../components/ShinyText';
+import logoImage from '../../public/logo.png';
+
+// Country codes for mobile number
+const COUNTRY_CODES = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'USA', flag: '🇺🇸' },
+  { code: '+44', country: 'UK', flag: '🇬🇧' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+971', country: 'UAE', flag: '🇦🇪' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+];
 
 const VerifyOTP = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -11,6 +30,8 @@ const VerifyOTP = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);
+  const [countryCode, setCountryCode] = useState('+1');
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const inputRefs = useRef([]);
   
   const [searchParams] = useSearchParams();
@@ -24,7 +45,13 @@ const VerifyOTP = () => {
   // Format mobile for display
   const formatMobile = (mobile) => {
     if (!mobile) return '';
-    return mobile.replace(/(\d{2})(\d{5})(\d{5})/, '+$1 $2-$3');
+    // Extract country code and number
+    const match = mobile.match(/^(\+\d{1,4})(\d+)$/);
+    if (match) {
+      const [, code, number] = match;
+      return `${code} ${number}`;
+    }
+    return mobile;
   };
 
   // Animate form on mount
@@ -32,6 +59,20 @@ const VerifyOTP = () => {
     const timer = setTimeout(() => setIsFormVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Close country dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showCountryDropdown && !event.target.closest('.country-dropdown')) {
+        setShowCountryDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showCountryDropdown]);
 
   // Countdown timer for resend
   useEffect(() => {
@@ -173,164 +214,177 @@ const VerifyOTP = () => {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-50">
-      {/* Hero Section Orb - Full Screen */}
-      <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
-        <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-      </div>
-      
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
-        <div 
-          className={`w-full max-w-md transform transition-all duration-1000 ease-out ${
-            isFormVisible 
-              ? 'translate-y-0 opacity-100 scale-100' 
-              : 'translate-y-8 opacity-0 scale-95'
-          }`}
-        >
-          {/* Logo */}
-          <div className="text-center mb-8 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
-              <ShinyText 
-                src="./public/logo.png"
-                alt="Biz365 Logo"
-                disabled={false} 
-                speed={3} 
-                className="w-full h-full"
-              />
+      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+          {/* Left Panel - Dark Promotional Section */}
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+            <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="relative z-10 my-auto space-y-6">
+              {/* Image Container */}
+              <div className="mb-4">
+                <img 
+                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
+                  alt="Business success illustration" 
+                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
+                />
+              </div>
+              
+              <h1 className="text-4xl font-semibold leading-tight">
+                Turn everyday customers into raving fans.
+              </h1>
+              <p className="text-gray-300 text-lg">
+                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
+              </p>
+              <ul className="space-y-3 text-gray-200">
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  NFC/QR review capture that just works
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  Auto-routes unhappy customers to private help
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  One dashboard. All platforms. Zero chaos.
+                </li>
+              </ul>
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Verify Your Mobile</h1>
-            <p className="text-gray-600">
-              We've sent a 6-digit code to{' '}
-              <span className="font-semibold text-amber-600">{formatMobile(mobile)}</span>
-            </p>
-          </div>
+          </section>
 
-          {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-8 animate-scale-in">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* OTP Input */}
-              <div className="space-y-4 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                <label className="text-sm font-semibold text-gray-700 text-center block">
-                  Enter Verification Code
-                </label>
-                
-                <div className="flex justify-center gap-3">
-                  {otp.map((digit, index) => (
-                    <input
-                      key={index}
-                      ref={el => inputRefs.current[index] = el}
-                      type="text"
-                      maxLength="1"
-                      value={digit}
-                      onChange={(e) => handleOtpChange(index, e.target.value)}
-                      onKeyDown={(e) => handleKeyDown(index, e)}
-                      onPaste={handlePaste}
-                      className={`w-12 h-12 text-center text-lg font-bold bg-gray-50 border-2 rounded-xl focus:outline-none transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                        errors.otp 
-                          ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                          : 'border-gray-200 focus:border-amber-400 focus:ring-4 focus:ring-amber-900/20'
-                      } ${digit ? 'border-amber-400 bg-amber-50' : ''}`}
-                      disabled={isLoading}
-                    />
-                  ))}
+          {/* Right Panel - White OTP Verification Form */}
+          <div>
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
+              <div className="p-6 sm:p-8">
+                {/* BIZ365 Logo */}
+                <div className="text-center mb-8">
+                  <img 
+                    src={logoImage} 
+                    alt="Biz365 Logo" 
+                    className="h-36 w-auto mx-auto mb-4"
+                  />
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Verify Your Mobile</h2>
+                  <p className="mt-1 text-gray-600 dark:text-gray-400">
+                    We've sent a 6-digit code to{' '}
+                    <span className="font-semibold text-gray-900">{formatMobile(mobile)}</span>
+                  </p>
                 </div>
 
-                {errors.otp && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center justify-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.otp}
-                  </p>
-                )}
-
-                <p className="text-xs text-gray-600 text-center">
-                  Enter the 6-digit code sent to your mobile number
-                </p>
-              </div>
-
-              {/* Submit Button */}
-              <div className="animate-slide-in" style={{ animationDelay: '200ms' }}>
-                                 <button
-                   type="submit"
-                   disabled={isLoading || otp.join('').length !== 6}
-                   className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-4 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
-                 >
-                  {isLoading && (
-                    <div className="absolute inset-0 bg-gradient-to-b from-gold-500 to-gold-700">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+                {/* OTP Form */}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* OTP Input */}
+                  <div className="space-y-4">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center block">
+                      Enter Verification Code
+                    </label>
+                    
+                    <div className="flex justify-center gap-3">
+                      {otp.map((digit, index) => (
+                        <input
+                          key={index}
+                          ref={el => inputRefs.current[index] = el}
+                          type="text"
+                          maxLength="1"
+                          value={digit}
+                          onChange={(e) => handleOtpChange(index, e.target.value)}
+                          onKeyDown={(e) => handleKeyDown(index, e)}
+                          onPaste={handlePaste}
+                          className={`w-12 h-12 text-center text-lg font-bold bg-white border-2 rounded-xl focus:outline-none transition-all duration-300 text-gray-800 placeholder-gray-500 ${
+                            errors.otp 
+                              ? 'border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-500' 
+                              : 'border-gray-300 focus:border-gray-500 focus:ring-2 focus:ring-gray-500'
+                          } ${digit ? 'border-gray-500 bg-gray-50' : ''}`}
+                          disabled={isLoading}
+                        />
+                      ))}
                     </div>
-                  )}
-                  <div className="relative flex items-center justify-center gap-2">
-                    {isLoading ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Verifying...
-                      </>
-                    ) : (
-                      <>
-                        Verify & Continue
-                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </div>
-            </form>
 
-            {/* Resend Section */}
-            <div className="mt-8 text-center space-y-4 animate-fade-in" style={{ animationDelay: '300ms' }}>
-              <div className="flex items-center">
-                <div className="flex-1 border-t border-gray-300"></div>
-                <span className="px-4 text-sm text-gray-600">Didn't receive the code?</span>
-                <div className="flex-1 border-t border-gray-300"></div>
+                    {errors.otp && (
+                      <p className="text-sm text-red-600 text-center">{errors.otp}</p>
+                    )}
+
+                    <p className="text-xs text-gray-600 text-center">
+                      Enter the 6-digit code sent to your mobile number
+                    </p>
+                  </div>
+
+                  {/* Verify Button */}
+                  <div>
+                    <button 
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
+                      type="submit" 
+                      disabled={isLoading || otp.join('').length !== 6}
+                    >
+                      {isLoading ? 'Verifying...' : 'Verify & Continue'}
+                    </button>
+                  </div>
+                </form>
+
+                {/* Resend Section */}
+                <div className="mt-6 text-center space-y-4">
+                  <div className="flex items-center">
+                    <div className="flex-1 border-t border-gray-300"></div>
+                    <span className="px-4 text-sm text-gray-600">Didn't receive the code?</span>
+                    <div className="flex-1 border-t border-gray-300"></div>
+                  </div>
+                  
+                  {canResend ? (
+                    <button
+                      onClick={handleResendOtp}
+                      disabled={isLoading}
+                      className="text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50"
+                    >
+                      Resend OTP
+                    </button>
+                  ) : (
+                    <p className="text-sm text-gray-600">
+                      Resend OTP in <span className="font-semibold text-gray-900">{countdown}s</span>
+                    </p>
+                  )}
+                  
+                  <p className="text-sm">
+                    <Link 
+                      to={ROUTES.SIGNUP}
+                      className="text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
+                    >
+                      Change mobile number
+                    </Link>
+                  </p>
+                </div>
+
+                {/* Back to Login */}
+                <div className="mt-6 text-center">
+                  <Link 
+                    to={ROUTES.LOGIN} 
+                    className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Back to login
+                  </Link>
+                </div>
               </div>
-              
-              {canResend ? (
-                <button
-                  onClick={handleResendOtp}
-                  disabled={isLoading}
-                  className="text-amber-600 hover:text-amber-700 font-semibold hover:underline transition-colors disabled:opacity-50"
-                >
-                  Resend OTP
-                </button>
-              ) : (
-                <p className="text-sm text-gray-600">
-                  Resend OTP in <span className="font-semibold text-amber-600">{countdown}s</span>
-                </p>
-              )}
-              
-              <p className="text-sm">
-                <Link 
-                  to={ROUTES.SIGNUP}
-                  className="text-amber-600 hover:text-amber-700 font-medium hover:underline transition-colors"
-                >
-                  Change mobile number
-                </Link>
-              </p>
             </div>
           </div>
-
-          {/* Back to Login */}
-          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
-            <Link 
-              to={ROUTES.LOGIN} 
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to login
-            </Link>
-          </div>
         </div>
-      </div>
+
+        {/* Footer */}
+        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+          © 2025 Biz365. All rights reserved. Powered by{' '}
+          <a 
+            href="https://corementors.in/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            CoreMentors
+          </a>
+        </footer>
+      </main>
     </div>
   );
 };

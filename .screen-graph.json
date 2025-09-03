@@ -59,6 +59,7 @@
           "element": "<StarBorder\r\n                as=\"a\"\r\n                href=\"/login\"\r\n                className=\"custom-class\"\r\n                color=\"#ffffff\"\r\n                speed=\"2s\"\r\n                onClick={() => window.location.href = '/login'}\r\n              >\r\n                Log in\r\n              </StarBorder>",
           "line": 160,
           "endLine": 169,
+          "endLine": 169,
           "column": 14,
           "endColumn": 27,
           "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"

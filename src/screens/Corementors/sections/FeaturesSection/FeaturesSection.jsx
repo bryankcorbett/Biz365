@@ -4,7 +4,7 @@ import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
 
-/* -------------------- UTIL: in-view hook (SSR safe) -------------------- */
+/* -------------------- In-view hook -------------------- */
 const useInView = (options) => {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
@@ -17,10 +17,10 @@ const useInView = (options) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          obs.unobserve(entry.target); // fire once
+          obs.unobserve(entry.target);
         }
       },
-      { threshold: 0.5, ...(options || {}) }
+      { threshold: 0.25, ...(options || {}) }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -29,8 +29,8 @@ const useInView = (options) => {
   return { ref, inView };
 };
 
-/* -------------------- TYPEWRITER (runs when in view) -------------------- */
-const TypewriterOnScroll = ({ text, className, speed = 45 }) => { // slower typing
+/* -------------------- Typewriter -------------------- */
+const TypewriterOnScroll = ({ text, className, speed = 38 }) => {
   const { ref, inView } = useInView({ threshold: 0.6 });
   const [shown, setShown] = useState("");
 
@@ -50,51 +50,26 @@ const TypewriterOnScroll = ({ text, className, speed = 45 }) => { // slower typi
       <style>{`@keyframes blink{0%,100%{opacity:0}50%{opacity:1}}`}</style>
       <h1 ref={ref} className={className}>
         {shown}
-        <span className="inline-block w-[1ch] -mb-[2px] border-r border-black animate-[blink_1s_steps(1)_infinite]" />
+        <span className="inline-block w-[1ch] border-r border-black animate-[blink_1s_steps(1)_infinite]" />
       </h1>
     </>
   );
 };
 
-/* -------------------- REVEAL (slide from CORNERS on scroll) -------------------- */
-const RevealOnScroll = ({
-  direction = "left",     // backward-compat (ignored if origin provided)
-  origin,                 // "tl" | "tr" | "bl" | "br"
-  delayMs = 0,
-  durationMs = 4500,      // a bit longer so entry clearly dikhai de
-  children,
-}) => {
-  const { ref, inView } = useInView({
-    threshold: 0.15,
-    rootMargin: "0px 0px -20% 0px",
-  });
-
-  // Compute X/Y offset: corners ke hisaab se
-  let dx = 0, dy = 0;
-  const OFFSET = 140; // bada offset so entry visible
-  if (origin === "tl") { dx = -OFFSET; dy = -OFFSET; }
-  else if (origin === "tr") { dx = OFFSET; dy = -OFFSET; }
-  else if (origin === "bl") { dx = -OFFSET; dy = OFFSET; }
-  else if (origin === "br") { dx = OFFSET; dy = OFFSET; }
-  else {
-    // fallback to old left/right behaviour
-    dx = direction === "left" ? -OFFSET : OFFSET;
-    dy = 0;
-  }
+/* -------------------- Reveal -------------------- */
+const RevealOnScroll = ({ origin = "tl", delayMs = 0, durationMs = 900, children }) => {
+  const { ref, inView } = useInView({ threshold: 0.2 });
+  const OFFSET = 80;
+  const map = { tl: [-OFFSET, -OFFSET], tr: [OFFSET, -OFFSET], bl: [-OFFSET, OFFSET], br: [OFFSET, OFFSET] };
+  const [dx, dy] = map[origin] || [0, 0];
 
   return (
     <div
       ref={ref}
       style={{
-        transform: inView
-          ? "translate(0, 0) scale(1)"
-          : `translate(${dx}px, ${dy}px) scale(0.96)`,
+        transform: inView ? "translate(0,0)" : `translate(${dx}px, ${dy}px)`,
         opacity: inView ? 1 : 0,
-        transitionProperty: "transform, opacity",
-        transitionDuration: `${durationMs}ms`,
-        transitionTimingFunction: "cubic-bezier(0.19,1,0.22,1)",
-        transitionDelay: `${delayMs}ms`,
-        willChange: "transform, opacity",
+        transition: `transform ${durationMs}ms cubic-bezier(0.19,1,0.22,1) ${delayMs}ms, opacity ${durationMs}ms ease ${delayMs}ms`,
       }}
     >
       {children}
@@ -102,45 +77,70 @@ const RevealOnScroll = ({
   );
 };
 
-/* -------------------- YOUR EXISTING DATA (unchanged) -------------------- */
+/* -------------------- Premium Image -------------------- */
+const PremiumImage = ({ src, alt = "feature visual", side = "right" }) => {
+  const { ref, inView } = useInView({ threshold: 0.3 });
+  const from = side === "left" ? "-40px" : "40px";
+
+  return (
+    <div
+      ref={ref}
+      className="w-full md:w-[420px] lg:w-[460px] shrink-0"
+      style={{
+        transform: inView ? "translateX(0) scale(1)" : `translateX(${from}) scale(0.96)`,
+        opacity: inView ? 1 : 0,
+        transition: "transform 800ms cubic-bezier(0.19,1,0.22,1), opacity 800ms ease",
+      }}
+    >
+      <div
+        className="rounded-[22px] p-[2px]"
+        style={{
+          background: "linear-gradient(135deg, rgba(0,0,0,0.15), rgba(255,255,255,0.25))",
+        }}
+      >
+        <div className="rounded-[20px] overflow-hidden bg-white shadow-[0_22px_40px_-18px_rgba(0,0,0,0.28)]">
+          <img
+            src={src}
+            alt={alt}
+            className="w-full h-[230px] md:h-[250px] lg:h-[270px] object-cover select-none 
+                       filter grayscale hover:grayscale-0 transition duration-500 ease-in-out"
+            draggable={false}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* -------------------- Data -------------------- */
 const featuresData = [
   {
     id: 1,
     title: "Launch Campaigns That Sell Themselves.",
     description:
       "→ Festive & seasonal templates\n→ One-click push to Instagram, WhatsApp, Facebook, TikTok\n→ Custom titles, offers, discount rules\n→ Multi-channel reach (Email, WhatsApp, SMS)\n→ Flexible rewards (discounts, freebies, no-discount promos)",
-    iconSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/group-6.png",
     graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
-    hasGraphic: true,
-    fontSize: "text-[19.1px]",
   },
   {
     id: 2,
     title: "Never Miss a Birthday, Anniversary, or Festival Again.",
     description:
-      "Biz365 Auto-Campaign remembers your customers and boosts your sales — automatically.\n\nYou approve. We deliver. Your customers celebrate with you.\n\n🎉Special days tracked automatically\n🎉One-click campaign launch\n🎉Multi-channel delivery (SMS, WhatsApp, Email)\n🎉No AI complexity — simple and effective\n🎉Visible results in dashboard",
-    iconSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/group-7.png",
-    hasGraphic: false,
-    fontSize: "text-[18.8px]",
+      "Biz365 Auto-Campaign remembers your customers and boosts your sales — automatically.\n\nYou approve. We deliver. Your customers celebrate with you.\n\n🎉 Special days tracked automatically\n🎉 One-click campaign launch\n🎉 Multi-channel delivery (SMS, WhatsApp, Email)\n🎉 Simple and effective\n🎉 Visible results in dashboard",
+    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
   },
   {
     id: 3,
     title: "Not Just a Code. A Connection.",
     description:
-      "From games to reviews, from loyalty to followers — Magic QR makes every scan unforgettable.\n\n\"Scan. Spin. Smile. Repeat.\"\n\n🎯Spin-the-wheel gamification\n🎯Birthday & special occasion triggers\n🎯Loyalty sign-ups made fun\n🎯Digital menus & Google reviews\n🎯Instagram follows & business cards\n🎯Store & campaign links",
-    iconSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/group-8.png",
-    hasGraphic: false,
-    fontSize: "text-[18.4px]",
+      "From games to reviews, from loyalty to followers — Magic QR makes every scan unforgettable.\n\n\"Scan. Spin. Smile. Repeat.\"\n\n🎯 Spin-the-wheel gamification\n🎯 Birthday & special occasion triggers\n🎯 Loyalty sign-ups made fun\n🎯 Digital menus & Google reviews\n🎯 Instagram follows & business cards\n🎯 Store & campaign links",
+    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
   },
   {
     id: 4,
     title: "Feedback That Rewards.",
     description:
-      "Your customers share. You listen. They earn. You grow.\n\n\"Turn every opinion into an opportunity.\"\n\n💬Smart forms that customers love to fill\n💬Incentivized feedback with loyalty points\n💬Actionable insights from responses\n💬Continuous improvement loop\n💬Silent risk prevention through early warnings",
-    iconSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/group-9.png",
+      "Your customers share. You listen. They earn. You grow.\n\n\"Turn every opinion into an opportunity.\"\n\n💬 Smart forms customers love\n💬 Incentivized feedback with loyalty points\n💬 Actionable insights from responses\n💬 Continuous improvement loop\n💬 Silent risk prevention with early warnings",
     graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic-1.png",
-    hasGraphic: true,
-    fontSize: "text-[18.8px]",
   },
 ];
 
@@ -149,17 +149,17 @@ const buttonsData = [
   { text: "See Our Services", href: "#services", variant: "secondary", hasIcon: false },
 ];
 
-/* -------------------- Animated bullets (typed) -------------------- */
-const AnimatedBulletPoints = ({ text, delay = 0 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+/* -------------------- Animated Bullet -------------------- */
+const AnimatedBullet = ({ text, delay = 0 }) => {
+  const [on, setOn] = useState(false);
   useEffect(() => {
-    const t = window.setTimeout(() => setIsVisible(true), delay);
-    return () => window.clearTimeout(t);
+    const t = setTimeout(() => setOn(true), delay);
+    return () => clearTimeout(t);
   }, [delay]);
   return (
     <div
-      className={`transition-all duration-700 ease-out transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      className={`transition-all duration-700 ease-out ${
+        on ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       }`}
     >
       {text}
@@ -167,180 +167,86 @@ const AnimatedBulletPoints = ({ text, delay = 0 }) => {
   );
 };
 
-/* -------------------- SHARED CARD CLASSES (uniform, wider) -------------------- */
-/* Wider cards: full width of inner container, large max width, centered */
-const cardClass =
-  "w-full max-w-[1100px] mx-auto bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden " +
-  "shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0";
-const cardContentClass = "flex items-center gap-8 p-10 min-h-[360px]";
+/* -------------------- Feature Card -------------------- */
+const FeatureCard = ({ feature, imageLeft = false }) => {
+  return (
+    <Card className="w-full max-w-[1100px] mx-auto bg-white rounded-[24px] overflow-hidden shadow-[0_24px_48px_-20px_rgba(0,0,0,0.18)] border-0">
+      <CardContent
+        className={`flex flex-col md:flex-row items-center gap-10 p-10 ${
+          imageLeft ? "md:flex-row-reverse" : ""
+        }`}
+      >
+        {/* TEXT */}
+        <div className="flex flex-col w-full md:flex-1 gap-6">
+          <h3 className="text-[22px] md:text-[26px] leading-tight tracking-[-0.02em] text-gray-900 font-semibold">
+            {feature.title}
+          </h3>
+          <div className="text-[15.5px] md:text-[16.5px] leading-7 text-gray-700 text-left space-y-3 [font-feature-settings:'ss01'on]">
+            {feature.description.split("\n").map((line, i) => (
+              <AnimatedBullet key={i} text={line} delay={450 + i * 220} />
+            ))}
+          </div>
+        </div>
 
-/* -------------------- MAIN SECTION -------------------- */
+        {/* IMAGE */}
+        <PremiumImage src={feature.graphicSrc} side={imageLeft ? "left" : "right"} />
+      </CardContent>
+    </Card>
+  );
+};
+
+/* -------------------- Main Section -------------------- */
 export const FeaturesSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-[360px] py-[100px] bg-orbai-templateframerwebsitewild-sand">
-      <div className="relative w-full max-w-[1200px]">
+    <section className="flex flex-col items-center px-4 md:px-8 lg:px-[360px] py-[100px] bg-gray-50">
+      <div className="w-full max-w-[1200px]">
         {/* Header */}
-        <header className="w-full flex flex-col items-center mb-[70px] translate-y-[-1rem] animate-fade-in opacity-0">
+        <header className="flex flex-col items-center mb-[70px]">
           <Badge
             variant="outline"
-            className="inline-flex items-center justify-center gap-2 px-3 py-1.5 mb-6 bg-orbai-templateframerwebsitewild-sand rounded-[60px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border-neutral-100"
+            className="px-4 py-1.5 mb-6 rounded-full border-gray-200 bg-white/80 shadow-sm"
           >
-            <div className="flex flex-col w-4 h-5 items-start">
-              <img
-                className="w-[13px] h-3.5 mt-[3px] ml-0.5"
-                alt="Features icon"
-                src="https://c.animaapp.com/mewus0n76JsNvN/img/group-10.png"
-              />
-            </div>
-            <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[11.2px] tracking-[0] leading-[14.4px]">
-              FEATURES
-            </span>
+            FEATURES
           </Badge>
-
-          {/* TYPEWRITER (exact same text) */}
           <TypewriterOnScroll
-            text="All Struggles is over with Biz365 Dashboard"
-            className="bg-[linear-gradient(0deg,rgba(0,0,0,1)_100%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Inter',Helvetica] font-medium text-[52px] text-center tracking-[-0.56px] leading-[67.2px] mb-6"
+            text="All Struggles are Over with Biz365 Dashboard"
+            className="font-semibold text-[40px] md:text-[52px] text-center leading-tight mb-6 bg-gradient-to-b from-black to-gray-700 bg-clip-text text-transparent"
           />
-
-          <p className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base text-center tracking-[0] leading-6 opacity-80 max-w-[500px] translate-y-[-1rem] animate-fade-in opacity-0">
+          <p className="text-gray-600 text-base text-center max-w-[640px]">
             Discover features that simplify workflows & grow your business.
           </p>
         </header>
 
-        {/* Features Grid */}
-        <div className="flex flex-col gap-6 mb-[46px]">
-          {/* Row 1 */}
-          <div className="flex flex-col gap-6">
-            {/* 1: top-left corner */}
-            <RevealOnScroll origin="tl" delayMs={150} durationMs={4500}>
-              <Card className={cardClass}>
-                <CardContent className={cardContentClass}>
-                  <div className="flex flex-col w-full max-w-[500px] justify-center gap-8">
-                    <div className="inline-flex items-center justify-center px-2.5 py-2 rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.25px_#ababab59,0px_13.65px_13.65px_-2.71px_#ababab82,0px_6.87px_6.87px_-2.17px_#ababab94,0px_3.62px_3.62px_-1.62px_#ababab9c,0px_1.81px_1.81px_-1.08px_#abababa1,0px_0.71px_0.71px_-0.54px_#abababa3] bg-[linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(255,255,255,1)_100%)] w-fit">
-                      <div className="flex flex-col w-[31px] h-[34px] items-start">
-                        <img className="w-[23px] h-[23px] mt-[5px] ml-1" alt="AI icon" src={featuresData[0].iconSrc} />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                      <h3 className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[19.1px] tracking-[-0.20px] leading-6">
-                        {featuresData[0].title}
-                      </h3>
-                      <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-8 opacity-80 text-left space-y-3">
-                        {featuresData[0].description.split("\n").map((line, index) => (
-                          <AnimatedBulletPoints key={index} text={line} delay={1000 + index * 300} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-
-            {/* 2: top-right corner */}
-            <RevealOnScroll origin="tr" delayMs={250} durationMs={4500}>
-              <Card className={cardClass}>
-                <CardContent className={cardContentClass}>
-                  <div className="flex flex-col w-full max-w-[500px] justify-center gap-8">
-                    <div className="inline-flex items-center justify-center px-2.5 py-2 rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.25px_#ababab59,0px_13.65px_13.65px_-2.71px_#ababab82,0px_6.87px_6.87px_-2.17px_#ababab94,0px_3.62px_3.62px_-1.62px_#ababab9c,0px_1.81px_1.81px_-1.08px_#abababa1,0px_0.71px_0.71px_-0.54px_#abababa3] bg-[linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(255,255,255,1)_100%)] w-fit">
-                      <div className="flex flex-col w-[31px] h-[34px] items-start">
-                        <img className="w-[27px] h-[25px] mt-1 ml-0.5" alt="Workflows icon" src={featuresData[1].iconSrc} />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                      <h3 className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[18.8px] tracking-[-0.20px] leading-6">
-                        {featuresData[1].title}
-                      </h3>
-                      <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-8 opacity-80 text-left space-y-3">
-                        {featuresData[1].description.split("\n").map((line, index) => (
-                          <AnimatedBulletPoints key={index} text={line} delay={1200 + index * 300} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-          </div>
-
-          {/* Row 2 */}
-          <div className="flex flex-col gap-6">
-            {/* 3: bottom-left corner */}
-            <RevealOnScroll origin="bl" delayMs={150} durationMs={4500}>
-              <Card className={cardClass}>
-                <CardContent className={cardContentClass}>
-                  <div className="flex flex-col w-full max-w-[500px] justify-center gap-8">
-                    <div className="inline-flex items-center justify-center px-2.5 py-2 rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.25px_#ababab59,0px_13.65px_13.65px_-2.71px_#ababab82,0px_6.87px_6.87px_-2.17px_#ababab94,0px_3.62px_3.62px_-1.62px_#ababab9c,0px_1.81px_1.81px_-1.08px_#abababa1,0px_0.71px_0.71px_-0.54px_#abababa3] bg-[linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(255,255,255,1)_100%)] w-fit">
-                      <div className="flex flex-col w-[31px] h-[34px] items-start">
-                        <img className="w-[27px] h-[17px] mt-[7px] ml-0.5" alt="Analytics icon" src={featuresData[2].iconSrc} />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                      <h3 className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[18.4px] tracking-[-0.20px] leading-6">
-                        {featuresData[2].title}
-                      </h3>
-                      <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-8 opacity-80 text-left space-y-3">
-                        {featuresData[2].description.split("\n").map((line, index) => (
-                          <AnimatedBulletPoints key={index} text={line} delay={1100 + index * 300} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-
-            {/* 4: bottom-right corner */}
-            <RevealOnScroll origin="br" delayMs={250} durationMs={4500}>
-              <Card className={cardClass}>
-                <CardContent className={cardContentClass}>
-                  <div className="flex flex-col w-full max-w-[500px] justify-center gap-8">
-                    <div className="inline-flex items-center justify-center px-2.5 py-2 rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.25px_#ababab59,0px_13.65px_13.65px_-2.71px_#ababab82,0px_6.87px_6.87px_-2.17px_#ababab94,0px_3.62px_3.62px_-1.62px_#ababab9c,0px_1.81px_1.81px_-1.08px_#abababa1,0px_0.71px_0.71px_-0.54px_#abababa3] bg-[linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(255,255,255,1)_100%)] w-fit">
-                      <div className="flex flex-col w-[31px] h-[34px] items-start">
-                        <img className="w-[25px] h-[25px] mt-1 ml-[3px]" alt="Support icon" src={featuresData[3].iconSrc} />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col gap-6">
-                      <h3 className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[18.8px] tracking-[-0.20px] leading-6">
-                        {featuresData[3].title}
-                      </h3>
-                      <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-8 opacity-80 text-left space-y-3">
-                        {featuresData[3].description.split("\n").map((line, index) => (
-                          <AnimatedBulletPoints key={index} text={line} delay={1400 + index * 300} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </RevealOnScroll>
-          </div>
+        {/* Alternating Cards */}
+        <div className="flex flex-col gap-10 mb-[46px]">
+          <RevealOnScroll origin="tl">
+            <FeatureCard feature={featuresData[0]} imageLeft={false} />
+          </RevealOnScroll>
+          <RevealOnScroll origin="tr">
+            <FeatureCard feature={featuresData[1]} imageLeft={true} />
+          </RevealOnScroll>
+          <RevealOnScroll origin="bl">
+            <FeatureCard feature={featuresData[2]} imageLeft={false} />
+          </RevealOnScroll>
+          <RevealOnScroll origin="br">
+            <FeatureCard feature={featuresData[3]} imageLeft={true} />
+          </RevealOnScroll>
         </div>
 
         {/* Buttons */}
-        <div className="flex flex-wrap gap-4 justify-center translate-y-[-1rem] animate-fade-in opacity-0">
+        <div className="flex flex-wrap gap-4 justify-center">
           {buttonsData.map((button, idx) => (
             <Button
               key={idx}
               asChild
               variant={button.variant === "primary" ? "default" : "outline"}
-              className={`h-auto inline-flex items-center justify-center pt-[11px] pb-3 px-6 rounded-[10px] overflow-hidden ${
-                button.variant === "primary"
-                  ? "bg-wwwsightfulcomblack shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-wwwsightfulcomblack/90"
-                  : "bg-orbai-templateframerwebsitewild-sand shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.5px_#9e9e9e4c,0px_13.65px_13.65px_-2.92px_#9e9e9e85,0px_6.87px_6.87px_-2.33px_#9e9e9e9c,0px_3.62px_3.62px_-1.75px_#9e9e9ea6,0px_1.81px_1.81px_-1.17px_#9e9e9ead,0px_0.71px_0.71px_-0.58px_#9e9e9eb0] hover:bg-orbai-templateframerwebsitewild-sand/90"
-              } border-0`}
+              className="h-auto px-6 py-3 rounded-xl shadow-sm"
             >
               <a
                 href={button.href}
-                rel="noopener noreferrer"
                 target="_blank"
-                className={`inline-flex items-center gap-2 [font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] ${
-                  button.variant === "primary" ? "text-wwwsightfulcomwhite" : "text-wwwsightfulcomblack"
-                }`}
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-medium text-sm"
               >
                 {button.text}
                 {button.hasIcon && <ArrowRightIcon className="w-5 h-5" />}
@@ -352,3 +258,5 @@ export const FeaturesSection = () => {
     </section>
   );
 };
+
+export default FeaturesSection;

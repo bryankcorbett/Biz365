@@ -132,9 +132,9 @@ export const Corementors = () => {
         alt="Container"
       />
 
-      <header className="flex flex-col w-[100%] items-start fixed top-0 left-0 z-50 pl-10 pr-10">
-        <nav className="flex justify-center pt-3 pb-4 px-0 self-stretch w-full flex-[0_0_auto] bg-orbai-templateframerwebsitewild-sand-20 backdrop-blur-[2.5px] backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative">
-          <div className="absolute w-[90vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
+      <header className="flex flex-col w-[100%] items-start fixed top-0 left-0 z-50 ">
+        <nav className="flex justify-center bg-white   pt-3 pb-4 px-0 self-stretch w-full flex-[0_0_auto]    [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
+          <div className="absolute w-[120vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
 
           <div className="flex w-[100%] items-center justify-between relative">
             {/* Logo - Left Side (Start) */}

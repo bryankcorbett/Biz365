@@ -3,20 +3,63 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
-import ShinyText from '../components/ShinyText';
+import logoImage from '../../public/logo.png';
+import countryCodesData from '../assets/CountryCodes.json';
 
+// Get country codes from JSON file
+const COUNTRY_CODES = countryCodesData.map(country => ({
+  code: country.dial_code,
+  country: country.name,
+  flag: getCountryFlag(country.code)
+}));
+
+// Function to get country flag emoji based on country code
+function getCountryFlag(countryCode) {
+  const flagMap = {
+    'AF': '🇦🇫', 'AL': '🇦🇱', 'DZ': '🇩🇿', 'AS': '🇦🇸', 'AD': '🇦🇩', 'AO': '🇦🇴', 'AI': '🇦🇮', 'AQ': '🇦🇶', 'AG': '🇦🇬', 'AR': '🇦🇷',
+    'AM': '🇦🇲', 'AW': '🇦🇼', 'AU': '🇦🇺', 'AT': '🇦🇹', 'AZ': '🇦🇿', 'BS': '🇧🇸', 'BH': '🇧🇭', 'BD': '🇧🇩', 'BB': '🇧🇧', 'BY': '🇧🇾',
+    'BE': '🇧🇪', 'BZ': '🇧🇿', 'BJ': '🇧🇯', 'BM': '🇧🇲', 'BT': '🇧🇹', 'BO': '🇧🇴', 'BA': '🇧🇦', 'BW': '🇧🇼', 'BR': '🇧🇷', 'IO': '🇮🇴',
+    'BN': '🇧🇳', 'BG': '🇧🇬', 'BF': '🇧🇫', 'BI': '🇧🇮', 'KH': '🇰🇭', 'CM': '🇨🇲', 'CA': '🇨🇦', 'CV': '🇨🇻', 'KY': '🇰🇾', 'CF': '🇨🇫',
+    'TD': '🇹🇩', 'CL': '🇨🇱', 'CN': '🇨🇳', 'CX': '🇨🇽', 'CC': '🇨🇨', 'CO': '🇨🇴', 'KM': '🇰🇲', 'CG': '🇨🇬', 'CD': '🇨🇩', 'CK': '🇨🇰',
+    'CR': '🇨🇷', 'CI': '🇨🇮', 'HR': '🇭🇷', 'CU': '🇨🇺', 'CY': '🇨🇾', 'CZ': '🇨🇿', 'DK': '🇩🇰', 'DJ': '🇩🇯', 'DM': '🇩🇲', 'DO': '🇩🇴',
+    'EC': '🇪🇨', 'EG': '🇪🇬', 'SV': '🇸🇻', 'GQ': '🇬🇶', 'ER': '🇪🇷', 'EE': '🇪🇪', 'ET': '🇪🇹', 'FK': '🇫🇰', 'FO': '🇫🇴', 'FJ': '🇫🇯',
+    'FI': '🇫🇮', 'FR': '🇫🇷', 'GF': '🇬🇫', 'PF': '🇵🇫', 'GA': '🇬🇦', 'GM': '🇬🇲', 'GE': '🇬🇪', 'DE': '🇩🇪', 'GH': '🇬🇭', 'GI': '🇬🇮',
+    'GR': '🇬🇷', 'GL': '🇬🇱', 'GD': '🇬🇩', 'GP': '🇬🇵', 'GU': '🇬🇺', 'GT': '🇬🇹', 'GG': '🇬🇬', 'GN': '🇬🇳', 'GW': '🇬🇼', 'GY': '🇬🇾',
+    'HT': '🇭🇹', 'VA': '🇻🇦', 'HN': '🇭🇳', 'HK': '🇭🇰', 'HU': '🇭🇺', 'IS': '🇮🇸', 'IN': '🇮🇳', 'ID': '🇮🇩', 'IR': '🇮🇷', 'IQ': '🇮🇶',
+    'IE': '🇮🇪', 'IM': '🇮🇲', 'IL': '🇮🇱', 'IT': '🇮🇹', 'JM': '🇯🇲', 'JP': '🇯🇵', 'JE': '🇯🇪', 'JO': '🇯🇴', 'KZ': '🇰🇿', 'KE': '🇰🇪',
+    'KI': '🇰🇮', 'KP': '🇰🇵', 'KR': '🇰🇷', 'KW': '🇰🇼', 'KG': '🇰🇬', 'LA': '🇱🇦', 'LV': '🇱🇻', 'LB': '🇱🇧', 'LS': '🇱🇸', 'LR': '🇱🇷',
+    'LY': '🇱🇾', 'LI': '🇱🇮', 'LT': '🇱🇹', 'LU': '🇱🇺', 'MO': '🇲🇴', 'MK': '🇲🇰', 'MG': '🇲🇬', 'MW': '🇲🇼', 'MY': '🇲🇾', 'MV': '🇲🇻',
+    'ML': '🇲🇱', 'MT': '🇲🇹', 'MH': '🇲🇭', 'MQ': '🇲🇶', 'MR': '🇲🇷', 'MU': '🇲🇺', 'YT': '🇾🇹', 'MX': '🇲🇽', 'FM': '🇫🇲', 'MD': '🇲🇩',
+    'MC': '🇲🇨', 'MN': '🇲🇳', 'ME': '🇲🇪', 'MS': '🇲🇸', 'MA': '🇲🇦', 'MZ': '🇲🇿', 'MM': '🇲🇲', 'NA': '🇳🇦', 'NR': '🇳🇷', 'NP': '🇳🇵',
+    'NL': '🇳🇱', 'AN': '🇦🇳', 'NC': '🇳🇨', 'NZ': '🇳🇿', 'NI': '🇳🇮', 'NE': '🇳🇪', 'NG': '🇳🇬', 'NU': '🇳🇺', 'NF': '🇳🇫', 'MP': '🇲🇵',
+    'NO': '🇳🇴', 'OM': '🇴🇲', 'PK': '🇵🇰', 'PW': '🇵🇼', 'PS': '🇵🇸', 'PA': '🇵🇦', 'PG': '🇵🇬', 'PY': '🇵🇾', 'PE': '🇵🇪', 'PH': '🇵🇭',
+    'PN': '🇵🇳', 'PL': '🇵🇱', 'PT': '🇵🇹', 'PR': '🇵🇷', 'QA': '🇶🇦', 'RO': '🇷🇴', 'RU': '🇷🇺', 'RW': '🇷🇼', 'RE': '🇷🇪', 'BL': '🇧🇱',
+    'SH': '🇸🇭', 'KN': '🇰🇳', 'LC': '🇱🇨', 'MF': '🇲🇫', 'PM': '🇵🇲', 'VC': '🇻🇨', 'WS': '🇼🇸', 'SM': '🇸🇲', 'ST': '🇸🇹', 'SA': '🇸🇦',
+    'SN': '🇸🇳', 'RS': '🇷🇸', 'SC': '🇸🇨', 'SL': '🇸🇱', 'SG': '🇸🇬', 'SK': '🇸🇰', 'SI': '🇸🇮', 'SB': '🇸🇧', 'SO': '🇸🇴', 'ZA': '🇿🇦',
+    'SS': '🇸🇸', 'GS': '🇬🇸', 'ES': '🇪🇸', 'LK': '🇱🇰', 'SD': '🇸🇩', 'SR': '🇸🇷', 'SJ': '🇸🇯', 'SZ': '🇸🇿', 'SE': '🇸🇪', 'CH': '🇨🇭',
+    'SY': '🇸🇾', 'TW': '🇹🇼', 'TJ': '🇹🇯', 'TZ': '🇹🇿', 'TH': '🇹🇭', 'TL': '🇹🇱', 'TG': '🇹🇬', 'TK': '🇹🇰', 'TO': '🇹🇴', 'TT': '🇹🇹',
+    'TN': '🇹🇳', 'TR': '🇹🇷', 'TM': '🇹🇲', 'TC': '🇹🇨', 'TV': '🇹🇻', 'UG': '🇺🇬', 'UA': '🇺🇦', 'AE': '🇦🇪', 'GB': '🇬🇧', 'US': '🇺🇸',
+    'UY': '🇺🇾', 'UZ': '🇺🇿', 'VU': '🇻🇺', 'VE': '🇻🇪', 'VN': '🇻🇳', 'VG': '🇻🇬', 'VI': '🇻🇮', 'WF': '🇼🇫', 'YE': '🇾🇪', 'ZM': '🇿🇲', 'ZW': '🇿🇼'
+  };
+  return flagMap[countryCode] || '🌍';
+}
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     mobile: '',
+    countryCode: '+1',
     password: '',
     acceptTerms: false,
   });
   const [errors, setErrors] = useState({});
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [isAppleLoading, setIsAppleLoading] = useState(false);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const navigate = useNavigate();
   const { signup, isLoading, error, clearError } = useAuth();
   const { showToast } = useToast();
@@ -26,6 +69,20 @@ const Signup = () => {
     const timer = setTimeout(() => setIsFormVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Close country dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showCountryDropdown && !event.target.closest('.country-dropdown')) {
+        setShowCountryDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showCountryDropdown]);
 
   // Clear auth error when component mounts
   useEffect(() => {
@@ -86,8 +143,8 @@ const Signup = () => {
     // Mobile validation
     if (!formData.mobile.trim()) {
       newErrors.mobile = 'Mobile number is required';
-    } else if (!/^(\+91|91)?[6-9]\d{9}$/.test(formData.mobile)) {
-      newErrors.mobile = 'Please enter a valid Indian mobile number';
+    } else if (!/^\d{6,15}$/.test(formData.mobile)) {
+      newErrors.mobile = 'Please enter a valid mobile number';
     }
 
     // Password validation
@@ -112,6 +169,115 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle Google Signup
+  const handleGoogleSignup = async () => {
+    setIsGoogleLoading(true);
+    try {
+      // Initialize Google OAuth
+      if (window.google) {
+        window.google.accounts.oauth2.initTokenClient({
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+          scope: 'email profile',
+          callback: async (response) => {
+            try {
+              // Get user info from Google
+              const userInfo = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${response.access_token}`);
+              const userData = await userInfo.json();
+              
+              // Send to your backend for signup
+              const authResponse = await fetch('/api/auth/google-signup', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: userData.email,
+                  name: userData.name,
+                  picture: userData.picture,
+                  googleId: userData.id,
+                }),
+              });
+
+              if (authResponse.ok) {
+                const result = await authResponse.json();
+                showToast('success', 'Successfully signed up with Google!');
+                
+                // Redirect based on onboarding status
+                if (result.user.onboardingCompleted) {
+                  window.location.href = ROUTES.DASHBOARD;
+                } else {
+                  navigate(ROUTES.ONBOARDING.STEP1);
+                }
+              } else {
+                throw new Error('Google signup failed');
+              }
+            } catch (error) {
+              console.error('Google signup error:', error);
+              showToast('error', 'Failed to sign up with Google. Please try again.');
+            } finally {
+              setIsGoogleLoading(false);
+            }
+          },
+        }).requestAccessToken();
+      } else {
+        // Fallback: redirect to Google OAuth
+        const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + '/auth/google/callback')}&scope=email profile&response_type=code`;
+        window.location.href = googleAuthUrl;
+      }
+    } catch (error) {
+      console.error('Google signup error:', error);
+      showToast('error', 'Failed to sign up with Google. Please try again.');
+      setIsGoogleLoading(false);
+    }
+  };
+
+  // Handle Apple Signup
+  const handleAppleSignup = async () => {
+    setIsAppleLoading(true);
+    try {
+      // Initialize Apple Sign-In
+      if (window.AppleID) {
+        const data = await window.AppleID.auth.signIn();
+        
+        // Send to your backend for signup
+        const authResponse = await fetch('/api/auth/apple-signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identityToken: data.authorization.id_token,
+            authorizationCode: data.authorization.code,
+            user: data.user,
+          }),
+        });
+
+        if (authResponse.ok) {
+          const result = await authResponse.json();
+          showToast('success', 'Successfully signed up with Apple!');
+          
+          // Redirect based on onboarding status
+          if (result.user.onboardingCompleted) {
+            window.location.href = ROUTES.DASHBOARD;
+          } else {
+            navigate(ROUTES.ONBOARDING.STEP1);
+          }
+        } else {
+          throw new Error('Apple signup failed');
+        }
+      } else {
+        // Fallback: redirect to Apple OAuth
+        const appleAuthUrl = `https://appleid.apple.com/auth/authorize?client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + '/auth/apple/callback')}&response_type=code&scope=name email`;
+        window.location.href = appleAuthUrl;
+      }
+    } catch (error) {
+      console.error('Apple signup error:', error);
+      showToast('error', 'Failed to sign up with Apple. Please try again.');
+    } finally {
+      setIsAppleLoading(false);
+    }
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,7 +287,13 @@ const Signup = () => {
     }
 
     try {
-      await signup(formData);
+      // Combine country code with mobile number
+      const signupData = {
+        ...formData,
+        mobile: `${formData.countryCode}${formData.mobile}`
+      };
+      
+      await signup(signupData);
       showToast('success', SUCCESS_MESSAGES.SIGNUP_SUCCESS);
       setSignupSuccess(true);
     } catch (error) {
@@ -130,283 +302,339 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-50">
-      {/* Hero Section Orb - Full Screen */}
-      <div style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}> 
-        <div className="orb-container w-full h-full" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-      </div>
-      
-      {/* Main Content - Inside the Orb */}
-      <div className="relative z-10 min-h-screen flex flex-col px-6 py-8">
-        <div 
-          className={`w-full max-w-md mx-auto transform transition-all duration-1000 ease-out ${
-            isFormVisible 
-              ? 'translate-y-0 opacity-100 scale-100' 
-              : 'translate-y-8 opacity-0 scale-95'
-          }`}
-        >
-          {/* Logo */}
-          <div className="text-center mb-6 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-32 h-20 mb-2">
-              <ShinyText 
-                src="./public/logo.png"
-                alt="Biz365 Logo"
-                disabled={false} 
-                speed={3} 
-                className="w-full h-full"
-              />
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+      {/* Main Content */}
+      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+          {/* Left Panel - Dark Promotional Section */}
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+            <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="relative z-10 my-auto space-y-6">
+              {/* Image Container */}
+              <div className="mb-4">
+                <img 
+                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
+                  alt="Business success illustration" 
+                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
+                />
+              </div>
+              
+              <h1 className="text-4xl font-semibold leading-tight">
+                Turn everyday customers into raving fans.
+              </h1>
+              <p className="text-gray-300 text-lg">
+                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
+              </p>
+              <ul className="space-y-3 text-gray-200">
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  NFC/QR review capture that just works
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  Auto-routes unhappy customers to private help
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  One dashboard. All platforms. Zero chaos.
+                </li>
+              </ul>
             </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-1">Create Account</h1>
-            <p className="text-gray-600">Join thousands of businesses using Biz365</p>
-          </div>
+          </section>
 
-          {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Name Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                <label 
-                  htmlFor="name" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  Full Name
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                      errors.name 
-                        ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                    }`}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder="Enter your full name"
-                    disabled={isLoading}
+          {/* Right Panel - White Signup Form */}
+          <div>
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
+              <div className="p-6 sm:p-8">
+                {/* BIZ365 Logo */}
+                <div className="text-center mb-8">
+                  <img 
+                    src={logoImage} 
+                    alt="Biz365 Logo" 
+                    className="h-36 w-auto mx-auto mb-4"
                   />
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Join the Revolution!</h2>
+                  <p className="mt-1 text-gray-600 dark:text-gray-400">Be part of something extraordinary</p>
                 </div>
-                {errors.name && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.name}
-                  </p>
-                )}
-              </div>
 
-              {/* Email Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '150ms' }}>
-                <label 
-                  htmlFor="email" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                  </svg>
-                  Email Address
-                </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                      errors.email 
-                        ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                    }`}
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Enter your email address"
-                    disabled={isLoading}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              {/* Mobile Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
-                <label 
-                  htmlFor="mobile" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                  Mobile Number
-                </label>
-                <div className="relative">
-                  <input
-                    type="tel"
-                    id="mobile"
-                    name="mobile"
-                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                      errors.mobile 
-                        ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                    }`}
-                    value={formData.mobile}
-                    onChange={handleInputChange}
-                    placeholder="Enter your mobile number"
-                    disabled={isLoading}
-                  />
-                </div>
-                {errors.mobile && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.mobile}
-                  </p>
-                )}
-              </div>
-
-              {/* Password Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '250ms' }}>
-                <label 
-                  htmlFor="password" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                      errors.password 
-                        ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                        : 'border-gray-200 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                    }`}
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    placeholder="Create a strong password"
-                    disabled={isLoading}
-                  />
-                </div>
-                {errors.password && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.password}
-                  </p>
-                )}
-                <p className="text-xs text-gray-600">
-                  Password must be at least 8 characters with uppercase, lowercase, and number
-                </p>
-              </div>
-
-              {/* Terms Checkbox */}
-              <div className="animate-slide-in" style={{ animationDelay: '300ms' }}>
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="acceptTerms"
-                    checked={formData.acceptTerms}
-                    onChange={handleInputChange}
-                    className="mt-1 h-4 w-4 text-gold-600 focus:ring-gold-500 border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-600">
-                    I agree to the{' '}
-                    <Link to="/terms" className="text-gold-600 hover:text-gold-700 font-medium hover:underline" target="_blank">
-                      Terms and Conditions
-                    </Link>{' '}
-                    and{' '}
-                    <Link to="/privacy" className="text-gold-600 hover:text-gold-700 font-medium hover:underline" target="_blank">
-                      Privacy Policy
-                    </Link>
-                  </span>
-                </label>
-                {errors.acceptTerms && (
-                  <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1 mt-2">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    {errors.acceptTerms}
-                  </p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <div className="animate-slide-in" style={{ animationDelay: '350ms' }}>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
-                >
-                  {isLoading && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-                    </div>
-                  )}
-                  <div className="relative flex items-center justify-center gap-2">
-                    {isLoading ? (
-                      <>
-                        <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                {/* Social Signup Buttons */}
+                <div className="space-y-3 mb-6">
+                  <button 
+                    onClick={handleGoogleSignup}
+                    disabled={isGoogleLoading || isAppleLoading}
+                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 w-full h-12 justify-center bg-white border-gray-300 text-black"
+                  >
+                    <div className="mr-3" aria-hidden="true">
+                      {isGoogleLoading ? (
+                        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                         </svg>
-                        Creating Account...
-                      </>
-                    ) : (
-                      <>
-                        Create Account
-                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      ) : (
+                        <svg width="18" height="18" viewBox="0 0 18 18">
+                          <g fill="none" fillRule="evenodd">
+                            <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path>
+                            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path>
+                            <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path>
+                            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"></path>
+                          </g>
                         </svg>
-                      </>
+                      )}
+                    </div>
+                    {isGoogleLoading ? 'Signing up...' : 'Sign up with Google'}
+                  </button>
+                  <button 
+                    onClick={handleAppleSignup}
+                    disabled={isGoogleLoading || isAppleLoading}
+                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-12 justify-center bg-black text-white"
+                  >
+                    <div className="mr-3" aria-hidden="true">
+                      {isAppleLoading ? (
+                        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                      ) : (
+                        <svg width="16" height="20" viewBox="0 0 384 512" fill="currentColor">
+                          <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+                        </svg>
+                      )}
+                    </div>
+                    {isAppleLoading ? 'Signing up...' : 'Sign up with Apple'}
+                  </button>
+                </div>
+
+                {/* Separator */}
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div data-orientation="horizontal" role="none" className="shrink-0 bg-border h-[1px] w-full"></div>
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-gray-500 dark:text-gray-400">OR CREATE WITH EMAIL</span>
+                  </div>
+                </div>
+
+                {/* Email Form */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name Field */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+                    <div className="relative">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                      <input 
+                        type="text" 
+                        name="name"
+                        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
+                        id="name" 
+                        placeholder="Enter your full name" 
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        disabled={isLoading}
+                      />
+                    </div>
+                    {errors.name && (
+                      <p className="text-sm text-red-600">{errors.name}</p>
                     )}
                   </div>
-                </button>
-              </div>
-            </form>
 
-            {/* Footer Links */}
-            <div className="mt-6 text-center animate-fade-in" style={{ animationDelay: '400ms' }}>
-              <p className="text-sm text-gray-600">
-                Already have an account?{' '}
-                <Link 
-                  to={ROUTES.LOGIN} 
-                  className="text-gold-600 hover:text-gold-700 font-semibold hover:underline transition-colors"
-                >
-                  Sign in
-                </Link>
-              </p>
+                  {/* Email Field */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <div className="relative">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                      </svg>
+                      <input 
+                        type="email" 
+                        name="email"
+                        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
+                        id="email" 
+                        placeholder="you@business.com" 
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        disabled={isLoading}
+                      />
+                    </div>
+                    {errors.email && (
+                      <p className="text-sm text-red-600">{errors.email}</p>
+                    )}
+                  </div>
+
+                  {/* Mobile Field */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="mobile" className="text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Number</label>
+                    <div className="flex gap-2">
+                      {/* Country Code Dropdown */}
+                      <div className="relative country-dropdown">
+                        <button
+                          type="button"
+                          onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                          className="flex items-center gap-2 px-3 py-2 h-11 bg-white border border-gray-300 rounded-md text-sm shadow-sm transition-all duration-200 hover:border-gray-400 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                        >
+                          <span className="text-lg">{COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag}</span>
+                          <span className="text-gray-700">{formData.countryCode}</span>
+                          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        
+                        {/* Dropdown Menu */}
+                        {showCountryDropdown && (
+                          <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+                            {COUNTRY_CODES.map((country) => (
+                              <button
+                                key={country.code}
+                                type="button"
+                                onClick={() => {
+                                  setFormData(prev => ({ ...prev, countryCode: country.code }));
+                                  setShowCountryDropdown(false);
+                                }}
+                                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-left hover:bg-gray-50 transition-colors"
+                              >
+                                <span className="text-lg">{country.flag}</span>
+                                <span className="text-gray-700">{country.code}</span>
+                                <span className="text-gray-500 ml-auto">{country.country}</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Mobile Number Input */}
+                      <div className="relative flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <input 
+                          type="tel" 
+                          name="mobile"
+                          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
+                          id="mobile" 
+                          placeholder="Enter your mobile number" 
+                          value={formData.mobile}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                        />
+                      </div>
+                    </div>
+                    {errors.mobile && (
+                      <p className="text-sm text-red-600">{errors.mobile}</p>
+                    )}
+                  </div>
+
+                  {/* Password Field */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                    <div className="relative">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        name="password"
+                        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 pr-10 h-11" 
+                        id="password" 
+                        placeholder="••••••••" 
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        disabled={isLoading}
+                      />
+                      <button 
+                        type="button" 
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 hover:scale-110 bg-transparent p-1 border-0 shadow-none focus-visible:outline-none focus-visible:ring-0 transition-all duration-200 rounded-sm" 
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye-off h-4 w-4">
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                            <line x1="2" x2="22" y1="2" y2="22"></line>
+                          </svg>
+                        ) : (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye h-4 w-4">
+                            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    {errors.password && (
+                      <p className="text-sm text-red-600">{errors.password}</p>
+                    )}
+                  </div>
+
+                  {/* Terms Checkbox */}
+                  <div className="flex items-center gap-2 text-sm">
+                    <input 
+                      type="checkbox" 
+                      name="acceptTerms"
+                      checked={formData.acceptTerms}
+                      onChange={handleInputChange}
+                      className="rounded border-gray-300 text-gray-900 focus:ring-gray-900 hover:border-gray-400 hover:scale-110 transition-all duration-200" 
+                    />
+                    <span className="text-gray-600 dark:text-gray-300">
+                      I agree to the{' '}
+                      <Link to="/terms" className="text-gray-900 dark:text-gray-100 hover:underline" target="_blank">
+                        Terms and Conditions
+                      </Link>{' '}
+                      and{' '}
+                      <Link to="/privacy" className="text-gray-900 dark:text-gray-100 hover:underline" target="_blank">
+                        Privacy Policy
+                      </Link>
+                    </span>
+                  </div>
+                  {errors.acceptTerms && (
+                    <p className="text-sm text-red-600">{errors.acceptTerms}</p>
+                  )}
+
+                  {/* Create Account Button */}
+                  <div tabIndex="0" style={{ transform: 'none' }}>
+                    <button 
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
+                      type="submit" 
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Creating Account...' : 'Create Account'}
+                    </button>
+                  </div>
+                </form>
+
+                {/* Sign In Link */}
+                <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
+                  Already have an account?{' '}
+                  <Link 
+                    to={ROUTES.LOGIN} 
+                    className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200"
+                  >
+                    Sign in
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* Back to Home */}
-          <div className="text-center mt-4 animate-fade-in" style={{ animationDelay: '500ms' }}>
-            <Link 
-              to="/" 
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to home
-            </Link>
-          </div>
         </div>
-      </div>
+
+        {/* Footer */}
+        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+          © 2025 Biz365. All rights reserved. Powered by{' '}
+          <a 
+            href="https://corementors.in/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium  text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            CoreMentors
+          </a>
+        </footer>
+      </main>
     </div>
   );
 };

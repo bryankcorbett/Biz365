@@ -58,14 +58,14 @@ export const FooterSection = () => {
         <div className="flex flex-col items-center gap-8 w-full">
           
                      {/* Logo and Tagline */}
-           <div className="flex flex-col items-center gap-4">
-             <div className="relative w-[200px] h-[60px]">
+           <div className="flex flex-col items-center gap-4 ">
+             <div className="relative w-[15vw] h-[10vh] filter invert  ">
                <ShinyText 
                  src="./public/logo.png"
                  alt="Biz365 Logo"
                  disabled={false} 
                  speed={3} 
-                 className="w-full h-full"
+                 className="w-[100%] h-[100%]"
                />
              </div>
             

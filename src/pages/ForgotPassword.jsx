@@ -2,23 +2,42 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, ERROR_MESSAGES } from '../constants';
-import { Renderer, Program, Mesh, Triangle, Vec3 } from "ogl";
-import ShinyText from '../components/ShinyText';
+import logoImage from '../../public/logo.png';
+
+// Country codes for mobile number
+const COUNTRY_CODES = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'USA', flag: '🇺🇸' },
+  { code: '+44', country: 'UK', flag: '🇬🇧' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+971', country: 'UAE', flag: '🇦🇪' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+];
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1); // 1: Phone input, 2: OTP verification
   const [formData, setFormData] = useState({
     phoneNumber: '',
-    otp: ''
+    otp: '',
+    countryCode: '+1'
   });
   const [errors, setErrors] = useState({});
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const navigate = useNavigate();
   const { showToast } = useToast();
-  const ctnDom = useRef(null);
 
   // Animate form on mount
   useEffect(() => {
@@ -34,270 +53,19 @@ const ForgotPassword = () => {
     }
   }, [countdown]);
 
-  // WebGL Orb Effect (same as Login page)
+  // Close country dropdown when clicking outside
   useEffect(() => {
-    const container = ctnDom.current;
-    if (!container) return;
-
-    const vert = /* glsl */ `
-      precision highp float;
-      attribute vec2 position;
-      attribute vec2 uv;
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 0.0, 1.0);
-      }
-    `;
-
-    const frag = /* glsl */ `
-      precision highp float;
-
-      uniform float iTime;
-      uniform vec3 iResolution;
-      uniform float hue;
-      uniform float hover;
-      uniform float rot;
-      uniform float hoverIntensity;
-      varying vec2 vUv;
-
-      vec3 rgb2yiq(vec3 c) {
-        float y = dot(c, vec3(0.299, 0.587, 0.114));
-        float i = dot(c, vec3(0.596, -0.274, -0.322));
-        float q = dot(c, vec3(0.211, -0.523, 0.312));
-        return vec3(y, i, q);
-      }
-      
-      vec3 yiq2rgb(vec3 c) {
-        float r = c.x + 0.956 * c.y + 0.621 * c.z;
-        float g = c.x - 0.272 * c.y - 0.647 * c.z;
-        float b = c.x - 1.106 * c.y + 1.703 * c.z;
-        return vec3(r, g, b);
-      }
-      
-      vec3 adjustHue(vec3 color, float hueDeg) {
-        float hueRad = hueDeg * 3.14159265 / 180.0;
-        vec3 yiq = rgb2yiq(color);
-        float cosA = cos(hueRad);
-        float sinA = sin(hueRad);
-        float i = yiq.y * cosA - yiq.z * sinA;
-        float q = yiq.y * sinA + yiq.z * cosA;
-        yiq.y = i;
-        yiq.z = q;
-        return yiq2rgb(yiq);
-      }
-
-      vec3 hash33(vec3 p3) {
-        p3 = fract(p3 * vec3(0.1031, 0.11369, 0.13787));
-        p3 += dot(p3, p3.yxz + 19.19);
-        return -1.0 + 2.0 * fract(vec3(
-          p3.x + p3.y,
-          p3.x + p3.z,
-          p3.y + p3.z
-        ) * p3.zyx);
-      }
-
-      float snoise3(vec3 p) {
-        const float K1 = 0.333333333;
-        const float K2 = 0.166666667;
-        vec3 i = floor(p + (p.x + p.y + p.z) * K1);
-        vec3 d0 = p - (i - (i.x + i.y + i.z) * K2);
-        vec3 e = step(vec3(0.0), d0 - d0.yzx);
-        vec3 i1 = e * (1.0 - e.zxy);
-        vec3 i2 = 1.0 - e.zxy * (1.0 - e);
-        vec3 d1 = d0 - (i1 - K2);
-        vec3 d2 = d0 - (i2 - K1);
-        vec3 d3 = d0 - 0.5;
-        vec4 h = max(0.6 - vec4(
-          dot(d0, d0),
-          dot(d1, d1),
-          dot(d2, d2),
-          dot(d3, d3)
-        ), 0.0);
-        vec4 n = h * h * h * h * vec4(
-          dot(d0, hash33(i)),
-          dot(d1, hash33(i + i1)),
-          dot(d2, hash33(i + i2)),
-          dot(d3, hash33(i + 1.0))
-        );
-        return dot(vec4(31.316), n);
-      }
-
-      vec4 extractAlpha(vec3 colorIn) {
-        float a = max(max(colorIn.r, colorIn.g), colorIn.b);
-        return vec4(colorIn.rgb / (a + 1e-5), a);
-      }
-
-      const vec3 baseColor1 = vec3(0.611765, 0.262745, 0.996078);
-      const vec3 baseColor2 = vec3(0.298039, 0.760784, 0.913725);
-      const vec3 baseColor3 = vec3(0.062745, 0.078431, 0.600000);
-      const float innerRadius = 0.6;
-      const float noiseScale = 0.65;
-
-      float light1(float intensity, float attenuation, float dist) {
-        return intensity / (1.0 + dist * attenuation);
-      }
-      float light2(float intensity, float attenuation, float dist) {
-        return intensity / (1.0 + dist * dist * attenuation);
-      }
-
-      vec4 draw(vec2 uv) {
-        vec3 color1 = adjustHue(baseColor1, hue);
-        vec3 color2 = adjustHue(baseColor2, hue);
-        vec3 color3 = adjustHue(baseColor3, hue);
-        
-        float ang = atan(uv.y, uv.x);
-        float len = length(uv);
-        float invLen = len > 0.0 ? 1.0 / len : 0.0;
-        
-        float n0 = snoise3(vec3(uv * noiseScale, iTime * 0.5)) * 0.5 + 0.5;
-        float r0 = mix(mix(innerRadius, 1.0, 0.4), mix(innerRadius, 1.0, 0.6), n0);
-        float d0 = distance(uv, (r0 * invLen) * uv);
-        float v0 = light1(1.0, 10.0, d0);
-        v0 *= smoothstep(r0 * 1.05, r0, len);
-        float cl = cos(ang + iTime * 2.0) * 0.5 + 0.5;
-        
-        float a = iTime * -1.0;
-        vec2 pos = vec2(cos(a), sin(a)) * r0;
-        float d = distance(uv, pos);
-        float v1 = light2(1.5, 5.0, d);
-        v1 *= light1(1.0, 50.0, d0);
-        
-        float v2 = smoothstep(1.0, mix(innerRadius, 1.0, n0 * 0.5), len);
-        float v3 = smoothstep(innerRadius, mix(innerRadius, 1.0, 0.5), len);
-        
-        vec3 col = mix(color1, color2, cl);
-        col = mix(color3, col, v0);
-        col = (col + v1) * v2 * v3;
-        col = clamp(col, 0.0, 1.0);
-        
-        return extractAlpha(col);
-      }
-
-      vec4 mainImage(vec2 fragCoord) {
-        vec2 center = iResolution.xy * 0.5;
-        float size = min(iResolution.x, iResolution.y);
-        vec2 uv = (fragCoord - center) / size * 2.0;
-        
-        float angle = rot;
-        float s = sin(angle);
-        float c = cos(angle);
-        uv = vec2(c * uv.x - s * uv.y, s * uv.x + c * uv.y);
-        
-        uv.x += hover * hoverIntensity * 0.1 * sin(uv.y * 10.0 + iTime);
-        uv.y += hover * hoverIntensity * 0.1 * sin(uv.x * 10.0 + iTime);
-        
-        return draw(uv);
-      }
-
-      void main() {
-        vec2 fragCoord = vUv * iResolution.xy;
-        vec4 col = mainImage(fragCoord);
-        gl_FragColor = vec4(col.rgb * col.a, col.a);
-      }
-    `;
-
-    const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 0);
-    container.appendChild(gl.canvas);
-    
-    // Set initial size
-    renderer.setSize(container.clientWidth, container.clientHeight);
-
-    const geometry = new Triangle(gl);
-    const program = new Program(gl, {
-      vertex: vert,
-      fragment: frag,
-      uniforms: {
-        iTime: { value: 0 },
-        iResolution: {
-          value: new Vec3(
-            gl.canvas.width,
-            gl.canvas.height,
-            gl.canvas.width / gl.canvas.height
-          ),
-        },
-        hue: { value: 0 },
-        hover: { value: 0 },
-        rot: { value: 0 },
-        hoverIntensity: { value: 0.2 },
-      },
-    });
-
-    const mesh = new Mesh(gl, { geometry, program });
-
-    function resize() {
-      if (!container) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      renderer.setSize(width, height);
-      program.uniforms.iResolution.value.set(width, height, width / height);
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    let targetHover = 0;
-    let lastTime = 0;
-    let currentRot = 0;
-    const rotationSpeed = 0.3;
-
-    const handleMouseMove = (e) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const width = rect.width;
-      const height = rect.height;
-      const size = Math.min(width, height);
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const uvX = ((x - centerX) / size) * 2.0;
-      const uvY = ((y - centerY) / size) * 2.0;
-
-      if (Math.sqrt(uvX * uvX + uvY * uvY) < 0.8) {
-        targetHover = 1;
-      } else {
-        targetHover = 0;
+    const handleClickOutside = (event) => {
+      if (showCountryDropdown && !event.target.closest('.country-dropdown')) {
+        setShowCountryDropdown(false);
       }
     };
 
-    const handleMouseLeave = () => {
-      targetHover = 0;
-    };
-
-    container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
-    let rafId;
-    const update = (t) => {
-      rafId = requestAnimationFrame(update);
-      const dt = (t - lastTime) * 0.001;
-      lastTime = t;
-      program.uniforms.iTime.value = t * 0.001;
-      program.uniforms.hue.value = 0;
-      program.uniforms.hoverIntensity.value = 0.2;
-
-      const effectiveHover = targetHover;
-      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.1;
-
-      if (effectiveHover > 0.5) {
-        currentRot += dt * rotationSpeed;
-      }
-      program.uniforms.rot.value = currentRot;
-
-      renderer.render({ scene: mesh });
-    };
-    rafId = requestAnimationFrame(update);
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", resize);
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-      container.removeChild(gl.canvas);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [showCountryDropdown]);
 
   // Handle input changes with animation
   const handleInputChange = (e) => {
@@ -313,12 +81,12 @@ const ForgotPassword = () => {
   // Validate phone number
   const validatePhoneNumber = () => {
     const newErrors = {};
-    const phoneRegex = /^[6-9]\d{9}$/;
+    const phoneRegex = /^\d{6,15}$/;
 
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = 'Phone number is required';
     } else if (!phoneRegex.test(formData.phoneNumber.replace(/\D/g, ''))) {
-      newErrors.phoneNumber = 'Please enter a valid 10-digit Indian mobile number';
+      newErrors.phoneNumber = 'Please enter a valid mobile number';
     }
 
     setErrors(newErrors);
@@ -408,269 +176,255 @@ const ForgotPassword = () => {
   // Format phone number as user types
   const formatPhoneNumber = (value) => {
     const cleaned = value.replace(/\D/g, '');
-    if (cleaned.length <= 10) {
+    if (cleaned.length <= 15) {
       return cleaned;
     }
-    return cleaned.slice(0, 10);
+    return cleaned.slice(0, 15);
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gray-50">
-      {/* Hero Section Orb - Full Screen */}
-      <div style={{ width: '100vw', height: '105vh', position: 'fixed', top: -30, left: 0, zIndex: 1, pointerEvents: 'auto' }}> 
-        <div ref={ctnDom} className="orb-container w-full h-full hover:scale-95 transition-transform duration-300 ease-out" style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'auto' }} />
-      </div>
-    
-      {/* Main Content - Inside the Orb */}
-      <div className="relative z-10 min-h-screen flex flex-col px-6 py-8 pointer-events-none">
-        <div 
-          className={`w-full max-w-md mx-auto transform transition-all duration-1000 ease-out pointer-events-auto ${
-            isFormVisible 
-              ? 'translate-y-0 opacity-100 scale-100' 
-              : 'translate-y-8 opacity-0 scale-95'
-          }`}
-        >
-          {/* Logo */}
-          <div className="text-center mb-6 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-32 h-20 mb-2">
-              <ShinyText 
-                src="./public/logo.png"
-                alt="Biz365 Logo"
-                disabled={false} 
-                speed={3} 
-                className="w-full h-full"
-              />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-1">
-              {step === 1 ? 'Reset Password' : 'Verify OTP'}
-            </h1>
-            <p className="text-gray-600">
-              {step === 1 
-                ? 'Enter your mobile number to receive OTP' 
-                : `OTP sent to +91 ${formData.phoneNumber}`
-              }
-            </p>
-          </div>
-
-          {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
-            {step === 1 ? (
-              <form onSubmit={handlePhoneSubmit} className="space-y-5">
-                {/* Phone Number Field */}
-                <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                  <label 
-                    htmlFor="phoneNumber" 
-                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    Mobile Number
-                  </label>
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 flex items-center">
-                      <span className="text-gray-500 text-sm">+91</span>
-                    </div>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      className={`w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 ${
-                        errors.phoneNumber 
-                          ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                          : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                      }`}
-                      value={formData.phoneNumber}
-                      onChange={(e) => {
-                        const formatted = formatPhoneNumber(e.target.value);
-                        handleInputChange({ target: { name: 'phoneNumber', value: formatted } });
-                      }}
-                      placeholder="Enter your mobile number"
-                      disabled={isLoading}
-                      maxLength={10}
-                    />
-                    {formData.phoneNumber && !errors.phoneNumber && formData.phoneNumber.length === 10 && (
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                  {errors.phoneNumber && (
-                    <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      {errors.phoneNumber}
-                    </p>
-                  )}
-                </div>
-
-                {/* Submit Button */}
-                <div className="animate-slide-in" style={{ animationDelay: '200ms' }}>
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
-                  >
-                    {isLoading && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-                      </div>
-                    )}
-                    <div className="relative flex items-center justify-center gap-2">
-                      {isLoading ? (
-                        <>
-                          <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                          </svg>
-                          Sending OTP...
-                        </>
-                      ) : (
-                        <>
-                          Send OTP
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <form onSubmit={handleOTPSubmit} className="space-y-5">
-                {/* OTP Field */}
-                <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
-                  <label 
-                    htmlFor="otp" 
-                    className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                    Enter OTP
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      id="otp"
-                      name="otp"
-                      className={`w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500 text-center text-lg tracking-widest ${
-                        errors.otp 
-                          ? 'border-red-400 focus:border-red-500 focus:ring-4 focus:ring-red-900/20' 
-                          : 'border-gray-600 focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20'
-                      }`}
-                      value={formData.otp}
-                      onChange={(e) => {
-                        const value = e.target.value.replace(/\D/g, '').slice(0, 6);
-                        handleInputChange({ target: { name: 'otp', value } });
-                      }}
-                      placeholder="000000"
-                      disabled={isLoading}
-                      maxLength={6}
-                    />
-                  </div>
-                  {errors.otp && (
-                    <p className="text-sm text-red-600 animate-fade-in flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      {errors.otp}
-                    </p>
-                  )}
-                </div>
-
-                {/* Resend OTP */}
-                <div className="text-center animate-slide-in" style={{ animationDelay: '150ms' }}>
-                  <button
-                    type="button"
-                    onClick={handleResendOTP}
-                    disabled={countdown > 0 || isLoading}
-                    className="text-sm text-gold-600 hover:text-gold-700 font-medium hover:underline transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {countdown > 0 ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
-                  </button>
-                </div>
-
-                {/* Submit Button */}
-                <div className="animate-slide-in" style={{ animationDelay: '200ms' }}>
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-gray-200/50 hover:shadow-xl hover:shadow-gray-300/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
-                  >
-                    {isLoading && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-700">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-                      </div>
-                    )}
-                    <div className="relative flex items-center justify-center gap-2">
-                      {isLoading ? (
-                        <>
-                          <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                          </svg>
-                          Verifying...
-                        </>
-                      ) : (
-                        <>
-                          Verify OTP
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
-                        </>
-                      )}
-                    </div>
-                  </button>
-                </div>
-              </form>
-            )}
-
-            {/* Footer Links */}
-            <div className="mt-6 space-y-3 text-center animate-fade-in" style={{ animationDelay: '300ms' }}>
-              <Link 
-                to={ROUTES.LOGIN} 
-                className="text-sm text-gold-600 hover:text-gold-700 font-medium hover:underline transition-colors"
-              >
-                Back to Login
-              </Link>
-              
-              <div className="flex items-center">
-                <div className="flex-1 border-t border-gray-300"></div>
-                <span className="px-4 text-sm text-gray-500">or</span>
-                <div className="flex-1 border-t border-gray-300"></div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+      {/* Main Content */}
+      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+          {/* Left Panel - Dark Promotional Section */}
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+            <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+            <div className="relative z-10 my-auto space-y-6">
+              {/* Image Container */}
+              <div className="mb-4">
+                <img 
+                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
+                  alt="Business success illustration" 
+                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
+                />
               </div>
               
-              <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
-                <Link 
-                  to={ROUTES.SIGNUP} 
-                  className="text-gold-600 hover:text-gold-700 font-semibold hover:underline transition-colors"
-                >
-                  Sign up for free
-                </Link>
+              <h1 className="text-4xl font-semibold leading-tight">
+                Turn everyday customers into raving fans.
+              </h1>
+              <p className="text-gray-300 text-lg">
+                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
               </p>
+              <ul className="space-y-3 text-gray-200">
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  NFC/QR review capture that just works
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  Auto-routes unhappy customers to private help
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                  One dashboard. All platforms. Zero chaos.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          {/* Right Panel - White Forgot Password Form */}
+          <div>
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
+              <div className="p-6 sm:p-8">
+                {/* BIZ365 Logo */}
+                <div className="text-center mb-8">
+                  <img 
+                    src={logoImage} 
+                    alt="Biz365 Logo" 
+                    className="h-36 w-auto mx-auto mb-4"
+                  />
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    {step === 1 ? 'Reset Password' : 'Verify OTP'}
+                  </h2>
+                  <p className="mt-1 text-gray-600 dark:text-gray-400">
+                    {step === 1 
+                      ? 'Enter your mobile number to receive OTP' 
+                      : `OTP sent to ${formData.countryCode} ${formData.phoneNumber}`
+                    }
+                  </p>
+                </div>
+
+                {/* Form */}
+                {step === 1 ? (
+                  <form onSubmit={handlePhoneSubmit} className="space-y-6">
+                    {/* Mobile Number Field */}
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Mobile Number
+                      </label>
+                      <div className="relative">
+                        {/* Country Code Dropdown */}
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
+                          <button
+                            type="button"
+                            onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                            className="flex items-center gap-1 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                          >
+                            <span className="text-lg">
+                              {COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag}
+                            </span>
+                            <span>{formData.countryCode}</span>
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          
+                          {showCountryDropdown && (
+                            <div className="country-dropdown absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-20">
+                              {COUNTRY_CODES.map((country) => (
+                                <button
+                                  key={country.code}
+                                  type="button"
+                                  onClick={() => {
+                                    setFormData(prev => ({ ...prev, countryCode: country.code }));
+                                    setShowCountryDropdown(false);
+                                  }}
+                                  className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-sm"
+                                >
+                                  <span className="text-lg">{country.flag}</span>
+                                  <span>{country.code}</span>
+                                  <span className="text-gray-500">{country.country}</span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <input
+                          type="tel"
+                          name="phoneNumber"
+                          className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-20 h-11 ${
+                            errors.phoneNumber ? 'border-red-500 focus:ring-red-500' : ''
+                          }`}
+                          value={formData.phoneNumber}
+                          onChange={(e) => {
+                            const formatted = formatPhoneNumber(e.target.value);
+                            handleInputChange({ target: { name: 'phoneNumber', value: formatted } });
+                          }}
+                          placeholder="Enter your mobile number"
+                          disabled={isLoading}
+                          maxLength={15}
+                        />
+                      </div>
+                      {errors.phoneNumber && (
+                        <p className="text-sm text-red-600">{errors.phoneNumber}</p>
+                      )}
+                    </div>
+
+                    {/* Send OTP Button */}
+                    <div>
+                      <button 
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
+                        type="submit" 
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Sending OTP...' : 'Send OTP'}
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <form onSubmit={handleOTPSubmit} className="space-y-6">
+                    {/* OTP Field */}
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        Enter OTP
+                      </label>
+                      <input
+                        type="text"
+                        name="otp"
+                        className={`w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-lg shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md text-center tracking-widest h-11 ${
+                          errors.otp ? 'border-red-500 focus:ring-red-500' : ''
+                        }`}
+                        value={formData.otp}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+                          handleInputChange({ target: { name: 'otp', value } });
+                        }}
+                        placeholder="000000"
+                        disabled={isLoading}
+                        maxLength={6}
+                      />
+                      {errors.otp && (
+                        <p className="text-sm text-red-600">{errors.otp}</p>
+                      )}
+                    </div>
+
+                    {/* Resend OTP */}
+                    <div className="text-center">
+                      <button
+                        type="button"
+                        onClick={handleResendOTP}
+                        disabled={countdown > 0 || isLoading}
+                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {countdown > 0 ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
+                      </button>
+                    </div>
+
+                    {/* Verify OTP Button */}
+                    <div>
+                      <button 
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
+                        type="submit" 
+                        disabled={isLoading}
+                      >
+                        {isLoading ? 'Verifying...' : 'Verify OTP'}
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Footer Links */}
+                <div className="mt-6 space-y-3 text-center">
+                  <Link 
+                    to={ROUTES.LOGIN} 
+                    className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
+                  >
+                    Back to Login
+                  </Link>
+                  
+                  <div className="flex items-center">
+                    <div className="flex-1 border-t border-gray-300"></div>
+                    <span className="px-4 text-sm text-gray-500">or</span>
+                    <div className="flex-1 border-t border-gray-300"></div>
+                  </div>
+                  
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Don't have an account?{' '}
+                    <Link 
+                      to={ROUTES.SIGNUP} 
+                      className="text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
+                    >
+                      Sign up for free
+                    </Link>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Back to Home */}
-          <div className="text-center mt-4 animate-fade-in" style={{ animationDelay: '400ms' }}>
-            <Link 
-              to="/" 
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to home
-            </Link>
-          </div>
         </div>
-      </div>
+
+        {/* Footer */}
+        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+          © 2025 Biz365. All rights reserved. Powered by{' '}
+          <a 
+            href="https://corementors.in/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            CoreMentors
+          </a>
+        </footer>
+      </main>
     </div>
   );
 };
