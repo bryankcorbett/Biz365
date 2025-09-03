@@ -129,6 +129,18 @@ export const INDIAN_STATES = [
   'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
 
+// OAuth Configuration
+export const OAUTH_CONFIG = {
+  GOOGLE: {
+    CLIENT_ID: '837428872880-es40sfd5t91oahv6g357smdacmsruv16.apps.googleusercontent.com',
+    REDIRECT_URI: 'https://biz365.ai/auth/google/callback'
+  },
+  APPLE: {
+    CLIENT_ID: 'com.biz365.platform.web',
+    REDIRECT_URI: 'https://biz365.ai/auth/apple/callback'
+  }
+};
+
 // API endpoints
 export const API_ENDPOINTS = {
   AUTH: {
@@ -136,7 +148,9 @@ export const API_ENDPOINTS = {
     LOGIN: '/auth/login',
     LOGOUT: '/auth/logout',
     OTP_VERIFY: '/auth/otp/verify',
-    OTP_RESEND: '/auth/otp/resend'
+    OTP_RESEND: '/auth/otp/resend',
+    GOOGLE: '/auth/google',
+    APPLE: '/auth/apple'
   },
   USER: {
     ONBOARDING_STATUS: '/user/onboarding-status',

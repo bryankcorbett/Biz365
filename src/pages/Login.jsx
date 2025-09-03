@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { ROUTES, SUCCESS_MESSAGES } from '../constants';
+import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG } from '../constants';
 const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
 
 const Login = () => {
@@ -182,7 +182,7 @@ const Login = () => {
       // Initialize Google OAuth
       if (window.google) {
         window.google.accounts.oauth2.initTokenClient({
-          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+          client_id: OAUTH_CONFIG.GOOGLE.CLIENT_ID,
           scope: 'email profile',
           callback: async (response) => {
             try {
@@ -227,7 +227,7 @@ const Login = () => {
         }).requestAccessToken();
       } else {
         // Fallback: redirect to Google OAuth
-        const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + '/auth/google/callback')}&scope=email profile&response_type=code`;
+        const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=${OAUTH_CONFIG.GOOGLE.CLIENT_ID}&redirect_uri=${encodeURIComponent(OAUTH_CONFIG.GOOGLE.REDIRECT_URI)}&scope=email profile&response_type=code`;
         window.location.href = googleAuthUrl;
       }
     } catch (error) {
