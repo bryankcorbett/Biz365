@@ -60,15 +60,130 @@ const Signup = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isAppleLoading, setIsAppleLoading] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  
+  // Animation states for right panel elements
+  const [isExiting, setIsExiting] = useState(false);
+  const [showRightElements, setShowRightElements] = useState({
+    logo: false,
+    welcomeText: false,
+    googleButton: false,
+    appleButton: false,
+    separator: false,
+    nameInput: false,
+    emailInput: false,
+    mobileInput: false,
+    passwordInput: false,
+    termsCheckbox: false,
+    createAccountButton: false,
+    signInLink: false
+  });
   const navigate = useNavigate();
   const { signup, isLoading, error, clearError } = useAuth();
   const { showToast } = useToast();
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setIsExiting(false);
+    setShowRightElements({
+      logo: false,
+      welcomeText: false,
+      googleButton: false,
+      appleButton: false,
+      separator: false,
+      nameInput: false,
+      emailInput: false,
+      mobileInput: false,
+      passwordInput: false,
+      termsCheckbox: false,
+      createAccountButton: false,
+      signInLink: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Right panel elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: true })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: true })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: true })), 1600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 1800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, termsCheckbox: true })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccountButton: true })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInLink: true })), 2400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
+
+  // Handle exit animations when navigating to login
+  const handleNavigateToLogin = (e) => {
+    e.preventDefault();
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInLink: false })), 0));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccountButton: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, termsCheckbox: false })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: false })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: false })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2200));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.LOGIN);
+    }, 2400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
+
+  // Handle exit animations when navigating to verify OTP
+  const handleNavigateToVerifyOTP = () => {
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInLink: false })), 0));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccountButton: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, termsCheckbox: false })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: false })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: false })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2200));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(`${ROUTES.VERIFY_OTP}?mobile=${encodeURIComponent(formData.mobile)}`, { replace: true });
+    }, 2400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
 
   // Close country dropdown when clicking outside
   useEffect(() => {
@@ -296,6 +411,9 @@ const Signup = () => {
       await signup(signupData);
       showToast('success', SUCCESS_MESSAGES.SIGNUP_SUCCESS);
       setSignupSuccess(true);
+      
+      // Start exit animations after successful signup
+      handleNavigateToVerifyOTP();
     } catch (error) {
       console.error('Signup failed:', error);
     }
@@ -318,8 +436,8 @@ const Signup = () => {
                   alt="Business success illustration" 
                   className="w-full h-72 object-cover rounded-2xl shadow-2xl"
                 />
-              </div>
-              
+      </div>
+      
               <h1 className="text-4xl font-semibold leading-tight">
                 Turn everyday customers into raving fans.
               </h1>
@@ -348,18 +466,34 @@ const Signup = () => {
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
                 {/* BIZ365 Logo */}
-                <div className="text-center mb-8">
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.logo 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <img 
                     src={logoImage} 
-                    alt="Biz365 Logo" 
+                alt="Biz365 Logo"
                     className="h-36 w-auto mx-auto mb-4"
-                  />
+              />
+            </div>
+
+                {/* Welcome Text */}
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.welcomeText 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Join the Revolution!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Be part of something extraordinary</p>
                 </div>
 
                 {/* Social Signup Buttons */}
-                <div className="space-y-3 mb-6">
+                <div className={`space-y-3 mb-6 transition-all duration-1000 ease-out ${
+                  showRightElements.googleButton 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <button 
                     onClick={handleGoogleSignup}
                     disabled={isGoogleLoading || isAppleLoading}
@@ -384,6 +518,14 @@ const Signup = () => {
                     </div>
                     {isGoogleLoading ? 'Signing up...' : 'Sign up with Google'}
                   </button>
+          </div>
+
+                {/* Apple Button */}
+                <div className={`mb-6 transition-all duration-1000 ease-out ${
+                  showRightElements.appleButton 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <button 
                     onClick={handleAppleSignup}
                     disabled={isGoogleLoading || isAppleLoading}
@@ -398,7 +540,7 @@ const Signup = () => {
                       ) : (
                         <svg width="16" height="20" viewBox="0 0 384 512" fill="currentColor">
                           <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
-                        </svg>
+                  </svg>
                       )}
                     </div>
                     {isAppleLoading ? 'Signing up...' : 'Sign up with Apple'}
@@ -406,7 +548,11 @@ const Signup = () => {
                 </div>
 
                 {/* Separator */}
-                <div className="relative mb-6">
+                <div className={`relative mb-6 transition-all duration-1000 ease-out ${
+                  showRightElements.separator 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <div className="absolute inset-0 flex items-center">
                     <div data-orientation="horizontal" role="none" className="shrink-0 bg-border h-[1px] w-full"></div>
                   </div>
@@ -418,55 +564,67 @@ const Signup = () => {
                 {/* Email Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Name Field */}
-                  <div className="space-y-1.5">
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.nameInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
-                    <div className="relative">
+                <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                       </svg>
-                      <input 
-                        type="text" 
+                  <input
+                    type="text"
                         name="name"
                         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                        id="name" 
+                    id="name"
                         placeholder="Enter your full name" 
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.name && (
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                </div>
+                {errors.name && (
                       <p className="text-sm text-red-600">{errors.name}</p>
-                    )}
-                  </div>
+                )}
+              </div>
 
-                  {/* Email Field */}
-                  <div className="space-y-1.5">
+              {/* Email Field */}
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.emailInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                      </svg>
-                      <input 
-                        type="email" 
+                  </svg>
+                  <input
+                    type="email"
                         name="email"
                         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                        id="email" 
+                    id="email"
                         placeholder="you@business.com" 
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.email && (
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                </div>
+                {errors.email && (
                       <p className="text-sm text-red-600">{errors.email}</p>
-                    )}
-                  </div>
+                )}
+              </div>
 
-                  {/* Mobile Field */}
-                  <div className="space-y-1.5">
+              {/* Mobile Field */}
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.mobileInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label htmlFor="mobile" className="text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Number</label>
                     <div className="flex gap-2">
                       {/* Country Code Dropdown */}
@@ -509,42 +667,46 @@ const Signup = () => {
                       <div className="relative flex-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                        </svg>
-                        <input 
-                          type="tel" 
+                  </svg>
+                  <input
+                    type="tel"
                           name="mobile"
                           className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                          id="mobile" 
+                    id="mobile"
                           placeholder="Enter your mobile number" 
-                          value={formData.mobile}
-                          onChange={handleInputChange}
-                          disabled={isLoading}
-                        />
+                    value={formData.mobile}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
                       </div>
-                    </div>
-                    {errors.mobile && (
+                </div>
+                {errors.mobile && (
                       <p className="text-sm text-red-600">{errors.mobile}</p>
-                    )}
-                  </div>
+                )}
+              </div>
 
-                  {/* Password Field */}
-                  <div className="space-y-1.5">
+              {/* Password Field */}
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.passwordInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                      <input 
+                  </svg>
+                  <input
                         type={showPassword ? "text" : "password"} 
                         name="password"
                         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 pr-10 h-11" 
-                        id="password" 
+                    id="password"
                         placeholder="••••••••" 
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
                       <button 
                         type="button" 
                         onClick={() => setShowPassword(!showPassword)}
@@ -565,62 +727,77 @@ const Signup = () => {
                           </svg>
                         )}
                       </button>
-                    </div>
-                    {errors.password && (
+                </div>
+                {errors.password && (
                       <p className="text-sm text-red-600">{errors.password}</p>
                     )}
-                  </div>
+              </div>
 
-                  {/* Terms Checkbox */}
-                  <div className="flex items-center gap-2 text-sm">
-                    <input 
-                      type="checkbox" 
-                      name="acceptTerms"
-                      checked={formData.acceptTerms}
-                      onChange={handleInputChange}
+              {/* Terms Checkbox */}
+                  <div className={`flex items-center gap-2 text-sm transition-all duration-1000 ease-out ${
+                    showRightElements.termsCheckbox 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
+                  <input
+                    type="checkbox"
+                    name="acceptTerms"
+                    checked={formData.acceptTerms}
+                    onChange={handleInputChange}
                       className="rounded border-gray-300 text-gray-900 focus:ring-gray-900 hover:border-gray-400 hover:scale-110 transition-all duration-200" 
-                    />
+                  />
                     <span className="text-gray-600 dark:text-gray-300">
-                      I agree to the{' '}
+                    I agree to the{' '}
                       <Link to="/terms" className="text-gray-900 dark:text-gray-100 hover:underline" target="_blank">
-                        Terms and Conditions
-                      </Link>{' '}
-                      and{' '}
+                      Terms and Conditions
+                    </Link>{' '}
+                    and{' '}
                       <Link to="/privacy" className="text-gray-900 dark:text-gray-100 hover:underline" target="_blank">
-                        Privacy Policy
-                      </Link>
-                    </span>
+                      Privacy Policy
+                    </Link>
+                  </span>
                   </div>
-                  {errors.acceptTerms && (
+                {errors.acceptTerms && (
                     <p className="text-sm text-red-600">{errors.acceptTerms}</p>
                   )}
 
                   {/* Create Account Button */}
-                  <div tabIndex="0" style={{ transform: 'none' }}>
-                    <button 
+                  <div className={`transition-all duration-1000 ease-out ${
+                    showRightElements.createAccountButton 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`} tabIndex="0">
+                                    <button 
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
                       type="submit" 
-                      disabled={isLoading}
+                      disabled={isLoading || isExiting}
                     >
                       {isLoading ? 'Creating Account...' : 'Create Account'}
-                    </button>
-                  </div>
-                </form>
+                </button>
+              </div>
+            </form>
 
                 {/* Sign In Link */}
-                <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
-                  Already have an account?{' '}
-                  <Link 
-                    to={ROUTES.LOGIN} 
-                    className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200"
-                  >
+                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
+                  showRightElements.signInLink 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
+                                    <p>
+                 Already have an account?{' '}
+                 <button 
+                   onClick={handleNavigateToLogin}
+                   disabled={isExiting}
+                     className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                 >
                     Sign in
-                  </Link>
-                </p>
-              </div>
+                  </button>
+                  </p>
             </div>
           </div>
+          </div>
         </div>
+      </div>
 
         {/* Footer */}
         <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">

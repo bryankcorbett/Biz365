@@ -34,6 +34,17 @@ const VerifyOTP = () => {
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const inputRefs = useRef([]);
   
+  // Animation states for right panel elements
+  const [showRightElements, setShowRightElements] = useState({
+    logo: false,
+    welcomeText: false,
+    otpInputs: false,
+    verifyButton: false,
+    resendSection: false,
+    changeMobileLink: false,
+    backToLoginLink: false
+  });
+  
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { verifyOTP, isLoading, error, clearError, isAuthenticated } = useAuth();
@@ -41,6 +52,36 @@ const VerifyOTP = () => {
 
   // Get mobile from URL params
   const mobile = searchParams.get('mobile');
+
+  // Reset animation states and start entrance animations
+  useEffect(() => {
+    // Reset all animation states
+    setShowRightElements({
+      logo: false,
+      welcomeText: false,
+      otpInputs: false,
+      verifyButton: false,
+      resendSection: false,
+      changeMobileLink: false,
+      backToLoginLink: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Right panel elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInputs: true })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, verifyButton: true })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendSection: true })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, changeMobileLink: true })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, backToLoginLink: true })), 1400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  }, []);
 
   // Format mobile for display
   const formatMobile = (mobile) => {
@@ -260,12 +301,24 @@ const VerifyOTP = () => {
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
                 {/* BIZ365 Logo */}
-                <div className="text-center mb-8">
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.logo 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <img 
                     src={logoImage} 
                     alt="Biz365 Logo" 
                     className="h-36 w-auto mx-auto mb-4"
                   />
+                </div>
+
+                {/* Welcome Text */}
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.welcomeText 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Verify Your Mobile</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">
                     We've sent a 6-digit code to{' '}
@@ -276,7 +329,11 @@ const VerifyOTP = () => {
                 {/* OTP Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* OTP Input */}
-                  <div className="space-y-4">
+                  <div className={`space-y-4 transition-all duration-1000 ease-out ${
+                    showRightElements.otpInputs 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 text-center block">
                       Enter Verification Code
                     </label>
@@ -312,7 +369,11 @@ const VerifyOTP = () => {
                   </div>
 
                   {/* Verify Button */}
-                  <div>
+                  <div className={`transition-all duration-1000 ease-out ${
+                    showRightElements.verifyButton 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <button 
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
                       type="submit" 
@@ -324,7 +385,11 @@ const VerifyOTP = () => {
                 </form>
 
                 {/* Resend Section */}
-                <div className="mt-6 text-center space-y-4">
+                <div className={`mt-6 text-center space-y-4 transition-all duration-1000 ease-out ${
+                  showRightElements.resendSection 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <div className="flex items-center">
                     <div className="flex-1 border-t border-gray-300"></div>
                     <span className="px-4 text-sm text-gray-600">Didn't receive the code?</span>
@@ -344,7 +409,14 @@ const VerifyOTP = () => {
                       Resend OTP in <span className="font-semibold text-gray-900">{countdown}s</span>
                     </p>
                   )}
-                  
+                </div>
+
+                {/* Change Mobile Link */}
+                <div className={`mt-4 text-center transition-all duration-1000 ease-out ${
+                  showRightElements.changeMobileLink 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <p className="text-sm">
                     <Link 
                       to={ROUTES.SIGNUP}
@@ -356,7 +428,11 @@ const VerifyOTP = () => {
                 </div>
 
                 {/* Back to Login */}
-                <div className="mt-6 text-center">
+                <div className={`mt-6 text-center transition-all duration-1000 ease-out ${
+                  showRightElements.backToLoginLink 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <Link 
                     to={ROUTES.LOGIN} 
                     className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors"

@@ -15,6 +15,23 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isAppleLoading, setIsAppleLoading] = useState(false);
+  
+  // Animation states
+  const [showLeftImage, setShowLeftImage] = useState(false);
+  const [showLeftText, setShowLeftText] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const [showRightElements, setShowRightElements] = useState({
+    logo: false,
+    welcomeText: false,
+    googleButton: false,
+    appleButton: false,
+    separator: false,
+    emailInput: false,
+    passwordInput: false,
+    rememberForgot: false,
+    signInButton: false,
+    createAccount: false
+  });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { login, isLoading, error, clearError, isAuthenticated, user } = useAuth();
@@ -23,10 +40,49 @@ const Login = () => {
   // Get next parameter for redirect after login
   const next = searchParams.get('next');
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setShowLeftImage(false);
+    setShowLeftText(false);
+    setIsExiting(false);
+    setShowRightElements({
+      logo: false,
+      welcomeText: false,
+      googleButton: false,
+      appleButton: false,
+      separator: false,
+      emailInput: false,
+      passwordInput: false,
+      rememberForgot: false,
+      signInButton: false,
+      createAccount: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Left panel image appears first (from left)
+    timers.push(setTimeout(() => setShowLeftImage(true), 200));
+    
+    // Left panel text appears after image (from left)
+    timers.push(setTimeout(() => setShowLeftText(true), 600));
+    
+    // Right panel elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: true })), 1600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 1800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: true })), 2400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: true })), 2600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccount: true })), 2800));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
 
   // Clear auth error when component mounts
@@ -57,6 +113,36 @@ const Login = () => {
       }
     }
   }, [isAuthenticated, user, navigate, next]);
+
+  // Handle exit animations when navigating to signup
+  const handleNavigateToSignup = (e) => {
+    e.preventDefault();
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccount: false })), 0));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: false })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 1600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 1800));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.SIGNUP);
+    }, 2000));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
 
 
 
@@ -225,34 +311,45 @@ const Login = () => {
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
             <div className="relative z-10 my-auto space-y-6">
               {/* Image Container */}
-              <div className="mb-4">
+              <div className={`mb-4 transition-all duration-1000 ease-out ${
+                showLeftImage 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
                 <img 
                   src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
                   alt="Business success illustration" 
                   className="w-full h-72 object-cover rounded-2xl shadow-2xl"
                 />
-        </div>
+              </div>
       
-              <h1 className="text-4xl font-semibold leading-tight">
-                Turn everyday customers into raving fans.
-              </h1>
-              <p className="text-gray-300 text-lg">
-                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
-              </p>
-              <ul className="space-y-3 text-gray-200">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  NFC/QR review capture that just works
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  Auto-routes unhappy customers to private help
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  One dashboard. All platforms. Zero chaos.
-                </li>
-              </ul>
+              {/* Text Content */}
+              <div className={`transition-all duration-1000 ease-out ${
+                showLeftText 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <h1 className="text-4xl font-semibold leading-tight">
+                  Turn everyday customers into raving fans.
+                </h1>
+                <p className="text-gray-300 text-lg">
+                  BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
+                </p>
+                <ul className="space-y-3 text-gray-200">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    NFC/QR review capture that just works
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    Auto-routes unhappy customers to private help
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    One dashboard. All platforms. Zero chaos.
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -261,23 +358,41 @@ const Login = () => {
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
                 {/* BIZ365 Logo */}
-                <div className="text-center mb-8">
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.logo 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <img 
                     src={logoImage} 
-                alt="Biz365 Logo"
+                    alt="Biz365 Logo"
                     className="h-36 w-auto mx-auto mb-4"
-              />
+                  />
+                </div>
+
+                {/* Welcome Text */}
+                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                  showRightElements.welcomeText 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Let's get started!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Access your BizTag dashboard</p>
-            </div>
+                </div>
 
                 {/* Social Login Buttons */}
                 <div className="space-y-3 mb-6">
-                  <button 
-                    onClick={handleGoogleLogin}
-                    disabled={isGoogleLoading || isAppleLoading}
-                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 w-full h-12 justify-center bg-white border-gray-300 text-black"
-                  >
+                  {/* Google Button */}
+                  <div className={`transition-all duration-1000 ease-out ${
+                    showRightElements.googleButton 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
+                    <button 
+                      onClick={handleGoogleLogin}
+                      disabled={isGoogleLoading || isAppleLoading}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 w-full h-12 justify-center bg-white border-gray-300 text-black"
+                    >
                     <div className="mr-3" aria-hidden="true">
                       {isGoogleLoading ? (
                         <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -295,13 +410,21 @@ const Login = () => {
                         </svg>
                       )}
                     </div>
-                    {isGoogleLoading ? 'Signing in...' : 'Continue with Google'}
-                  </button>
-                  <button 
-                    onClick={handleAppleLogin}
-                    disabled={isGoogleLoading || isAppleLoading}
-                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-12 justify-center bg-black text-white"
-                  >
+                      {isGoogleLoading ? 'Signing in...' : 'Continue with Google'}
+                    </button>
+                  </div>
+
+                  {/* Apple Button */}
+                  <div className={`transition-all duration-1000 ease-out ${
+                    showRightElements.appleButton 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
+                    <button 
+                      onClick={handleAppleLogin}
+                      disabled={isGoogleLoading || isAppleLoading}
+                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-12 justify-center bg-black text-white"
+                    >
                     <div className="mr-3" aria-hidden="true">
                       {isAppleLoading ? (
                         <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -314,24 +437,33 @@ const Login = () => {
                         </svg>
                       )}
                     </div>
-                    {isAppleLoading ? 'Signing in...' : 'Continue with Apple'}
-                  </button>
+                      {isAppleLoading ? 'Signing in...' : 'Continue with Apple'}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Separator */}
-                <div className="relative mb-6">
+                <div className={`relative mb-6 transition-all duration-1000 ease-out ${
+                  showRightElements.separator 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <div className="absolute inset-0 flex items-center">
                     <div data-orientation="horizontal" role="none" className="shrink-0 bg-border h-[1px] w-full"></div>
                   </div>
                   <div className="relative flex justify-center">
                     <span className="bg-white dark:bg-transparent px-3 text-xs uppercase tracking-wider text-gray-500">or use your email</span>
                   </div>
-          </div>
+                </div>
 
                 {/* Login Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Email Field */}
-                  <div className="space-y-1.5">
+                  {/* Email Field */}
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.emailInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="email">Email</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
@@ -354,8 +486,12 @@ const Login = () => {
                 )}
               </div>
 
-              {/* Password Field */}
-                  <div className="space-y-1.5">
+                  {/* Password Field */}
+                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                    showRightElements.passwordInput 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="password">Password</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
@@ -399,7 +535,11 @@ const Login = () => {
               </div>
 
                   {/* Remember me and Forgot password */}
-                  <div className="flex items-center justify-between text-sm">
+                  <div className={`flex items-center justify-between text-sm transition-all duration-1000 ease-out ${
+                    showRightElements.rememberForgot 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                     <label className="flex items-center gap-2">
                       <input type="checkbox" className="rounded border-gray-300 text-gray-900 focus:ring-gray-900 hover:border-gray-400 hover:scale-110 transition-all duration-200" />
                       <span className="text-gray-600 dark:text-gray-300">Remember me</span>
@@ -413,7 +553,11 @@ const Login = () => {
                   </div>
 
                   {/* Sign In Button */}
-                  <div tabIndex="0" style={{ transform: 'none' }}>
+                  <div className={`transition-all duration-1000 ease-out ${
+                    showRightElements.signInButton 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-full opacity-0'
+                  }`}>
                                  <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
                    type="submit"
@@ -425,15 +569,22 @@ const Login = () => {
             </form>
 
                 {/* Create Account Link */}
-                <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
+                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
+                  showRightElements.createAccount 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
+                  <p>
                  Don't have an account?{' '}
-                <Link 
-                  to={ROUTES.SIGNUP} 
-                    className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200"
+                <button 
+                  onClick={handleNavigateToSignup}
+                  disabled={isExiting}
+                  className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Create one
-                </Link>
-              </p>
+                  </button>
+                  </p>
+                </div>
             </div>
           </div>
           </div>
