@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
+import logoImage from '../../public/logo.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -226,12 +227,12 @@ const Login = () => {
               {/* Image Container */}
               <div className="mb-4">
                 <img 
-                  src="https://cdn.pixabay.com/photo/2023/04/13/16/51/girls-7922980_1280.jpg" 
+                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
                   alt="Business success illustration" 
                   className="w-full h-72 object-cover rounded-2xl shadow-2xl"
                 />
-              </div>
-              
+        </div>
+      
               <h1 className="text-4xl font-semibold leading-tight">
                 Turn everyday customers into raving fans.
               </h1>
@@ -259,16 +260,16 @@ const Login = () => {
           <div>
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
-                {/* BIZTAG Logo */}
+                {/* BIZ365 Logo */}
                 <div className="text-center mb-8">
                   <img 
-                    src="https://i.ibb.co/v6SSYvyd/56-A67550-FECF-48-BA-BFF4-9436-AFAD2-AF4.png" 
-                    alt="BizTag Logo" 
+                    src={logoImage} 
+                alt="Biz365 Logo"
                     className="h-36 w-auto mx-auto mb-4"
-                  />
+              />
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Let's get started!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Access your BizTag dashboard</p>
-                </div>
+            </div>
 
                 {/* Social Login Buttons */}
                 <div className="space-y-3 mb-6">
@@ -325,52 +326,52 @@ const Login = () => {
                   <div className="relative flex justify-center">
                     <span className="bg-white dark:bg-transparent px-3 text-xs uppercase tracking-wider text-gray-500">or use your email</span>
                   </div>
-                </div>
+          </div>
 
                 {/* Login Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Email Field */}
+              {/* Email Field */}
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="email">Email</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                      </svg>
-                      <input 
-                        type="email" 
+                  </svg>
+                                     <input
+                     type="email"
                         name="email"
                         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                        id="email" 
+                     id="email"
                         placeholder="you@business.com" 
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
-                    </div>
-                    {errors.email && (
+                     value={formData.email}
+                     onChange={handleInputChange}
+                     disabled={isLoading}
+                   />
+                </div>
+                {errors.email && (
                       <p className="text-sm text-red-600">{errors.email}</p>
-                    )}
-                  </div>
+                )}
+              </div>
 
-                  {/* Password Field */}
+              {/* Password Field */}
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="password">Password</label>
                     <div className="relative">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lock absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                      <input 
+                  </svg>
+                                     <input
                         type={showPassword ? "text" : "password"} 
                         name="password"
                         className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 pr-10 h-11" 
-                        id="password" 
+                     id="password"
                         placeholder="••••••••" 
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
+                     value={formData.password}
+                     onChange={handleInputChange}
+                     disabled={isLoading}
+                   />
                       <button 
                         type="button" 
                         onClick={() => setShowPassword(!showPassword)}
@@ -391,11 +392,11 @@ const Login = () => {
                           </svg>
                         )}
                       </button>
-                    </div>
-                    {errors.password && (
+                </div>
+                {errors.password && (
                       <p id="password-error" className="text-sm text-red-600">{errors.password}</p>
-                    )}
-                  </div>
+                )}
+              </div>
 
                   {/* Remember me and Forgot password */}
                   <div className="flex items-center justify-between text-sm">
@@ -413,35 +414,43 @@ const Login = () => {
 
                   {/* Sign In Button */}
                   <div tabIndex="0" style={{ transform: 'none' }}>
-                    <button 
+                                 <button
                       className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
-                      type="submit" 
-                      disabled={isLoading}
+                   type="submit"
+                   disabled={isLoading}
                     >
                       {isLoading ? 'Signing in...' : 'Sign in'}
-                    </button>
-                  </div>
-                </form>
+                </button>
+              </div>
+            </form>
 
                 {/* Create Account Link */}
                 <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
-                  Don't have an account?{' '}
-                  <Link 
-                    to={ROUTES.SIGNUP} 
+                 Don't have an account?{' '}
+                <Link 
+                  to={ROUTES.SIGNUP} 
                     className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200"
-                  >
+                >
                     Create one
-                  </Link>
-                </p>
-              </div>
+                </Link>
+              </p>
             </div>
+          </div>
           </div>
         </div>
 
-        {/* Footer */}
-        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          © 2025 BizTag. All rights reserved.
-        </footer>
+                  {/* Footer */}
+          <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
+            © 2025 Biz365. All rights reserved. Powered by{' '}
+            <a 
+              href="https://corementors.in/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              CoreMentors
+            </a>
+          </footer>
       </main>
     </div>
   );
