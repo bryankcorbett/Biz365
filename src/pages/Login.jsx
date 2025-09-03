@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
 import { Renderer, Program, Mesh, Triangle, Vec3 } from "ogl";
+import ShinyText from '../components/ShinyText';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -359,8 +360,8 @@ const Login = () => {
     }
 
     try {
-      await login(formData);
-      showToast('success', SUCCESS_MESSAGES.LOGIN_SUCCESS);
+      // Redirect to external dashboard instead of using auth flow
+      window.location.href = ROUTES.DASHBOARD;
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -385,10 +386,12 @@ const Login = () => {
                                {/* Logo */}
           <div className="text-center mb-6 animate-fade-in">
             <div className="inline-flex items-center justify-center w-32 h-20 mb-2">
-              <img 
-                className="w-full h-full object-contain" 
-                alt="Biz365 Logo" 
-                src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+              <ShinyText 
+                src="./public/logo.png"
+                alt="Biz365 Logo"
+                disabled={false} 
+                speed={3} 
+                className="w-full h-full"
               />
             </div>
              <h1 className="text-2xl font-bold text-gray-800 mb-1">Welcome back</h1>
@@ -518,7 +521,7 @@ const Login = () => {
                          {/* Footer Links */}
              <div className="mt-6 space-y-3 text-center animate-fade-in" style={{ animationDelay: '400ms' }}>
               <Link 
-                to="/forgot-password" 
+                to={ROUTES.FORGOT_PASSWORD} 
                 className="text-sm text-gold-600 hover:text-gold-700 font-medium hover:underline transition-colors"
               >
                 Forgot your password?

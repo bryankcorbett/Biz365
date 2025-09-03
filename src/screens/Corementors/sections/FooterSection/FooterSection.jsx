@@ -3,10 +3,11 @@ import { Button } from "../../../../components/ui/button";
 import Magnet from "../../../../components/Magnet";
 import Hyperspeed from "../../../../components/Hyperspeed";
 import StarBorder from "../../../../components/loginButton";
+import ShinyText from "../../../../components/ShinyText";
 
 export const FooterSection = () => {
   return (
-    <footer className="relative flex flex-col items-center justify-center px-4 md:px-[360px] py-[100px] bg-black w-full min-h-screen overflow-hidden">
+    <footer className="relative flex flex-col items-center justify-center px-4 md:px-[360px] py-16 bg-black w-full overflow-hidden">
       {/* 3D Hyperspeed Animation Background */}
       <div className="absolute inset-0 w-full h-full">
         <Hyperspeed
@@ -51,18 +52,20 @@ export const FooterSection = () => {
       </div>
       
       {/* Content Layer - All existing content with relative positioning */}
-      <div className="relative z-10 flex flex-col max-w-[1200px] items-center gap-16 w-full">
+      <div className="relative z-10 flex flex-col max-w-[1200px] items-center gap-8 w-full">
         
         {/* Main Footer Content */}
-        <div className="flex flex-col items-center gap-12 w-full">
+        <div className="flex flex-col items-center gap-8 w-full">
           
                      {/* Logo and Tagline */}
-           <div className="flex flex-col items-center gap-6">
+           <div className="flex flex-col items-center gap-4">
              <div className="relative w-[200px] h-[60px]">
-               <img 
-                 className="w-full h-full object-contain" 
-                 alt="Biz365 Logo" 
-                 src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+               <ShinyText 
+                 src="./public/logo.png"
+                 alt="Biz365 Logo"
+                 disabled={false} 
+                 speed={3} 
+                 className="w-full h-full"
                />
              </div>
             
@@ -77,7 +80,7 @@ export const FooterSection = () => {
           </div>
 
           {/* CTA Section */}
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-6">
             <div className="flex flex-col items-center gap-4">
                              <h4 className="[font-family:'Inter',Helvetica] font-medium text-white text-[20px] tracking-[-0.2px] leading-6 text-center">
                  Start your journey today
@@ -121,7 +124,7 @@ export const FooterSection = () => {
           </div>
 
           {/* Links Section */}
-          <div className="flex flex-col items-center gap-8 w-full">
+          <div className="flex flex-col items-center gap-4 w-full">
                          <div className="flex flex-wrap justify-center items-center gap-8 max-w-[800px]">
                <a href="#dashboard" className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[22.4px] hover:opacity-70 transition-opacity">
                  Dashboard
@@ -147,7 +150,7 @@ export const FooterSection = () => {
         </div>
 
                  {/* Bottom Section */}
-         <div className="flex flex-col items-center gap-6 w-full pt-8 border-t border-gray-600">
+         <div className="flex flex-col items-center gap-4 w-full pt-2 border-t border-gray-600">
            <div className="flex flex-col items-center gap-4">
              <p className="[font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-5 text-center opacity-60">
              © 2025 Biz365. All rights reserved.Powered by CoreMentor

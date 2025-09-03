@@ -5,13 +5,11 @@ import { ROUTES, SUCCESS_MESSAGES } from '../../constants';
 
 import onboardingService from '../../services/onboardingService';
 import OnboardingStepper from '../../components/OnboardingStepper';
+import ShinyText from '../../components/ShinyText';
 
 const OnboardingStep1 = () => {
   const [formData, setFormData] = useState({
     companyName: '',
-    businessType: '',
-    website: '',
-    description: '',
   });
   const [errors, setErrors] = useState({});
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -97,18 +95,18 @@ const OnboardingStep1 = () => {
           {/* Logo */}
           <div className="text-center mb-6 animate-fade-in">
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
-              <img 
-                className="w-full h-full object-contain" 
-                alt="Biz365 Logo" 
-                src="https://ik.imagekit.io/corementorid/biz-logo.png?updatedAt=1756561209550" 
+              <ShinyText 
+                src="./public/logo.png"
+                alt="Biz365 Logo"
+                disabled={false} 
+                speed={3} 
+                className="w-full h-full"
               />
             </div>
           </div>
 
           {/* Onboarding Stepper */}
           <OnboardingStepper currentStep={1} totalSteps={5} />
-
-
 
           {/* Form Card */}
           <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-5 animate-scale-in">
@@ -136,86 +134,10 @@ const OnboardingStep1 = () => {
                 />
               </div>
 
-              {/* Business Type */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '150ms' }}>
-                <label 
-                  htmlFor="businessType" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                  Business Type *
-                </label>
-                <select
-                  id="businessType"
-                  name="businessType"
-                                       className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800"
-                  value={formData.businessType}
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                >
-                  <option value="">Select business type</option>
-                  <option value="sole-proprietorship">Sole Proprietorship</option>
-                  <option value="partnership">Partnership</option>
-                  <option value="llp">Limited Liability Partnership (LLP)</option>
-                  <option value="private-limited">Private Limited Company</option>
-                  <option value="public-limited">Public Limited Company</option>
-                  <option value="one-person-company">One Person Company (OPC)</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
 
-
-
-              {/* Website */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
-                <label 
-                  htmlFor="website" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
-                  </svg>
-                  Website
-                </label>
-                <input
-                  type="url"
-                  id="website"
-                  name="website"
-                                       className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
-                  value={formData.website}
-                  onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                  placeholder="https://yourcompany.com"
-                  disabled={isLoading}
-                />
-              </div>
-
-              {/* Business Description */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '250ms' }}>
-                <label 
-                  htmlFor="description" 
-                  className="text-sm font-semibold text-gray-700 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Business Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows={4}
-                  className="w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-gold-400 focus:ring-4 focus:ring-gold-900/20 transition-all duration-300 resize-none text-gray-800 placeholder-gray-500"
-                  value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="Briefly describe your business..."
-                  disabled={isLoading}
-                />
-              </div>
 
               {/* Submit Button */}
-              <div className="animate-slide-in" style={{ animationDelay: '300ms' }}>
+              <div className="animate-slide-in" style={{ animationDelay: '200ms' }}>
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -241,7 +163,7 @@ const OnboardingStep1 = () => {
                       </>
                     ) : (
                       <>
-                        Continue to Industry
+                        Continue
                         <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
@@ -254,7 +176,7 @@ const OnboardingStep1 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '300ms' }}>
             <div className="flex items-center justify-center gap-2">
               <div className="w-3 h-3 bg-gold-500 rounded-full"></div>
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>

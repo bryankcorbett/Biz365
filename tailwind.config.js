@@ -171,6 +171,10 @@ module.exports = {
           "0%": { transform: "translate(0%, 0%)", opacity: "1" },
           "100%": { transform: "translate(0%, 100%)", opacity: "0" },
         },
+        "shine": {
+          "0%": { "background-position": "100%" },
+          "100%": { "background-position": "-100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -189,6 +193,7 @@ module.exports = {
         "star-movement-top": "star-movement-top linear infinite alternate",
         "star-movement-right": "star-movement-right linear infinite alternate",
         "star-movement-left": "star-movement-left linear infinite alternate",
+        "shine": "shine 5s linear infinite",
       },
     },
     container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },

@@ -5,6 +5,7 @@ import { Card, CardContent } from "../../../../components/ui/card";
 export const BenefitsSection = () => {
   const sectionRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,25 +72,23 @@ export const BenefitsSection = () => {
           <div className="flex flex-nowrap items-start justify-center gap-10 w-full">
             {/* First Card */}
             <Card
-              className={`flex flex-col w-96 h-[440px] items-start justify-center mb-10 bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-amber-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-float-1 animate-card-entrance-1' : 'opacity-0 translate-x-[-100px]'}`}
-              style={{
-                animationDelay: "200ms",
-                animationFillMode: "both",
-              }}
+              className={`flex flex-col w-96 h-[470px] items-start justify-center mb-10 bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-amber-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-card-sequence-1' : 'opacity-0 translate-x-[100px]'} ${hoveredCard === 1 ? 'animation-paused' : ''}`}
+              onMouseEnter={() => setHoveredCard(1)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
+              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full h-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
 
                 {/* First card - Updated content matching the image */}
                 <div className="flex flex-col items-start gap-2 w-full h-full">
                   {/* Top Title Section - Similar to other cards */}
-                  <div className="inline-flex items-center gap-10 px-4 py-2 rounded-[2px] shadow-md mb-4 group-hover:shadow-lg group-hover:shadow-yellow-500/30 transition-all duration-300 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/50">
+                  <div className="inline-flex items-center gap-10 px-4 py-2 rounded-[2px]shadow-md mb-4 group-hover:shadow-lg group-hover:shadow-yellow-500/30 transition-all duration-300 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/50">
                     <span className="text-lg font-medium text-wwwsightfulcomblack group-hover:text-white transition-colors duration-300">
-                    Loyalty That Works Everywhere
+                    Loyalty That  Truly  Better Works Everywhere
                     </span>
                   </div>
 
                   {/* Main Content */}
-                  <div className="flex flex-col items-start gap-3 p-4 rounded-lg shadow-sm w-full group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
+                  <div className="flex flex-col items-start gap-3 p-4 rounded-lg shadow-sm w-full h-[330px] group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
                     {/* Introductory Paragraph */}
                     <p className="text-lg text-gray-700 leading-relaxed group-hover:text-white transition-colors duration-300">
                     From salons to food trucks, Biz365 points follow your customers — and bring them back to you.
@@ -141,13 +140,11 @@ export const BenefitsSection = () => {
 
             {/* Second Card */}
             <Card
-              className={`flex flex-col w-96 h-[440px] items-start justify-center bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-purple-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-float-2 animate-card-entrance-2' : 'opacity-0 translate-x-[-100px]'}`}
-              style={{
-                animationDelay: "400ms",
-                animationFillMode: "both",
-              }}
+              className={`flex flex-col w-96 h-[470px] items-start justify-center bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-purple-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-card-sequence-2' : 'opacity-0 translate-y-[100px]'} ${hoveredCard === 2 ? 'animation-paused' : ''}`}
+              onMouseEnter={() => setHoveredCard(2)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
+              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full h-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
 
 
                 {/* Second card - AI Growth */}
@@ -160,7 +157,7 @@ export const BenefitsSection = () => {
                   </div>
 
                   {/* Main Content */}
-                  <div className="flex flex-col items-start gap-3 p-4 rounded-lg shadow-sm w-full group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
+                  <div className="flex flex-col items-start gap-3 p-4 rounded-lg shadow-sm w-full h-[330px] group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
                     {/* Introductory Paragraph */}
                     <p className="text-lg text-gray-700 leading-relaxed group-hover:text-white transition-colors duration-300">
                     Biz365 Auto-Campaign turns birthdays and anniversaries into your biggest revenue days.
@@ -188,26 +185,24 @@ export const BenefitsSection = () => {
 
             {/* Third Card */}
             <Card
-              className={`flex flex-col w-96 h-[440px] items-start justify-center bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-blue-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-float-3 animate-card-entrance-3' : 'opacity-0 translate-x-[-100px]'}`}
-              style={{
-                animationDelay: "600ms",
-                animationFillMode: "both",
-              }}
+              className={`flex flex-col w-96 h-[470px] items-start justify-center bg-orbai-templateframerwebsitewild-sand rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-3.33px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0 hover:scale-105 transition-all duration-300 group hover:shadow-2xl hover:shadow-blue-500/20 transform-gpu will-change-transform hover:bg-black ${isInView ? 'animate-card-sequence-3' : 'opacity-0 translate-x-[100px]'} ${hoveredCard === 3 ? 'animation-paused' : ''}`}
+              onMouseEnter={() => setHoveredCard(3)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
+              <CardContent className="flex flex-col items-center justify-start relative flex-1 w-full h-full p-6 overflow-hidden  transition-transform duration-500 ease-out">
                 
 
                 {/* Third card - Updated content matching the image */}
                 <div className="flex flex-col items-start gap-2 w-full h-full">
                   {/* Top Title Section - Similar to other cards */}
-                  <div className="inline-flex items-center gap-10 px-4 py-2 rounded-[2px] shadow-md mb-3 animate-pulse group-hover:shadow-lg group-hover:shadow-yellow-500/30 transition-all duration-300 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/50">
+                  <div className="inline-flex items-center gap-10 px-4 py-2 rounded-[2px] shadow-md mb-4 group-hover:shadow-lg group-hover:shadow-yellow-500/30 transition-all duration-300 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/50">
                     <span className="text-lg font-medium text-wwwsightfulcomblack group-hover:text-white transition-colors duration-300">
                       Don't Just See Customers. Understand Them.
                     </span>
                   </div>
 
                   {/* Main Content */}
-                  <div className="flex flex-col items-start gap-2 p-3 rounded-lg shadow-sm w-full group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
+                  <div className="flex flex-col items-start gap-3 p-4 rounded-lg shadow-sm w-full h-[330px] group-hover:shadow-md group-hover:shadow-yellow-500/20 group-hover:bg-gray-800 group-hover:border group-hover:border-yellow-500/30 transition-all duration-300">
                     {/* First Paragraph */}
                     <p className="text-lg text-gray-700 leading-relaxed group-hover:text-white transition-colors duration-300">
                       From VIPs to at-risk customers — Biz365 tells you who matters and how to keep them.
@@ -258,43 +253,17 @@ export const BenefitsSection = () => {
         </div>
       </div>
 
-      {/* Custom CSS for ultra animations */}
+      {/* Custom CSS for card sequence animations */}
       <style jsx>{`
-        @keyframes float-1 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          25% { transform: translateY(-8px) rotate(0.5deg); }
-          50% { transform: translateY(-4px) rotate(-0.3deg); }
-          75% { transform: translateY(-12px) rotate(0.2deg); }
-        }
-        
-        @keyframes float-2 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          25% { transform: translateY(-6px) rotate(-0.4deg); }
-          50% { transform: translateY(-10px) rotate(0.6deg); }
-          75% { transform: translateY(-2px) rotate(-0.2deg); }
-        }
-        
-        @keyframes float-3 {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          25% { transform: translateY(-10px) rotate(0.3deg); }
-          50% { transform: translateY(-6px) rotate(-0.5deg); }
-          75% { transform: translateY(-8px) rotate(0.4deg); }
-        }
-        
-        @keyframes slide-up {
-          0% { transform: translateY(0px) translateX(-50%); }
-          100% { transform: translateY(-8px) translateX(-50%); }
-        }
-        
-        @keyframes pulse-slow {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.02); }
-        }
-        
-        @keyframes card-entrance-1 {
+        /* Card 1: Animates from right to position */
+        @keyframes card-sequence-1 {
           0% { 
             opacity: 0; 
-            transform: translateX(-100px); 
+            transform: translateX(100px); 
+          }
+          30% { 
+            opacity: 1; 
+            transform: translateX(0); 
           }
           100% { 
             opacity: 1; 
@@ -302,10 +271,31 @@ export const BenefitsSection = () => {
           }
         }
         
-        @keyframes card-entrance-2 {
+        /* Card 2: Animates from down to position */
+        @keyframes card-sequence-2 {
           0% { 
             opacity: 0; 
-            transform: translateX(-100px); 
+            transform: translateY(100px); 
+          }
+          30% { 
+            opacity: 1; 
+            transform: translateY(0); 
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateY(0); 
+          }
+        }
+        
+        /* Card 3: Animates from right to position */
+        @keyframes card-sequence-3 {
+          0% { 
+            opacity: 0; 
+            transform: translateX(100px); 
+          }
+          30% { 
+            opacity: 1; 
+            transform: translateX(0); 
           }
           100% { 
             opacity: 1; 
@@ -313,56 +303,30 @@ export const BenefitsSection = () => {
           }
         }
         
-        @keyframes card-entrance-3 {
-          0% { 
-            opacity: 0; 
-            transform: translateX(-100px); 
-          }
-          100% { 
-            opacity: 1; 
-            transform: translateX(0); 
-          }
+        /* Animation classes with 10-second cycle and 3-second card animations */
+        .animate-card-sequence-1 {
+          animation: card-sequence-1 10s ease-in-out infinite;
+          animation-delay: 0s;
         }
         
-        .animate-float-1 {
-          animation: float-1 6s ease-in-out infinite;
+        .animate-card-sequence-2 {
+          animation: card-sequence-2 10s ease-in-out infinite;
+          animation-delay: 3.5s;
         }
         
-        .animate-float-2 {
-          animation: float-2 7s ease-in-out infinite;
+        .animate-card-sequence-3 {
+          animation: card-sequence-3 10s ease-in-out infinite;
+          animation-delay: 7s;
         }
         
-        .animate-float-3 {
-          animation: float-3 8s ease-in-out infinite;
+        /* Pause animation on hover */
+        .animation-paused {
+          animation-play-state: paused !important;
         }
         
-        .animate-slide-up {
-          animation: slide-up 0.6s ease-out forwards;
-        }
-        
-        .animate-pulse-slow {
-          animation: pulse-slow 2s ease-in-out infinite;
-        }
-        
-        .group:hover .animate-float-1,
-        .group:hover .animate-float-2,
-        .group:hover .animate-float-3 {
-          animation-play-state: paused;
-        }
-
-        .animate-card-entrance-1 {
-          animation: card-entrance-1 0.8s ease-out forwards;
-          animation-delay: 0.2s;
-        }
-        
-        .animate-card-entrance-2 {
-          animation: card-entrance-2 0.8s ease-out forwards;
-          animation-delay: 0.4s;
-        }
-        
-        .animate-card-entrance-3 {
-          animation: card-entrance-3 0.8s ease-out forwards;
-          animation-delay: 0.6s;
+        /* Smooth transitions for hover effects */
+        .group:hover {
+          transition: all 0.3s ease;
         }
       `}</style>
     </section>
