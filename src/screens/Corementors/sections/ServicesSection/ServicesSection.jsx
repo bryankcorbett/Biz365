@@ -188,7 +188,7 @@ const RIGHT_IMAGES = {
 
 export const ServicesSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center px-4 md:px-[360px] py-[100px] bg-orbai-templateframerwebsitewild-sand">
+    <section id="services" className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 xl:px-16 py-16 sm:py-20 lg:py-[100px] bg-orbai-templateframerwebsitewild-sand">
       <div className="flex flex-col max-w-[1200px] items-center gap-11 w-full">
         {/* Header Section (as-is) */}
         <header className="flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full translate-y-[-1rem] animate-fade-in opacity-0">
@@ -198,7 +198,7 @@ export const ServicesSection = () => {
           >
             <div className="flex flex-col w-4 h-5 items-start">
               <div className="relative self-stretch w-full h-5">
-                <img className="absolute w-3.5 h-3.5 top-0.5 left-0.5" alt="Group" src="https://c.animaapp.com/mewus0n76JsNvN/img/group-11.png" />
+                <img className="absolute w-6 h-5 top-0 left-0.5" alt="Group" src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/7cb85085-2d66-47ca-b2e1-727c6533bb9a" />
               </div>
             </div>
             <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[11.6px] tracking-[0] leading-[14.4px]">
@@ -207,34 +207,34 @@ export const ServicesSection = () => {
           </Badge>
 
           <div className="flex flex-col items-center w-full translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
-            <h2 className="bg-[linear-gradient(0deg,rgba(0,0,0,1)_34%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Inter',Helvetica] font-medium text-[52.4px] text-center tracking-[-0.56px] leading-[67.2px]">
+            <h2 className="bg-[linear-gradient(0deg,rgba(0,0,0,1)_34%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Inter',Helvetica] font-medium text-3xl sm:text-4xl lg:text-5xl xl:text-[52.4px] text-center tracking-[-0.56px] leading-tight sm:leading-[1.2] lg:leading-[67.2px]">
               What We Offer
             </h2>
           </div>
 
-          <div className="flex flex-col max-w-[500px] w-full items-center pt-px pb-0 px-0 opacity-80 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
-            <p className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base text-center tracking-[0] leading-6">
+          <div className="flex flex-col max-w-[500px] w-full items-center pt-px pb-0 px-0 translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
+            <p className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-sm sm:text-base text-center tracking-[0] leading-5 sm:leading-6">
               From reviews to loyalty, from social media to menus — BizTag makes every tap a new opportunity.
             </p>
           </div>
         </header>
 
         {/* Services Grid */}
-        <div className="flex flex-col gap-6 w-full translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]">
+        <div className="flex flex-col gap-4 sm:gap-6 w-full max-w-screen-xl mx-auto translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]">
           {/* First Row */}
-          <div className="flex flex-wrap gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {/* Card: id=2 - appears from LEFT (slower + visible) */}
             <RevealOnScroll origin="left" delayMs={100} durationMs={1600}>
-              <Card className="flex-1 min-w-[792px] bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0">
-                <CardContent className="flex items-center gap-6 p-[30px] min-h-[360px]">
+              <Card className="w-full max-w-4xl bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0">
+                <CardContent className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6 p-4 sm:p-6 lg:p-[30px] min-h-[300px] lg:min-h-[360px]">
                   {/* LEFT: text */}
                   <div className="flex flex-col gap-4 flex-1">
                     <TypewriterOnScroll
                       text={servicesData[1].title}
-                      className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[18.8px] tracking-[-0.20px] leading-6"
+                      className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-lg sm:text-xl lg:text-[18.8px] tracking-[-0.20px] leading-5 sm:leading-6"
                       speed={60}
                     />
-                    <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-6 opacity-80">
+                    <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-sm sm:text-base tracking-[0] leading-5 sm:leading-6 opacity-80">
                       {servicesData[1].description.split("\n").map((line, index) => (
                         <LineReveal key={index} delay={300 + index * 160}>
                           <div className="mb-3">{line}</div>
@@ -242,9 +242,9 @@ export const ServicesSection = () => {
                       ))}
                     </div>
                   </div>
-                  {/* RIGHT: same-size IMAGE */}
-                  <div className="w-[400px] rounded-2xl overflow-hidden shadow-[0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
-                    <img src={RIGHT_IMAGES[2]} alt="service-visual-2" className="w-full h-[300px] object-cover" loading="lazy" />
+                  {/* RIGHT: responsive IMAGE */}
+                  <div className="w-full lg:w-[400px] rounded-2xl overflow-hidden shadow-[0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
+                    <img src={RIGHT_IMAGES[2]} alt="service-visual-2" className="w-full h-[200px] sm:h-[250px] lg:h-[300px] object-cover" loading="lazy" />
                   </div>
                 </CardContent>
               </Card>
@@ -252,19 +252,19 @@ export const ServicesSection = () => {
           </div>
 
           {/* Second Row */}
-          <div className="flex flex-wrap gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {/* Card: id=3 - appears from RIGHT (slower + visible) */}
             <RevealOnScroll origin="right" delayMs={250} durationMs={1600}>
-              <Card className="flex-1 min-w-[792px] bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0">
-                <CardContent className="flex items-center gap-6 p-[30px] min-h-[360px]">
+              <Card className="w-full max-w-4xl bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border-0">
+                <CardContent className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6 p-4 sm:p-6 lg:p-[30px] min-h-[300px] lg:min-h-[360px]">
                   {/* LEFT: text */}
                   <div className="flex flex-col gap-4 flex-1">
                     <TypewriterOnScroll
                       text={servicesData[2].title}
-                      className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[18.8px] tracking-[-0.20px] leading-6"
+                      className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-lg sm:text-xl lg:text-[18.8px] tracking-[-0.20px] leading-5 sm:leading-6"
                       speed={60}
                     />
-                    <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base tracking-[0] leading-6 opacity-80">
+                    <div className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-sm sm:text-base tracking-[0] leading-5 sm:leading-6 opacity-80">
                       {servicesData[2].description.split("\n").map((line, index) => (
                         <LineReveal key={index} delay={300 + index * 160}>
                           <div className="mb-3">{line}</div>
@@ -272,9 +272,9 @@ export const ServicesSection = () => {
                       ))}
                     </div>
                   </div>
-                  {/* RIGHT: same-size IMAGE */}
-                  <div className="w-[400px] rounded-2xl overflow-hidden shadow-[0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
-                    <img src={RIGHT_IMAGES[3]} alt="service-visual-3" className="w-full h-[300px] object-cover" loading="lazy" />
+                  {/* RIGHT: responsive IMAGE */}
+                  <div className="w-full lg:w-[400px] rounded-2xl overflow-hidden shadow-[0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
+                    <img src={RIGHT_IMAGES[3]} alt="service-visual-3" className="w-full h-[200px] sm:h-[250px] lg:h-[300px] object-cover" loading="lazy" />
                   </div>
                 </CardContent>
               </Card>

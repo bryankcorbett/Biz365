@@ -134,7 +134,7 @@ export const Corementors = () => {
 
       <header className="flex flex-col w-[100%] items-start fixed top-0 left-0 z-50 ">
         <nav className="flex justify-center bg-white   pt-3 pb-4 px-0 self-stretch w-full flex-[0_0_auto]    [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
-          <div className="absolute w-[120vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
+          <div className="absolute w-[100vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
 
           <div className="flex w-[100%] items-center justify-between relative">
             {/* Logo - Left Side (Start) */}
@@ -176,14 +176,15 @@ export const Corementors = () => {
                 inactiveTransition="transform 0.4s ease-in-out"
               >
                 <Button
-                  className="inline-flex items-center justify-center pt-[11px] pb-3 px-6 h-auto bg-wwwsightfulcomblack rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-gray-800 transition-colors"
+                  className="inline-flex items-center justify-center pt-2 pb-2 px-3 sm:pt-[11px] sm:pb-3 sm:px-6 h-auto w-auto bg-wwwsightfulcomblack rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-gray-800 transition-colors"
                   asChild
                 >
                   <a
                     href="/signup"
                   >
-                    <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap">
-                      Try it for free
+                    <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-xs sm:text-sm tracking-[0] leading-[18px] sm:leading-[22.4px] whitespace-nowrap">
+                      <span className="hidden sm:inline">Try it for free</span>
+                      <span className="sm:hidden">Try free</span>
                     </span>
                   </a>
                 </Button>

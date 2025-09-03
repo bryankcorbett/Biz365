@@ -145,7 +145,7 @@ export const ReviewsSection = () => {
             <Badge className="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-orbai-templateframerwebsitewild-sand rounded-[60px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border border-solid border-neutral-100">
               <div className="flex flex-col w-4 h-5 items-start">
                 <div className="relative w-full h-5">
-                  <img className="absolute w-3.5 h-3 top-1 left-px" alt="Group" src="https://c.animaapp.com/mewus0n76JsNvN/img/group-1.png" />
+                  <img className="absolute w-6 h-5 top left-px" alt="Group" src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/bb139178-e08a-429e-826c-1b8d041be1d7" />
                 </div>
               </div>
               <span className="font-orbai-template-framer-website-inter-medium font-[number:var(--orbai-template-framer-website-inter-medium-font-weight)] text-wwwsightfulcomblack text-[length:var(--orbai-template-framer-website-inter-medium-font-size)] tracking-[var(--orbai-template-framer-website-inter-medium-letter-spacing)] leading-[var(--orbai-template-framer-website-inter-medium-line-height)] [font-style:var(--orbai-template-framer-website-inter-medium-font-style)]">

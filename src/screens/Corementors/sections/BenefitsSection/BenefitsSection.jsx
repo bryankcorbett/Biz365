@@ -41,7 +41,7 @@ const CARDS = [
       ["Differentiates ", "from single", " shop loyalty"],
     ],
     backImg:
-      "src/pages/biz3655.png",
+      "https://cdn.pixabay.com/photo/2018/03/27/21/43/startup-3267505_1280.jpg",
     caption: "Earn everywhere. Redeem anywhere.",
   },
   {
@@ -68,7 +68,7 @@ const CARDS = [
       ["Edge: POS/loyalty shows numbers — ", "Biz365 tells you the next action", ""],
     ],
     backImg:
-      "src/pages/biz3678.png",
+      "https://cdn.pixabay.com/photo/2020/11/24/04/13/finance-5771541_1280.jpg",
     caption: "Know who to talk to — and what to say.",
   },
 ];
@@ -98,7 +98,7 @@ const FlipCard = ({ data }) => (
             <span className="text-[18px] font-semibold text-black">{data.title}</span>
           </div>
 
-          <div className="rounded-2xl p-5 bg-white shadow-inner flex-1 overflow-auto">
+          <div className="rounded-2xl p-5 bg-white shadow-inner flex-1 overflow-auto scrollbar-hide">
             <p className="text-black text-[15.5px] leading-7 mb-3">{data.lead}</p>
             <ul className="space-y-2">
               {data.bullets.map(([pre, strong, post], idx) => (
@@ -189,6 +189,13 @@ export const BenefitsSection = () => {
       <style>{`
         .perspective { perspective: 1200px; }
         .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .scrollbar-hide {
+          -ms-overflow-style: none;  /* Internet Explorer 10+ */
+          scrollbar-width: none;  /* Firefox */
+        }
+        .scrollbar-hide::-webkit-scrollbar { 
+          display: none;  /* Safari and Chrome */
+        }
         @media (prefers-reduced-motion: reduce) {
           .perspective { perspective: none; }
         }

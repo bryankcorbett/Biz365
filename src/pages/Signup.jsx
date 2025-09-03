@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
@@ -60,6 +60,7 @@ const Signup = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isAppleLoading, setIsAppleLoading] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   
   // Animation states for right panel elements
   const [isExiting, setIsExiting] = useState(false);
@@ -463,8 +464,8 @@ const Signup = () => {
 
           {/* Right Panel - White Signup Form */}
           <div>
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
-              <div className="p-6 sm:p-8">
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 relative">
+              <div className="p-6 sm:p-8 relative">
                 {/* BIZ365 Logo */}
                 <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
                   showRightElements.logo 
@@ -562,7 +563,7 @@ const Signup = () => {
                 </div>
 
                 {/* Email Form */}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 relative">
                   {/* Name Field */}
                   <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
                     showRightElements.nameInput 
@@ -628,8 +629,9 @@ const Signup = () => {
                     <label htmlFor="mobile" className="text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Number</label>
                     <div className="flex gap-2">
                       {/* Country Code Dropdown */}
-                      <div className="relative country-dropdown">
+                      <div className="relative country-dropdown z-50">
                         <button
+                          ref={dropdownRef}
                           type="button"
                           onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                           className="flex items-center gap-2 px-3 py-2 h-11 bg-white border border-gray-300 rounded-md text-sm shadow-sm transition-all duration-200 hover:border-gray-400 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
@@ -643,7 +645,10 @@ const Signup = () => {
                         
                         {/* Dropdown Menu */}
                         {showCountryDropdown && (
-                          <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto">
+                          <div 
+                            data-country-dropdown
+                            className="absolute bottom-full left-0 mb-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-[9999] max-h-60 overflow-y-auto"
+                          >
                             {COUNTRY_CODES.map((country) => (
                               <button
                                 key={country.code}

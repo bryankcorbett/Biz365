@@ -401,9 +401,9 @@ const OnboardingStep3 = () => {
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
           }`}>
-            <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
+            <div className="inline-flex items-center justify-center w-32 h-32 mb-4">
               <ShinyText 
-                src="./public/logo.png"
+                src="../../public/logo.png"
                 alt="Biz365 Logo"
                 disabled={false} 
                 speed={3} 

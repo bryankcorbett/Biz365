@@ -121,7 +121,7 @@ export const PricingSection = () => {
             variant="outline"
             className="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-orbai-templateframerwebsitewild-sand rounded-[60px] border-neutral-100"
           >
-            <img className="w-[13px] h-[13px]" alt="Group" src="https://c.animaapp.com/mewus0n76JsNvN/img/group-14.png" />
+            <img className="w-[18px] h-[15px]" alt="Group" src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/31f1b065-1217-47e4-998e-c4794587f4ef" />
             <span className="font-medium text-xs">PRICING</span>
           </Badge>
 

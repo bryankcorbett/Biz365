@@ -133,34 +133,33 @@ const featuresData = [
     title: "Launch Campaigns That Sell Themselves.",
     description:
       "→ Festive & seasonal templates\n→ One-click push to Instagram, WhatsApp, Facebook, TikTok\n→ Custom titles, offers, discount rules\n→ Multi-channel reach (Email, WhatsApp, SMS)\n→ Flexible rewards (discounts, freebies, no-discount promos)",
-    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
+    graphicSrc: "https://cdn1.genspark.ai/user-upload-image/gpt_image_edited/99192e67-20e6-4a0f-a8fc-bee373a2e1a5",
   },
   {
     id: 2,
     title: "Never Miss a Birthday, Anniversary, or Festival Again.",
     description:
       "Biz365 Auto-Campaign remembers your customers and boosts your sales — automatically.\n\nYou approve. We deliver. Your customers celebrate with you.\n\n🎉 Special days tracked automatically\n🎉 One-click campaign launch\n🎉 Multi-channel delivery (SMS, WhatsApp, Email)\n🎉 Simple and effective\n🎉 Visible results in dashboard",
-    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
+    graphicSrc: "https://cdn1.genspark.ai/user-upload-image/gpt_image_edited/99192e67-20e6-4a0f-a8fc-bee373a2e1a5",
   },
   {
     id: 3,
     title: "Not Just a Code. A Connection.",
     description:
       "From games to reviews, from loyalty to followers — Magic QR makes every scan unforgettable.\n\n\"Scan. Spin. Smile. Repeat.\"\n\n🎯 Spin-the-wheel gamification\n🎯 Birthday & special occasion triggers\n🎯 Loyalty sign-ups made fun\n🎯 Digital menus & Google reviews\n🎯 Instagram follows & business cards\n🎯 Store & campaign links",
-    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic.png",
+    graphicSrc: "https://cdn1.genspark.ai/user-upload-image/gpt_image_edited/99192e67-20e6-4a0f-a8fc-bee373a2e1a5",
   },
   {
     id: 4,
     title: "Feedback That Rewards.",
     description:
       "Your customers share. You listen. They earn. You grow.\n\n\"Turn every opinion into an opportunity.\"\n\n💬 Smart forms customers love\n💬 Incentivized feedback with loyalty points\n💬 Actionable insights from responses\n💬 Continuous improvement loop\n💬 Silent risk prevention with early warnings",
-    graphicSrc: "https://c.animaapp.com/mewus0n76JsNvN/img/graphic-1.png",
+    graphicSrc: "https://cdn1.genspark.ai/user-upload-image/gpt_image_edited/99192e67-20e6-4a0f-a8fc-bee373a2e1a5",
   },
 ];
 
 const buttonsData = [
   { text: "Get Started", href: "/signup", variant: "primary", hasIcon: true },
-  { text: "See Our Services", href: "#services", variant: "secondary", hasIcon: false },
 ];
 
 /* -------------------- Animated Bullet -------------------- */
@@ -198,7 +197,7 @@ const FeatureCard = ({ feature, imageLeft = false }) => {
           </div>
 
           {/* IMAGE */}
-          <div className="media justify-self-center">
+          <div className="media justify-self-center content-center">
             <PremiumImage src={feature.graphicSrc} side={imageLeft ? "left" : "right"} />
           </div>
         </div>

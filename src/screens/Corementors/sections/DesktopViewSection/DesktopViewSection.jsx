@@ -57,9 +57,9 @@ export const DesktopViewSection = () => {
             <Badge className="h-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-[60px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border border-solid border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
               <div className="flex items-center gap-2 px-3 py-1.5">
                 <img
-                  className="w-[13px] h-[13px] animate-spin"
+                  className="w-[18px] h-[15px]"
                   alt="Group"
-                  src="https://c.animaapp.com/mewus0n76JsNvN/img/group-15.png"
+                  src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/23fcf73e-a6e0-4fd6-8fdd-a1f04b72dc48"
                 />
                 <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[11.6px] tracking-[0] leading-[14.4px]">
                   FAQS
