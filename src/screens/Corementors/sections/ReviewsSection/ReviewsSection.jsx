@@ -137,7 +137,7 @@ const animatedTextWordsLine5 = [
 /* ==================== COMPONENT ==================== */
 export const ReviewsSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center px-4 md:px-[360px] py-[100px] bg-orbai-templateframerwebsitewild-sand">
+    <section className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 xl:px-24 py-[100px] bg-orbai-templateframerwebsitewild-sand">
       <div className="flex flex-col max-w-[1200px] items-center gap-11 w-full">
         {/* Header Section (unchanged visual) */}
         <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:0ms] flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full">

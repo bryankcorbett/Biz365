@@ -283,7 +283,7 @@ export default function Orb({
 
   return (
     <div className="relative w-full h-full flex items-center justify-center">
-      <div ref={ctnDom} className="orb-container relative w-[1200px] h-[1200px]" />
+      <div ref={ctnDom} className="orb-container relative w-full max-w-[1200px] h-[1200px]" />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
         
 
@@ -298,7 +298,7 @@ export default function Orb({
 
 
         {/* Subtitle - Inside the circle */}
-        <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms] flex flex-col min-w-[446px] max-w-[446px] items-center pointer-events-auto" style={{ marginBottom: '30px' }}>
+        <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms] flex flex-col w-full max-w-[446px] items-center pointer-events-auto" style={{ marginBottom: '30px' }}>
               <p className="font-muskymore-biz365-ai-inter-regular font-[number:var(--muskymore-biz365-ai-inter-regular-font-weight)] text-wwwsightfulcomblack text-[length:var(--muskymore-biz365-ai-inter-regular-font-size)] text-center tracking-[var(--muskymore-biz365-ai-inter-regular-letter-spacing)] leading-[var(--muskymore-biz365-ai-inter-regular-line-height)] [font-style:var(--muskymore-biz365-ai-inter-regular-font-style)]">
               From sales to loyalty, Biz365 Dashboard shows you everything you need to grow.
               </p>

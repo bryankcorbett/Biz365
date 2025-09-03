@@ -7,7 +7,7 @@ import ShinyText from "../../../../components/ShinyText";
 
 export const FooterSection = () => {
   return (
-    <footer className="relative flex flex-col items-center justify-center px-4 md:px-[360px] py-16 bg-black w-full overflow-hidden">
+    <footer className="relative flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 py-16 bg-black w-full max-w-full overflow-hidden">
       {/* 3D Hyperspeed Animation Background */}
       <div className="absolute inset-0 w-full h-full">
         <Hyperspeed
@@ -52,7 +52,7 @@ export const FooterSection = () => {
       </div>
       
       {/* Content Layer - All existing content with relative positioning */}
-      <div className="relative z-10 flex flex-col max-w-[1200px] items-center gap-8 w-full">
+      <div className="relative z-10 flex flex-col max-w-7xl items-center gap-8 w-full">
         
         {/* Main Footer Content */}
         <div className="flex flex-col items-center gap-8 w-full">

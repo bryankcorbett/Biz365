@@ -49,7 +49,7 @@ const navigationItems = [
 export const Corementors = () => {
   return (
     <div
-      className="flex flex-col items-start relative bg-[linear-gradient(0deg,rgba(245,245,245,1)_0%,rgba(245,245,245,1)_100%),linear-gradient(0deg,rgba(255,255,255,1)_0%,rgba(255,255,255,1)_100%)] bg-orbai-templateframerwebsitewhite-wild-sand"
+      className="flex flex-col items-start relative bg-[linear-gradient(0deg,rgba(245,245,245,1)_0%,rgba(245,245,245,1)_100%),linear-gradient(0deg,rgba(255,255,255,1)_0%,rgba(255,255,255,1)_100%)] bg-orbai-templateframerwebsitewhite-wild-sand w-full max-w-full overflow-x-hidden"
       data-model-id="1:308"
     >
       <div className="relative self-stretch w-full bg-orbai-templateframerwebsitewild-sand">
@@ -103,43 +103,17 @@ export const Corementors = () => {
         </div>
       </div>
 
-      <div className="flex flex-col w-[121px] items-start fixed top-[1096px] left-[1779px] z-50">
-        <Button
-          className="inline-flex items-center justify-center gap-[7px] pl-3 pr-3.5 pt-[7px] pb-2 h-auto rounded-[11px] overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] bg-[linear-gradient(180deg,rgba(62,105,184,0.5)_0%,rgba(0,0,0,1)_16%)] border border-solid border-black"
-          asChild
-        >
-          <a
-            href="https://framebase.lemonsqueezy.com/buy/ed1b4c3d-925c-4434-8a7f-de7f9cd40560"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <div className="flex flex-col w-[18px] h-[18px] items-start relative">
-              <img
-                className="relative self-stretch w-full h-[18px]"
-                alt="Component"
-                src="https://c.animaapp.com/mewus0n76JsNvN/img/component-1-33.svg"
-              />
-            </div>
-            <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap">
-              Get Orb AI
-            </span>
-          </a>
-        </Button>
-      </div>
+      
 
-      <img
-        className="fixed w-[1920px] h-[100px] top-[1100px] left-0 z-40"
-        alt="Container"
-      />
 
       <header className="flex flex-col w-[100%] items-start fixed top-0 left-0 z-50 ">
-        <nav className="flex justify-center bg-white w-screen  pt-3 pb-4 px-0 self-stretch flex-[0_0_auto]    [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
+        <nav className="flex justify-center bg-white w-full max-w-full pt-3 pb-4 px-4 self-stretch flex-[0_0_auto] [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
           <div className="absolute h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
 
           <div className="flex w-[100%] items-center justify-between relative">
             {/* Logo - Left Side (Start) */}
             <div className="absolute left-0 flex-shrink-0">
-              <div className="relative w-[230px] h-[150px]">
+              <div className="relative w-[180px] h-[120px] max-w-[230px] max-h-[150px]">
                 <ShinyText 
                   src="https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200"
                   alt="Biz365 Logo"
@@ -194,37 +168,9 @@ export const Corementors = () => {
         </nav>
       </header>
 
-      <div className="flex w-[1920px] items-start justify-end p-5 fixed top-[1122px] left-0 z-40">
-        <div className="relative w-[140px] h-[38px]">
-          <div className="relative h-[38px]">
-            <div className="absolute w-[138px] h-9 top-px left-px bg-wwwsightfulcomwhite rounded-[10px] shadow-[0px_10px_26px_-4.5px_#00000005,0px_2.29px_5.95px_-3px_#00000024,0px_0.6px_1.57px_-1.5px_#0000002b]" />
-
-            <div className="inline-flex items-center gap-2.5 absolute top-[11px] left-2.5">
-              <div className="relative w-3 h-4">
-                <img
-                  className="absolute w-3 h-5 -top-0.5 left-0"
-                  alt="Logo mask group"
-                  src="https://c.animaapp.com/mewus0n76JsNvN/img/logo-mask-group.svg"
-                />
-              </div>
-
-              <img
-                className="relative w-[97px] h-2.5"
-                alt="Text mask group"
-                src="https://c.animaapp.com/mewus0n76JsNvN/img/text-mask-group.svg"
-              />
-            </div>
-
-            <img
-              className="absolute w-[140px] h-[38px] top-0 left-0"
-              alt="Bottom mask group"
-              src="https://c.animaapp.com/mewus0n76JsNvN/img/bottom-mask-group.svg"
-            />
-
-            <div className="absolute w-[140px] h-[38px] top-0 left-0 bg-wwwsightfulcomwhite-02 rounded-[11px] shadow-[inset_0px_0px_0px_1px_#000000] opacity-[0.04]" />
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };
+
+export default Corementors;
