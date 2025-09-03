@@ -53,7 +53,7 @@ export const FounderNoteSection = () => {
   }, [currentIndex, isTyping, fullText]);
 
   return (
-    <section ref={sectionRef} className="flex flex-col items-center justify-center px-4 md:px-[360px] py-[100px] w-full bg-orbai-templateframerwebsitewhite-30 shadow-[inset_0px_-3px_1px_#ffffff66,inset_0px_3px_1px_#ffffff66] mt-52">
+    <section ref={sectionRef} className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 xl:px-24 py-[100px] w-full bg-orbai-templateframerwebsitewhite-30 shadow-[inset_0px_-3px_1px_#ffffff66,inset_0px_3px_1px_#ffffff66] mt-52">
       <div className="flex flex-col max-w-[1200px] items-center w-full">
         <Card className={`max-w-[844px] w-full bg-transparent border-none shadow-none ${isInView ? 'translate-y-0 animate-fade-in opacity-100' : 'translate-y-[-1rem] opacity-0'}`}>
           <CardContent className="flex flex-col items-center justify-center gap-6 p-0">

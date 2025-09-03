@@ -3,7 +3,7 @@ import { Badge } from "../../../../components/ui/badge";
 
 export const TeamSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center pt-[100px] pb-[60px] px-4 md:px-[360px] w-full bg-orbai-templateframerwebsitewild-sand">
+    <section className="flex flex-col items-center justify-center pt-[100px] pb-[60px] px-4 md:px-8 lg:px-16 xl:px-24 w-full bg-orbai-templateframerwebsitewild-sand">
       <div className="flex flex-col max-w-[1200px] items-center gap-11 w-full">
         <div className="flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full">
           <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:0ms]">

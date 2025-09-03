@@ -74,7 +74,7 @@ const processSteps = [
 
 export const ProcessSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center px-4 md:px-[360px] py-[100px] w-full bg-orbai-templateframerwebsitewild-sand">
+    <section className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 xl:px-24 py-[100px] w-full bg-orbai-templateframerwebsitewild-sand">
       <div className="flex flex-col max-w-[1200px] items-center justify-center gap-[43.99px] w-full">
         {/* Header Section */}
         <header className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:0ms] flex flex-col min-w-[700px] max-w-[700px] items-center justify-center gap-[15px]">
@@ -101,7 +101,7 @@ export const ProcessSection = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col max-w-[500px] w-[500px] items-center pt-[0.99px] opacity-80">
+          <div className="flex flex-col max-w-[500px] w-full items-center pt-[0.99px] opacity-80">
             <p className="[font-family:'Inter',Helvetica] font-normal text-wwwsightfulcomblack text-base text-center tracking-[0] leading-6">
               A transparent process of collaboration and feedback
             </p>

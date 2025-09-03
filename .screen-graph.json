@@ -6,7 +6,6 @@
       "routes": [
         "/"
       ],
-      "dataModelId": "1:308",
       "isRoot": true
     },
     {
@@ -47,86 +46,5 @@
       ]
     }
   ],
-  "edges": [
-    {
-      "id": "src\\screens\\Corementors\\Corementors.jsx:160:14-to-src\\pages\\Login.jsx",
-      "source": "src\\screens\\Corementors\\Corementors.jsx",
-      "target": "src\\pages\\Login.jsx",
-      "data": {
-        "viaRoute": "/login",
-        "trigger": {
-          "element": "<StarBorder\r\n                as=\"a\"\r\n                href=\"/login\"\r\n                className=\"custom-class\"\r\n                color=\"#ffffff\"\r\n                speed=\"2s\"\r\n                onClick={() => window.location.href = '/login'}\r\n              >\r\n                Log in\r\n              </StarBorder>",
-          "line": 160,
-          "endLine": 169,
-          "column": 14,
-          "endColumn": 27,
-          "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\Corementors\\Corementors.jsx:182:18-to-src\\pages\\Signup.jsx",
-      "source": "src\\screens\\Corementors\\Corementors.jsx",
-      "target": "src\\pages\\Signup.jsx",
-      "data": {
-        "viaRoute": "/signup",
-        "trigger": {
-          "element": "<a\r\n                    href=\"/signup\"\r\n                  >\r\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-xs sm:text-sm tracking-[0] leading-[18px] sm:leading-[22.4px] whitespace-nowrap\">\r\n                      <span className=\"hidden sm:inline\">Try it for free</span>\r\n                      <span className=\"sm:hidden\">Try free</span>\r\n                    </span>\r\n                  </a>",
-          "line": 182,
-          "endLine": 189,
-          "column": 18,
-          "endColumn": 22,
-          "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\Corementors\\sections\\HeroSection\\HeroSection.jsx:314:14-to-src\\pages\\Signup.jsx",
-      "source": "src\\screens\\Corementors\\Corementors.jsx",
-      "target": "src\\pages\\Signup.jsx",
-      "data": {
-        "viaRoute": "/signup",
-        "trigger": {
-          "element": "<a\r\n              href=\"/signup\"\r\n                className=\"inline-flex items-center gap-2 [font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] text-wwwsightfulcomwhite\"\r\n            >\r\n              Get Started\r\n              <ArrowRight className=\"w-5 h-5\" />\r\n              </a>",
-          "line": 314,
-          "endLine": 320,
-          "column": 14,
-          "endColumn": 18,
-          "sourceFile": "src\\screens\\Corementors\\sections\\HeroSection\\HeroSection.jsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\Corementors\\sections\\PricingSection\\PricingSection.jsx:173:22-to-src\\pages\\Signup.jsx",
-      "source": "src\\screens\\Corementors\\Corementors.jsx",
-      "target": "src\\pages\\Signup.jsx",
-      "data": {
-        "viaRoute": "/signup",
-        "trigger": {
-          "element": "<a href=\"/signup\" className=\"flex items-center justify-center gap-2 pt-[11px] pb-3 px-6\">\r\n                        <span className=\"font-medium text-sm\">Get Started</span>\r\n                        <ArrowRightIcon className=\"w-5 h-5\" />\r\n                      </a>",
-          "line": 173,
-          "endLine": 176,
-          "column": 22,
-          "endColumn": 26,
-          "sourceFile": "src\\screens\\Corementors\\sections\\PricingSection\\PricingSection.jsx"
-        }
-      }
-    },
-    {
-      "id": "src\\screens\\Corementors\\sections\\FooterSection\\FooterSection.jsx:115:21-to-src\\pages\\Signup.jsx",
-      "source": "src\\screens\\Corementors\\Corementors.jsx",
-      "target": "src\\pages\\Signup.jsx",
-      "data": {
-        "viaRoute": "/signup",
-        "trigger": {
-          "element": "<a href=\"/signup\">\r\n                       <span className=\"[font-family:'Inter',Helvetica] font-medium text-black text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\r\n                         Try it for free\r\n                       </span>\r\n                     </a>",
-          "line": 115,
-          "endLine": 119,
-          "column": 21,
-          "endColumn": 25,
-          "sourceFile": "src\\screens\\Corementors\\sections\\FooterSection\\FooterSection.jsx"
-        }
-      }
-    }
-  ]
+  "edges": []
 }

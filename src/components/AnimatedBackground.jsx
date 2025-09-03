@@ -6,7 +6,7 @@ const AnimatedBackground = ({ variant = 'default' }) => {
       {/* Main animated circle gradient */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div 
-          className="w-[1000px] h-[1000px] rounded-full animate-pulse-slow"
+          className="w-[80vw] h-[80vw] max-w-[1000px] max-h-[1000px] rounded-full animate-pulse-slow"
           style={{
             background: `
               radial-gradient(
@@ -28,7 +28,7 @@ const AnimatedBackground = ({ variant = 'default' }) => {
       {/* Secondary rotating circle */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div 
-          className="w-[800px] h-[800px] rounded-full"
+          className="w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] rounded-full"
           style={{
             background: `
               conic-gradient(
@@ -49,7 +49,7 @@ const AnimatedBackground = ({ variant = 'default' }) => {
       {/* Inner glow circle */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <div 
-          className="w-[500px] h-[500px] rounded-full"
+          className="w-[50vw] h-[50vw] max-w-[500px] max-h-[500px] rounded-full"
           style={{
             background: `
               radial-gradient(

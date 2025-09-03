@@ -182,14 +182,26 @@ const Hyperspeed = ({
           antialias: false,
           alpha: true
         });
-        this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        // Force canvas to be exactly viewport width to prevent overflow
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = container.offsetHeight;
+        this.renderer.setSize(viewportWidth, viewportHeight, false);
+        this.renderer.setPixelRatio(1); // Use 1 to prevent scaling issues
         this.composer = new EffectComposer(this.renderer);
+        
+        // Add aggressive CSS constraints to canvas
+        this.renderer.domElement.style.maxWidth = '100vw';
+        this.renderer.domElement.style.width = '100vw';
+        this.renderer.domElement.style.height = '100%';
+        this.renderer.domElement.style.position = 'absolute';
+        this.renderer.domElement.style.top = '0';
+        this.renderer.domElement.style.left = '0';
+        this.renderer.domElement.style.zIndex = '0';
         container.append(this.renderer.domElement);
 
         this.camera = new THREE.PerspectiveCamera(
           options.fov,
-          container.offsetWidth / container.offsetHeight,
+          viewportWidth / viewportHeight,
           0.1,
           10000
         );
@@ -246,13 +258,17 @@ const Hyperspeed = ({
       }
 
       onWindowResize() {
-        const width = this.container.offsetWidth;
+        const width = window.innerWidth; // Force to viewport width
         const height = this.container.offsetHeight;
 
         this.renderer.setSize(width, height);
         this.camera.aspect = width / height;
         this.camera.updateProjectionMatrix();
         this.composer.setSize(width, height);
+        
+        // Re-apply CSS constraints
+        this.renderer.domElement.style.maxWidth = '100vw';
+        this.renderer.domElement.style.width = '100vw';
       }
 
       initPasses() {
@@ -920,7 +936,7 @@ const Hyperspeed = ({
     };
   }, [effectOptions]);
 
-  return <div id="lights" className="w-full h-full" ref={hyperspeed}></div>;
+  return <div id="lights" className="w-screen h-full overflow-hidden" ref={hyperspeed} style={{ maxWidth: '100vw', width: '100vw' }}></div>;
 };
 
 export default Hyperspeed;

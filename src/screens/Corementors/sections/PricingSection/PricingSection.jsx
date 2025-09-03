@@ -113,7 +113,7 @@ const pricingPlans = [
 
 export const PricingSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 xl:px-[360px] py-[100px] w-full bg-orbai-templateframerwebsitewild-sand">
+    <section className="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16 xl:px-24 py-[100px] w-full bg-orbai-templateframerwebsitewild-sand">
       <div className="flex flex-col max-w-[1200px] items-center gap-7 w-full">
         {/* Header */}
         <header className="flex flex-col max-w-[700px] items-center justify-center gap-4">
