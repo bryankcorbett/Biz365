@@ -61,7 +61,7 @@ export const FooterSection = () => {
            <div className="flex flex-col items-center gap-4 ">
              <div className="relative w-[15vw] h-[10vh] filter invert  ">
                <ShinyText 
-                 src="./public/logo.png"
+                 src="https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200"
                  alt="Biz365 Logo"
                  disabled={false} 
                  speed={3} 

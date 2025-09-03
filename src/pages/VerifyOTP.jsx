@@ -3,7 +3,7 @@ import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES } from '../constants';
-import logoImage from '../../public/logo.png';
+const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
 
 // Country codes for mobile number
 const COUNTRY_CODES = [

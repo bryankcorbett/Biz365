@@ -141,7 +141,7 @@ export const Corementors = () => {
             <div className="absolute left-0 flex-shrink-0">
               <div className="relative w-[230px] h-[150px]">
                 <ShinyText 
-                  src="./public/logo.png"
+                  src="https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200"
                   alt="Biz365 Logo"
                   disabled={false} 
                   speed={3} 

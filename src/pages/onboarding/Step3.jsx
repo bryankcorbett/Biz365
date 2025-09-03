@@ -403,7 +403,7 @@ const OnboardingStep3 = () => {
           }`}>
             <div className="inline-flex items-center justify-center w-32 h-32 mb-4">
               <ShinyText 
-                src="../../public/logo.png"
+                src="https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200"
                 alt="Biz365 Logo"
                 disabled={false} 
                 speed={3} 
