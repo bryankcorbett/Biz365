@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 
 const AnimatedNavbar = ({ navigationItems = [] }) => {
   return (
-    <div className="inline-flex gap-8 items-center">
+    <div className="inline-flex gap-8 items-center mb-1">
       {navigationItems.map((item, index) => (
         <NavItem key={index} href={item.href} label={item.label} />
       ))}
