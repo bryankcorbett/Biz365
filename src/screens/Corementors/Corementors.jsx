@@ -133,8 +133,8 @@ export const Corementors = () => {
       />
 
       <header className="flex flex-col w-[100%] items-start fixed top-0 left-0 z-50 ">
-        <nav className="flex justify-center bg-white   pt-3 pb-4 px-0 self-stretch w-full flex-[0_0_auto]    [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
-          <div className="absolute w-[100vw] h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
+        <nav className="flex justify-center bg-white w-screen  pt-3 pb-4 px-0 self-stretch flex-[0_0_auto]    [-webkit-backdrop-filter:blur(2.5px)_brightness(100%)] items-center relative" >
+          <div className="absolute h-16 top-0 left-0 border-b-2 [border-bottom-style:solid] border-[#ffffff4c]" />
 
           <div className="flex w-[100%] items-center justify-between relative">
             {/* Logo - Left Side (Start) */}

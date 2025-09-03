@@ -71,9 +71,9 @@
       "data": {
         "viaRoute": "/signup",
         "trigger": {
-          "element": "<a\r\n                    href=\"/signup\"\r\n                  >\r\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\r\n                      Try it for free\r\n                    </span>\r\n                  </a>",
+          "element": "<a\r\n                    href=\"/signup\"\r\n                  >\r\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-xs sm:text-sm tracking-[0] leading-[18px] sm:leading-[22.4px] whitespace-nowrap\">\r\n                      <span className=\"hidden sm:inline\">Try it for free</span>\r\n                      <span className=\"sm:hidden\">Try free</span>\r\n                    </span>\r\n                  </a>",
           "line": 182,
-          "endLine": 188,
+          "endLine": 189,
           "column": 18,
           "endColumn": 22,
           "sourceFile": "src\\screens\\Corementors\\Corementors.jsx"
