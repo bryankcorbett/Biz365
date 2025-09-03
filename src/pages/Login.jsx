@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG } from '../constants';
+import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
 const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
 
 const Login = () => {
@@ -191,7 +191,7 @@ const Login = () => {
               const userData = await userInfo.json();
               
               // Send to your backend for authentication
-              const authResponse = await fetch('/api/auth/google', {
+              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/auth/google`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

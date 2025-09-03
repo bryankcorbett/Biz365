@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
-import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG } from '../constants';
+import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
 const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
 import countryCodesData from '../assets/CountryCodes.json';
 
@@ -301,7 +301,7 @@ const Signup = () => {
               const userData = await userInfo.json();
               
               // Send to your backend for signup
-              const authResponse = await fetch('/api/auth/google-signup', {
+              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/auth/google`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

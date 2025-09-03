@@ -129,11 +129,17 @@ export const INDIAN_STATES = [
   'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
 
+// API Configuration
+export const API_CONFIG = {
+  BASE_URL: 'http://localhost/api',
+  DASHBOARD_URL: 'https://dashboard.biz365.ai'
+};
+
 // OAuth Configuration
 export const OAUTH_CONFIG = {
   GOOGLE: {
     CLIENT_ID: '837428872880-es40sfd5t91oahv6g357smdacmsruv16.apps.googleusercontent.com',
-    REDIRECT_URI: 'https://biz365.ai/auth/google/callback'
+    REDIRECT_URI: 'https://biz365.ai/api/oauth/google/callback'
   },
   APPLE: {
     CLIENT_ID: 'com.biz365.platform.web',
