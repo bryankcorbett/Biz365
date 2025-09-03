@@ -14,9 +14,21 @@ const OnboardingStep3 = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isExiting, setIsExiting] = useState(false);
+  
+  // Animation states for form elements
+  const [showElements, setShowElements] = useState({
+    logo: false,
+    stepper: false,
+    businessAims: false,
+    otherAim: false,
+    selectedAims: false,
+    submitButton: false,
+    progressIndicator: false
+  });
   
   const [formData, setFormData] = useState({
     businessAims: [],
@@ -64,10 +76,35 @@ const OnboardingStep3 = () => {
     
   ];
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setIsExiting(false);
+    setShowElements({
+      logo: false,
+      stepper: false,
+      businessAims: false,
+      otherAim: false,
+      selectedAims: false,
+      submitButton: false,
+      progressIndicator: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: true })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: true })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
 
   // Handle aim selection
@@ -280,6 +317,32 @@ const OnboardingStep3 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle exit animations when completing onboarding
+  const handleNavigateToComplete = () => {
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: false })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: false })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: false })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1200));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      window.location.href = ROUTES.DASHBOARD;
+    }, 1400));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -296,10 +359,8 @@ const OnboardingStep3 = () => {
       
       showToast('success', '🎉 Onboarding completed successfully! Welcome to Biz365!');
       
-      // Redirect to external dashboard
-      setTimeout(() => {
-        window.location.href = ROUTES.DASHBOARD;
-      }, 1500);
+      // Start exit animations after successful save
+      handleNavigateToComplete();
     } catch (error) {
       showToast('error', 'Failed to complete onboarding. Please try again.');
     } finally {
@@ -335,7 +396,11 @@ const OnboardingStep3 = () => {
       <div className="relative z-10 min-h-screen flex flex-col px-6 py-8">
         <div className="w-full max-w-4xl mx-auto">
           {/* Logo */}
-          <div className="text-center mb-6 animate-fade-in">
+          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+            showElements.logo 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
               <ShinyText 
                 src="./public/logo.png"
@@ -348,13 +413,23 @@ const OnboardingStep3 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <OnboardingStepper currentStep={3} totalSteps={3} />
+          <div className={`transition-all duration-1000 ease-out ${
+            showElements.stepper 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
+            <OnboardingStepper currentStep={3} totalSteps={3} />
+          </div>
 
           {/* Form Card */}
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Business Aims Selection */}
-              <div className="space-y-4 animate-slide-in" style={{ animationDelay: '100ms' }}>
+              <div className={`space-y-4 transition-all duration-1000 ease-out ${
+                showElements.businessAims 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <label className="text-sm font-bold text-black flex items-center gap-2 mb-4">
                   <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -419,7 +494,11 @@ const OnboardingStep3 = () => {
 
               {/* Other Aim Input */}
               {formData.businessAims.includes('other') && (
-                <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.otherAim 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label htmlFor="otherAim" className="text-sm font-bold text-black flex items-center gap-2">
                     <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -449,7 +528,11 @@ const OnboardingStep3 = () => {
 
               {/* Selected Aims Summary */}
               {formData.businessAims.length > 0 && (
-                <div className="bg-gray-100 border-2 border-black rounded-xl p-4 animate-fade-in">
+                <div className={`bg-gray-100 border-2 border-black rounded-xl p-4 transition-all duration-1000 ease-out ${
+                  showElements.selectedAims 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <h4 className="font-bold text-black mb-2 flex items-center gap-2">
                     <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -474,7 +557,11 @@ const OnboardingStep3 = () => {
               )}
 
               {/* Back and Submit Buttons */}
-              <div className="flex gap-4 animate-slide-in" style={{ animationDelay: '300ms' }}>
+              <div className={`flex gap-4 transition-all duration-1000 ease-out ${
+                showElements.submitButton 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 {/* Back Button */}
                 <button
                   type="button"
@@ -492,7 +579,7 @@ const OnboardingStep3 = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading || formData.businessAims.length === 0}
+                  disabled={isLoading || formData.businessAims.length === 0 || isExiting}
                   className="flex-1 bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-black/30 hover:shadow-xl hover:shadow-black/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group cursor-target"
                 >
                   {isLoading && (
@@ -527,7 +614,11 @@ const OnboardingStep3 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+            showElements.progressIndicator 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="flex items-center justify-center gap-2">
               <div className="w-3 h-3 bg-black rounded-full"></div>
               <div className="w-3 h-3 bg-black rounded-full"></div>

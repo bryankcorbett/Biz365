@@ -40,6 +40,8 @@ export default function Counter({
   min = 0,
   max = 999
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  
   // Format value to always show 3 digits (000, 001, 010, 100, etc.)
   const formattedValue = value.toString().padStart(3, '0');
   const digits = formattedValue.split('');
@@ -55,9 +57,12 @@ export default function Counter({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    transition: 'all 0.2s ease',
+    transition: 'all 0.3s ease',
     fontSize: '16px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    opacity: isHovered ? 1 : 0,
+    transform: isHovered ? 'scale(1)' : 'scale(0.8)',
+    pointerEvents: isHovered ? 'auto' : 'none'
   };
 
   const counterStyle = {
@@ -70,7 +75,14 @@ export default function Counter({
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div 
+      className="flex items-center gap-4"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      tabIndex={0}
+    >
       {/* Minus Button */}
       <button
         type="button"

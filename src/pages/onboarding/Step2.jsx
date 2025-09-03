@@ -16,18 +16,61 @@ const OnboardingStep2 = () => {
     pincode: '',
   });
   const [errors, setErrors] = useState({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  
+  // Animation states for form elements
+  const [showElements, setShowElements] = useState({
+    logo: false,
+    stepper: false,
+    address: false,
+    city: false,
+    state: false,
+    country: false,
+    pincode: false,
+    submitButton: false,
+    progressIndicator: false
+  });
   const navigate = useNavigate();
   const { showToast } = useToast();
 
   // Check if India is selected for state dropdown
   const isIndiaSelected = formData.country === 'IN';
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setIsExiting(false);
+    setShowElements({
+      logo: false,
+      stepper: false,
+      address: false,
+      city: false,
+      state: false,
+      country: false,
+      pincode: false,
+      submitButton: false,
+      progressIndicator: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: true })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: true })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: true })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: true })), 1400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1800));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
 
   // Handle input changes with error clearing
@@ -77,6 +120,34 @@ const OnboardingStep2 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle exit animations when navigating to next step
+  const handleNavigateToNextStep = () => {
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: false })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: false })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: false })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: false })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: false })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1600));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.ONBOARDING.STEP3, { replace: true });
+    }, 1800));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,10 +163,8 @@ const OnboardingStep2 = () => {
       
       showToast('success', SUCCESS_MESSAGES.ONBOARDING_SAVED);
       
-      // Navigate to next step (which will be the new Step 3)
-      setTimeout(() => {
-        navigate(ROUTES.ONBOARDING.STEP3, { replace: true });
-      }, 1000);
+      // Start exit animations after successful save
+      handleNavigateToNextStep();
     } catch (error) {
       showToast('error', 'Failed to save address information. Please try again.');
     } finally {
@@ -118,7 +187,11 @@ const OnboardingStep2 = () => {
           }`}
         >
           {/* Logo */}
-          <div className="text-center mb-6 animate-fade-in">
+          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+            showElements.logo 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
               <ShinyText 
                 src="./public/logo.png"
@@ -131,13 +204,23 @@ const OnboardingStep2 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <OnboardingStepper currentStep={2} totalSteps={3} />
+          <div className={`transition-all duration-1000 ease-out ${
+            showElements.stepper 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
+            <OnboardingStepper currentStep={2} totalSteps={3} />
+          </div>
 
           {/* Form Card */}
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Address Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
+              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                showElements.address 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <label 
                   htmlFor="address" 
                   className="text-sm font-bold text-black flex items-center gap-2"
@@ -169,9 +252,13 @@ const OnboardingStep2 = () => {
               </div>
 
               {/* City and Country Row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-slide-in" style={{ animationDelay: '150ms' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* City */}
-                <div className="space-y-2">
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.city 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label 
                     htmlFor="city" 
                     className="text-sm font-bold text-black flex items-center gap-2"
@@ -202,7 +289,11 @@ const OnboardingStep2 = () => {
                 </div>
 
                 {/* Country */}
-                <div className="space-y-2">
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.country 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label 
                     htmlFor="country" 
                     className="text-sm font-bold text-black flex items-center gap-2"
@@ -242,9 +333,13 @@ const OnboardingStep2 = () => {
               </div>
 
               {/* State and Pincode Row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-slide-in" style={{ animationDelay: '200ms' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* State */}
-                <div className="space-y-2">
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.state 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label 
                     htmlFor="state" 
                     className="text-sm font-bold text-black flex items-center gap-2"
@@ -293,7 +388,11 @@ const OnboardingStep2 = () => {
                 </div>
 
                 {/* Pincode */}
-                <div className="space-y-2">
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.pincode 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label 
                     htmlFor="pincode" 
                     className="text-sm font-bold text-black flex items-center gap-2"
@@ -327,7 +426,11 @@ const OnboardingStep2 = () => {
              
 
               {/* Back and Submit Buttons */}
-              <div className="flex gap-4 animate-slide-in" style={{ animationDelay: '250ms' }}>
+              <div className={`flex gap-4 transition-all duration-1000 ease-out ${
+                showElements.submitButton 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 {/* Back Button */}
                 <button
                   type="button"
@@ -345,7 +448,7 @@ const OnboardingStep2 = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || isExiting}
                   className="flex-1 bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-black/30 hover:shadow-xl hover:shadow-black/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                 >
                   {isLoading && (
@@ -377,7 +480,11 @@ const OnboardingStep2 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+            showElements.progressIndicator 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="flex items-center justify-center gap-2">
               <div className="w-3 h-3 bg-black rounded-full"></div>
               <div className="w-3 h-3 bg-black rounded-full animate-pulse"></div>

@@ -30,7 +30,8 @@ const AnimatedDropdown = ({
   showGradients = true,
   enableArrowNavigation = true,
   displayScrollbar = false,
-  disabled = false
+  disabled = false,
+  dropdownDirection = 'down' // 'up' or 'down'
 }) => {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -160,7 +161,11 @@ const AnimatedDropdown = ({
             onClick={() => setIsOpen(false)}
           />
           <div 
-            className="absolute top-full left-0 right-0 mt-1 bg-white border-2 border-black rounded-xl shadow-lg shadow-black/20 max-h-60 overflow-hidden transform translate-y-0"
+            className={`absolute left-0 right-0 bg-white border-2 border-black rounded-xl shadow-lg shadow-black/20 max-h-60 overflow-hidden transform translate-y-0 ${
+              dropdownDirection === 'up' 
+                ? 'bottom-full mb-1' 
+                : 'top-full mt-1'
+            }`}
             style={{ 
               zIndex: 99999,
               position: 'absolute',

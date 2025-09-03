@@ -19,8 +19,21 @@ const OnboardingStep1 = () => {
     numberOfBranches: 0,
   });
   const [errors, setErrors] = useState({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  
+  // Animation states for form elements
+  const [showElements, setShowElements] = useState({
+    logo: false,
+    stepper: false,
+    companyName: false,
+    industry: false,
+    subIndustry: false,
+    numberOfBranches: false,
+    submitButton: false,
+    progressIndicator: false
+  });
   const navigate = useNavigate();
   const { showToast } = useToast();
   const { user } = useAuth();
@@ -51,10 +64,37 @@ const OnboardingStep1 = () => {
   const selectedIndustryData = INDUSTRIES.find(ind => ind.value === formData.industry);
   const subIndustries = selectedIndustryData?.subIndustries || [];
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setIsExiting(false);
+    setShowElements({
+      logo: false,
+      stepper: false,
+      companyName: false,
+      industry: false,
+      subIndustry: false,
+      numberOfBranches: false,
+      submitButton: false,
+      progressIndicator: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: true })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: true })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: true })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1600));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
 
   // Handle input changes with error clearing
@@ -94,6 +134,33 @@ const OnboardingStep1 = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle exit animations when navigating to next step
+  const handleNavigateToNextStep = () => {
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: false })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: false })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: false })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: false })), 1000));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1400));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.ONBOARDING.STEP2, { replace: true });
+    }, 1600));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -115,10 +182,8 @@ const OnboardingStep1 = () => {
       
       showToast('success', SUCCESS_MESSAGES.ONBOARDING_SAVED);
       
-      // Navigate to next step (which will be the new Step 2)
-      setTimeout(() => {
-        navigate(ROUTES.ONBOARDING.STEP2, { replace: true });
-      }, 1000);
+      // Start exit animations after successful save
+      handleNavigateToNextStep();
     } catch (error) {
       showToast('error', 'Failed to save information. Please try again.');
     } finally {
@@ -141,7 +206,11 @@ const OnboardingStep1 = () => {
           }`}
         >
           {/* Logo */}
-          <div className="text-center mb-6 animate-fade-in">
+          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+            showElements.logo 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="inline-flex items-center justify-center w-32 h-20 mb-4">
               <ShinyText 
                 src="./public/logo.png"
@@ -154,18 +223,28 @@ const OnboardingStep1 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <OnboardingStepper 
-            currentStep={1} 
-            totalSteps={3} 
-            customTitle={getPersonalizedTitle()}
-            customDescription="Tell us about your Business and industry"
-          />
+          <div className={`transition-all duration-1000 ease-out ${
+            showElements.stepper 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
+            <OnboardingStepper 
+              currentStep={1} 
+              totalSteps={3} 
+              customTitle={getPersonalizedTitle()}
+              customDescription="Tell us about your Business and industry"
+            />
+          </div>
 
           {/* Form Card */}
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Company Name */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '100ms' }}>
+              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                showElements.companyName 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <label 
                   htmlFor="companyName" 
                   className="text-sm font-bold text-black flex items-center gap-2"
@@ -196,7 +275,11 @@ const OnboardingStep1 = () => {
               </div>
 
               {/* Industry Selection */}
-              <div className="space-y-4 animate-slide-in" style={{ animationDelay: '150ms' }}>
+              <div className={`space-y-4 transition-all duration-1000 ease-out ${
+                showElements.industry 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <label className="text-sm font-bold text-black flex items-center gap-2 mb-4">
                   <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -506,7 +589,11 @@ const OnboardingStep1 = () => {
 
               {/* Sub-Industry Selection - Shows only when industry is selected */}
               {formData.industry && subIndustries.length > 0 && (
-                <div className="space-y-2 animate-fade-in">
+                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                  showElements.subIndustry 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   <label 
                     htmlFor="subIndustry" 
                     className="text-sm font-bold text-black flex items-center gap-2"
@@ -528,6 +615,7 @@ const OnboardingStep1 = () => {
                       showGradients={true}
                       enableArrowNavigation={true}
                       displayScrollbar={false}
+                      dropdownDirection="up"
                     />
                   )}
                   
@@ -557,7 +645,11 @@ const OnboardingStep1 = () => {
               )}
 
               {/* Number of Branches Field */}
-              <div className="space-y-2 animate-slide-in" style={{ animationDelay: '200ms' }}>
+              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                showElements.numberOfBranches 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <label 
                   htmlFor="numberOfBranches" 
                   className="text-sm font-bold text-black flex items-center gap-2"
@@ -601,10 +693,14 @@ const OnboardingStep1 = () => {
               
 
               {/* Submit Button */}
-              <div className="animate-slide-in" style={{ animationDelay: '300ms' }}>
+              <div className={`transition-all duration-1000 ease-out ${
+                showElements.submitButton 
+                  ? 'translate-x-0 opacity-100' 
+                  : 'translate-x-full opacity-0'
+              }`}>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || isExiting}
                   className="w-full bg-black hover:bg-gray-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-black/30 hover:shadow-xl hover:shadow-black/50 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
                 >
                   {isLoading && (
@@ -636,7 +732,11 @@ const OnboardingStep1 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
+          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+            showElements.progressIndicator 
+              ? 'translate-x-0 opacity-100' 
+              : 'translate-x-full opacity-0'
+          }`}>
             <div className="flex items-center justify-center gap-2">
               <div className="w-3 h-3 bg-black rounded-full animate-pulse"></div>
               <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
