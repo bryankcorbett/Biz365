@@ -57,9 +57,9 @@
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#ffffff\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
+          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#ffffff\"\n                speed=\"2s\"\n                onClick={() => window.location.href = '/login'}\n              >\n                Log in\n              </StarBorder>",
           "line": 160,
-          "endLine": 168,
+          "endLine": 169,
           "column": 14,
           "endColumn": 27,
           "sourceFile": "src/screens/Corementors/Corementors.jsx"
@@ -67,15 +67,15 @@
       }
     },
     {
-      "id": "src/screens/Corementors/Corementors.jsx:181:18-to-src/pages/Signup.jsx",
+      "id": "src/screens/Corementors/Corementors.jsx:182:18-to-src/pages/Signup.jsx",
       "source": "src/screens/Corementors/Corementors.jsx",
       "target": "src/pages/Signup.jsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
           "element": "<a\n                    href=\"/signup\"\n                  >\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                      Try it for free\n                    </span>\n                  </a>",
-          "line": 181,
-          "endLine": 187,
+          "line": 182,
+          "endLine": 188,
           "column": 18,
           "endColumn": 22,
           "sourceFile": "src/screens/Corementors/Corementors.jsx"
