@@ -10,8 +10,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import OnboardingStep1 from './pages/onboarding/Step1';
 import OnboardingStep2 from './pages/onboarding/Step2';
 import OnboardingStep3 from './pages/onboarding/Step3';
-import OnboardingStep4 from './pages/onboarding/Step4';
-import OnboardingStep5 from './pages/onboarding/Step5';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -43,16 +41,6 @@ function App() {
             <Route path="/onboarding/step3" element={
               <ProtectedRoute>
                 <OnboardingStep3 />
-              </ProtectedRoute>
-            } />
-            <Route path="/onboarding/step4" element={
-              <ProtectedRoute>
-                <OnboardingStep4 />
-              </ProtectedRoute>
-            } />
-            <Route path="/onboarding/step5" element={
-              <ProtectedRoute>
-                <OnboardingStep5 />
               </ProtectedRoute>
             } />
             

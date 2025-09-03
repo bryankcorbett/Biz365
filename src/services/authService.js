@@ -2,6 +2,11 @@ import apiClient from './apiClient';
 import { API_ENDPOINTS } from '../constants';
 
 class AuthService {
+  // Simple in-memory storage for user data during signup process
+  constructor() {
+    this.tempUserData = null;
+  }
+
   // User Login
   async login(email, password) {
     try {
@@ -40,6 +45,16 @@ class AuthService {
       // Mock API call for testing
       await new Promise(resolve => setTimeout(resolve, 1500));
 
+      // Store user data temporarily for OTP verification
+      this.tempUserData = {
+        name: userData.name,
+        email: userData.email,
+        mobile: userData.mobile,
+        password: userData.password
+      };
+      
+      console.log('AuthService - Stored user data:', this.tempUserData);
+
       // Mock response
       const mockResponse = {
         message: 'Signup successful! Please verify your mobile number.',
@@ -64,11 +79,21 @@ class AuthService {
         throw new Error('OTP must be 6 digits');
       }
 
-      // Mock user data after OTP verification
-      const mockUser = {
-        id: '1',
+      // Use stored user data from signup, or fallback to mock data
+      const userData = this.tempUserData || {
         name: 'John Doe',
         email: 'john@example.com',
+        mobile: mobile,
+        password: 'password123'
+      };
+      
+      console.log('AuthService - Using user data for OTP verification:', userData);
+
+      // Create user object after OTP verification
+      const mockUser = {
+        id: '1',
+        name: userData.name,
+        email: userData.email,
         mobile: mobile,
         isVerified: true,
         onboardingCompleted: false,
@@ -82,7 +107,10 @@ class AuthService {
         message: 'OTP verified successfully!'
       };
 
-      // No localStorage storage
+      console.log('AuthService - Created user after OTP verification:', mockUser);
+
+      // Clear temporary data after successful verification
+      this.tempUserData = null;
 
       return mockResponse;
     } catch (error) {
@@ -171,7 +199,7 @@ class AuthService {
 
   // Get stored user data
   getStoredUserData() {
-    return null; // No localStorage data
+    return this.tempUserData; // Return temporary user data if available
   }
 
   // Refresh token (if implemented)

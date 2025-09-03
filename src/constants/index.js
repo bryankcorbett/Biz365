@@ -1,74 +1,73 @@
-// Industry options for onboarding step 2
+// Industry options for onboarding step 1
 export const INDUSTRIES = [
+  {
+    value: 'food-beverage',
+    label: 'Food & Beverage',
+    subIndustries: [
+      { value: 'quick-service-eatery', label: 'Quick Service Eatery' },
+      { value: 'fine-dine', label: 'Fine Dine' },
+      { value: 'cafe', label: 'Café' },
+      { value: 'bar', label: 'Bar' },
+      { value: 'lounge', label: 'Lounge' },
+      { value: 'pub', label: 'Pub' },
+      { value: 'desserts', label: 'Desserts' },
+      { value: 'bakery', label: 'Bakery' },
+      { value: 'cloud-kitchen', label: 'Cloud Kitchen' },
+      { value: 'sweet-shop', label: 'Sweet Shop' },
+      { value: 'tea-snacks', label: 'Tea & Snacks' },
+      { value: 'other-food', label: 'Other' }
+    ]
+  },
+  {
+    value: 'beauty-wellness',
+    label: 'Beauty & Wellness',
+    subIndustries: [
+      { value: 'salons', label: 'Salons' },
+      { value: 'nail-salons', label: 'Nail Salons' },
+      { value: 'spa', label: 'Spa' },
+      { value: 'massage-centers', label: 'Massage Centers' },
+      { value: 'other-beauty', label: 'Other' }
+    ]
+  },
   {
     value: 'retail',
     label: 'Retail',
     subIndustries: [
-      { value: 'fashion', label: 'Fashion & Apparel' },
-      { value: 'electronics', label: 'Electronics' },
-      { value: 'grocery', label: 'Grocery & Supermarket' },
-      { value: 'pharmacy', label: 'Pharmacy' },
-      { value: 'jewelry', label: 'Jewelry & Watches' },
-      { value: 'home-decor', label: 'Home & Decor' },
-      { value: 'sports', label: 'Sports & Fitness' },
-      { value: 'books', label: 'Books & Stationery' },
-      { value: 'other-retail', label: 'Other Retail' }
+      { value: 'groceries', label: 'Groceries' },
+      { value: 'convenience', label: 'Convenience' },
+      { value: 'departmental', label: 'Departmental' },
+      { value: 'clothing', label: 'Clothing' },
+      { value: 'accessories', label: 'Accessories' },
+      { value: 'cosmetics', label: 'Cosmetics' },
+      { value: 'jewelry', label: 'Jewelry' },
+      { value: 'footwear', label: 'Footwear' },
+      { value: 'watches', label: 'Watches' },
+      { value: 'belts', label: 'Belts' },
+      { value: 'wallets', label: 'Wallets' },
+      { value: 'eyewear-opticals', label: 'Eyewear/Opticals' },
+      { value: 'pet-store', label: 'Pet Store' },
+      { value: 'general', label: 'General' }
     ]
   },
   {
-    value: 'restaurant',
-    label: 'Restaurant & Food Service',
+    value: 'service-industry',
+    label: 'Service Industry',
     subIndustries: [
-      { value: 'fine-dining', label: 'Fine Dining' },
-      { value: 'casual-dining', label: 'Casual Dining' },
-      { value: 'fast-food', label: 'Fast Food' },
-      { value: 'cafe', label: 'Cafe & Coffee Shop' },
-      { value: 'food-truck', label: 'Food Truck' },
-      { value: 'catering', label: 'Catering' },
-      { value: 'other-food', label: 'Other Food Service' }
-    ]
-  },
-  {
-    value: 'healthcare',
-    label: 'Healthcare',
-    subIndustries: [
-      { value: 'clinic', label: 'Medical Clinic' },
-      { value: 'pharmacy', label: 'Pharmacy' },
-      { value: 'dental', label: 'Dental Practice' },
-      { value: 'wellness', label: 'Wellness & Spa' },
-      { value: 'other-healthcare', label: 'Other Healthcare' }
-    ]
-  },
-  {
-    value: 'services',
-    label: 'Professional Services',
-    subIndustries: [
-      { value: 'consulting', label: 'Consulting' },
-      { value: 'legal', label: 'Legal Services' },
-      { value: 'accounting', label: 'Accounting' },
-      { value: 'real-estate', label: 'Real Estate' },
-      { value: 'education', label: 'Education & Training' },
-      { value: 'other-services', label: 'Other Services' }
-    ]
-  },
-  {
-    value: 'manufacturing',
-    label: 'Manufacturing',
-    subIndustries: [
-      { value: 'textiles', label: 'Textiles' },
-      { value: 'electronics', label: 'Electronics' },
-      { value: 'automotive', label: 'Automotive' },
-      { value: 'food-processing', label: 'Food Processing' },
-      { value: 'other-manufacturing', label: 'Other Manufacturing' }
+      { value: 'tours-travels', label: 'Tours & Travels' },
+      { value: 'health-fitness', label: 'Health & Fitness' },
+      { value: 'other-manual-entry', label: 'Other manual entry' }
     ]
   },
   {
     value: 'other',
-    label: 'Other'
+    label: 'Other',
+    subIndustries: [
+      { value: 'other', label: 'Other' }
+    ]
   }
 ];
 
-// Business aims for onboarding step 5
+// Business aims for onboarding step 3
 export const AIMS = [
   {
     value: 'billing-gst',
@@ -105,13 +104,6 @@ export const AIMS = [
     label: 'Payments & Reconciliation',
     description: 'Accept multiple payment methods and reconcile transactions'
   }
-];
-
-// POS usage options for onboarding step 4
-export const POS_USAGE_OPTIONS = [
-  { value: 'already-using', label: 'Already using POS/Billing software' },
-  { value: 'want-biz365', label: 'Want to use Biz365 POS' },
-  { value: 'not-sure', label: 'Not sure yet' }
 ];
 
 // Location data
@@ -153,9 +145,7 @@ export const API_ENDPOINTS = {
   ONBOARDING: {
     STEP1: '/onboarding/step1',
     STEP2: '/onboarding/step2',
-    STEP3: '/onboarding/step3',
-    STEP4: '/onboarding/step4',
-    STEP5: '/onboarding/step5'
+    STEP3: '/onboarding/step3'
   }
 };
 
@@ -169,9 +159,7 @@ export const ROUTES = {
   ONBOARDING: {
     STEP1: '/onboarding/step1',
     STEP2: '/onboarding/step2',
-    STEP3: '/onboarding/step3',
-    STEP4: '/onboarding/step4',
-    STEP5: '/onboarding/step5'
+    STEP3: '/onboarding/step3'
   },
   DASHBOARD: 'https://app.biz365.ai'
 };
