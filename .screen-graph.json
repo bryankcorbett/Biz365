@@ -31,6 +31,13 @@
       ]
     },
     {
+      "id": "src/pages/ForgotPassword.jsx",
+      "label": "ForgotPassword",
+      "routes": [
+        "/forgot-password"
+      ]
+    },
+    {
       "id": "src/components/ProtectedRoute.jsx",
       "label": "ProtectedRoute",
       "routes": [
@@ -44,15 +51,15 @@
   ],
   "edges": [
     {
-      "id": "src/screens/Corementors/Corementors.jsx:157:14-to-src/pages/Login.jsx",
+      "id": "src/screens/Corementors/Corementors.jsx:160:14-to-src/pages/Login.jsx",
       "source": "src/screens/Corementors/Corementors.jsx",
       "target": "src/pages/Login.jsx",
       "data": {
         "viaRoute": "/login",
         "trigger": {
-          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"white\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
-          "line": 157,
-          "endLine": 165,
+          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#ffffff\"\n                speed=\"2s\"\n              >\n                Log in\n              </StarBorder>",
+          "line": 160,
+          "endLine": 168,
           "column": 14,
           "endColumn": 27,
           "sourceFile": "src/screens/Corementors/Corementors.jsx"
@@ -60,15 +67,15 @@
       }
     },
     {
-      "id": "src/screens/Corementors/Corementors.jsx:178:18-to-src/pages/Signup.jsx",
+      "id": "src/screens/Corementors/Corementors.jsx:181:18-to-src/pages/Signup.jsx",
       "source": "src/screens/Corementors/Corementors.jsx",
       "target": "src/pages/Signup.jsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
           "element": "<a\n                    href=\"/signup\"\n                  >\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                      Try it for free\n                    </span>\n                  </a>",
-          "line": 178,
-          "endLine": 184,
+          "line": 181,
+          "endLine": 187,
           "column": 18,
           "endColumn": 22,
           "sourceFile": "src/screens/Corementors/Corementors.jsx"
@@ -108,15 +115,15 @@
       }
     },
     {
-      "id": "src/screens/Corementors/sections/FooterSection/FooterSection.jsx:112:21-to-src/pages/Signup.jsx",
+      "id": "src/screens/Corementors/sections/FooterSection/FooterSection.jsx:115:21-to-src/pages/Signup.jsx",
       "source": "src/screens/Corementors/Corementors.jsx",
       "target": "src/pages/Signup.jsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
           "element": "<a href=\"/signup\">\n                       <span className=\"[font-family:'Inter',Helvetica] font-medium text-black text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                         Try it for free\n                       </span>\n                     </a>",
-          "line": 112,
-          "endLine": 116,
+          "line": 115,
+          "endLine": 119,
           "column": 21,
           "endColumn": 25,
           "sourceFile": "src/screens/Corementors/sections/FooterSection/FooterSection.jsx"
@@ -124,15 +131,15 @@
       }
     },
     {
-      "id": "src/pages/Login.jsx:547:13-to-src/screens/Corementors/Corementors.jsx",
+      "id": "src/pages/Login.jsx:550:13-to-src/screens/Corementors/Corementors.jsx",
       "source": "src/pages/Login.jsx",
       "target": "src/screens/Corementors/Corementors.jsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link \n               to=\"/\" \n               className=\"inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors\"\n             >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
-          "line": 547,
-          "endLine": 555,
+          "line": 550,
+          "endLine": 558,
           "column": 13,
           "endColumn": 19,
           "sourceFile": "src/pages/Login.jsx"
@@ -140,18 +147,34 @@
       }
     },
     {
-      "id": "src/pages/Signup.jsx:395:12-to-src/screens/Corementors/Corementors.jsx",
+      "id": "src/pages/Signup.jsx:398:12-to-src/screens/Corementors/Corementors.jsx",
       "source": "src/pages/Signup.jsx",
       "target": "src/screens/Corementors/Corementors.jsx",
       "data": {
         "viaRoute": "/",
         "trigger": {
           "element": "<Link \n              to=\"/\" \n              className=\"inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors\"\n            >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
-          "line": 395,
-          "endLine": 403,
+          "line": 398,
+          "endLine": 406,
           "column": 12,
           "endColumn": 19,
           "sourceFile": "src/pages/Signup.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/pages/ForgotPassword.jsx:662:12-to-src/screens/Corementors/Corementors.jsx",
+      "source": "src/pages/ForgotPassword.jsx",
+      "target": "src/screens/Corementors/Corementors.jsx",
+      "data": {
+        "viaRoute": "/",
+        "trigger": {
+          "element": "<Link \n              to=\"/\" \n              className=\"inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 transition-colors\"\n            >\n              <svg className=\"w-4 h-4\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">\n                <path strokeLinecap=\"round\" strokeLinejoin=\"round\" strokeWidth={2} d=\"M15 19l-7-7 7-7\" />\n              </svg>\n              Back to home\n            </Link>",
+          "line": 662,
+          "endLine": 670,
+          "column": 12,
+          "endColumn": 19,
+          "sourceFile": "src/pages/ForgotPassword.jsx"
         }
       }
     }

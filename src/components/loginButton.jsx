@@ -98,7 +98,7 @@ const LoginPulseButton = ({
           .login-pulse-btn::after {
             animation: none;
           }
-          .login-pulse-btn {
+          .login-pulse-btn { 
             transition: none;
           }
         }

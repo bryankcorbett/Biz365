@@ -26,7 +26,7 @@
     "three": "^0.179.1"
   },
   "devDependencies": {
-    "@animaapp/vite-plugin-screen-graph": "^0.1.5",
+    "@animaapp/vite-plugin-screen-graph": "^0.1.11",
     "@vitejs/plugin-react": "^5.0.0",
     "esbuild": "0.24.0",
     "globals": "15.12.0",

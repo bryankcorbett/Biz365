@@ -163,6 +163,7 @@ export const Corementors = () => {
                 className="custom-class"
                 color="#ffffff"
                 speed="2s"
+                onClick={() => window.location.href = '/login'}
               >
                 Log in
               </StarBorder>
