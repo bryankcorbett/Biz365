@@ -301,7 +301,7 @@ const Signup = () => {
               const userData = await userInfo.json();
               
               // Send to your backend for signup
-              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/auth/google`, {
+              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/api/auth/google`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

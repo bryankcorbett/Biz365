@@ -132,7 +132,7 @@ export const INDIAN_STATES = [
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: 'https://api.biz365.ai',
-  DASHBOARD_URL: 'https://dashboard.biz365.ai'
+  DASHBOARD_URL: 'https://app.biz365.ai'
 };
 
 // OAuth Configuration

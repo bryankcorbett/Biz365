@@ -10,30 +10,12 @@ class AuthService {
   // User Login
   async login(email, password) {
     try {
-      // Mock API call for testing
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, {
+        email,
+        password
+      });
 
-      // Mock user data
-      const mockUser = {
-        id: '1',
-        name: 'John Doe',
-        email: email,
-        mobile: '+919876543210',
-        isVerified: true,
-        onboardingCompleted: false, // Always start with onboarding not completed for testing
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-
-      const mockResponse = {
-        token: 'mock_jwt_token_' + Date.now(),
-        user: mockUser,
-        message: 'Login successful'
-      };
-
-      // No localStorage storage
-
-      return mockResponse;
+      return response;
     } catch (error) {
       throw new Error(error.message || 'Login failed. Please check your credentials.');
     }
@@ -42,9 +24,8 @@ class AuthService {
   // User Signup
   async signup(userData) {
     try {
-      // Mock API call for testing
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.SIGNUP, userData);
+      
       // Store user data temporarily for OTP verification
       this.tempUserData = {
         name: userData.name,
@@ -55,14 +36,7 @@ class AuthService {
       
       console.log('AuthService - Stored user data:', this.tempUserData);
 
-      // Mock response
-      const mockResponse = {
-        message: 'Signup successful! Please verify your mobile number.',
-        mobile: userData.mobile,
-        otpSent: true
-      };
-
-      return mockResponse;
+      return response;
     } catch (error) {
       throw new Error(error.message || 'Signup failed. Please try again.');
     }
@@ -71,48 +45,15 @@ class AuthService {
   // Verify OTP
   async verifyOTP(mobile, otp) {
     try {
-      // Mock API call for testing
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Mock OTP verification (accept any 6-digit OTP for testing)
-      if (otp.length !== 6) {
-        throw new Error('OTP must be 6 digits');
-      }
-
-      // Use stored user data from signup, or fallback to mock data
-      const userData = this.tempUserData || {
-        name: 'John Doe',
-        email: 'john@example.com',
-        mobile: mobile,
-        password: 'password123'
-      };
-      
-      console.log('AuthService - Using user data for OTP verification:', userData);
-
-      // Create user object after OTP verification
-      const mockUser = {
-        id: '1',
-        name: userData.name,
-        email: userData.email,
-        mobile: mobile,
-        isVerified: true,
-        onboardingCompleted: false,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-
-      const mockResponse = {
-        token: 'mock_jwt_token_' + Date.now(),
-        user: mockUser,
-        message: 'OTP verified successfully!'
-      };
-
-      console.log('AuthService - Created user after OTP verification:', mockUser);
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.OTP_VERIFY, {
+        mobile,
+        otp
+      });
 
       // Clear temporary data after successful verification
       this.tempUserData = null;
 
-      return mockResponse;
+      return response;
     } catch (error) {
       throw new Error(error.message || 'OTP verification failed. Please try again.');
     }
@@ -121,17 +62,11 @@ class AuthService {
   // Resend OTP
   async resendOTP(mobile) {
     try {
-      // Mock API call for testing
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await apiClient.post(API_ENDPOINTS.AUTH.OTP_RESEND, {
+        mobile
+      });
 
-      // Mock response
-      const mockResponse = {
-        message: 'OTP resent successfully!',
-        mobile: mobile,
-        otpSent: true
-      };
-
-      return mockResponse;
+      return response;
     } catch (error) {
       throw new Error(error.message || 'Failed to resend OTP. Please try again.');
     }
