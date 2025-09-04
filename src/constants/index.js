@@ -150,22 +150,23 @@ export const OAUTH_CONFIG = {
 // API endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    SIGNUP: '/auth/signup',
-    LOGIN: '/auth/login',
-    LOGOUT: '/auth/logout',
-    OTP_VERIFY: '/auth/otp/verify',
-    OTP_RESEND: '/auth/otp/resend',
-    GOOGLE: '/auth/google',
-    APPLE: '/auth/apple'
+    SIGNUP: '/api/auth/signup',
+    LOGIN: '/api/auth/login',
+    LOGOUT: '/api/auth/logout',
+    OTP_VERIFY: '/api/otp/verify',
+    OTP_RESEND: '/api/otp/resend',
+    GOOGLE: '/api/auth/google',
+    APPLE: '/api/auth/apple',
+    ME: '/api/auth/me'
   },
   USER: {
-    ONBOARDING_STATUS: '/user/onboarding-status',
-    PROFILE: '/user/profile'
+    ONBOARDING_STATUS: '/api/user/onboarding-status',
+    PROFILE: '/api/profile'
   },
   ONBOARDING: {
-    STEP1: '/onboarding/step1',
-    STEP2: '/onboarding/step2',
-    STEP3: '/onboarding/step3'
+    STEP1: '/api/onboarding/step1',
+    STEP2: '/api/onboarding/step2',
+    STEP3: '/api/onboarding/step3'
   }
 };
 
