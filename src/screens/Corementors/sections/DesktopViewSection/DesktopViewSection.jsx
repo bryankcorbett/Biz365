@@ -54,7 +54,7 @@ export const DesktopViewSection = () => {
       <div className="flex flex-col max-w-6xl items-center gap-12 w-full relative z-10">
         <header className="flex flex-col items-center justify-center gap-6 text-center animate-fade-in">
           <div className="flex flex-col items-center">
-            <Badge className="h-8 bg-gradient-to-r from-gray-50 to-gray-100 rounded-[60px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border border-solid border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <Badge variant="premium" className="h-8 rounded-[60px] overflow-hidden group">
               <div className="flex items-center gap-2 px-3 py-1.5">
                 <img
                   className="w-[18px] h-[15px]"
@@ -93,7 +93,7 @@ export const DesktopViewSection = () => {
                 <AccordionItem
                   key={faq.id}
                   value={faq.id}
-                  className="w-full bg-gradient-to-r from-orbai-templateframerwebsitewild-sand to-white rounded-2xl overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border border-gray-100/50 hover:border-gray-300/70 transition-all duration-500 hover:shadow-[0px_40px_40px_-8px_#00000010,0px_20px_20px_-6px_#00000015] hover:scale-[1.02] group relative animate-fade-up"
+                  className="w-full bg-gradient-to-r from-orbai-templateframerwebsitewild-sand to-white rounded-2xl overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border border-gray-100/50 hover:border-gray-300/70 transition-all duration-500 hover:shadow-[0px_40px_40px_-8px_#00000010,0px_20px_20px_-6px_#00000015] hover:scale-[1.02] hover:-translate-y-1 group relative animate-fade-up"
                   style={{ animationDelay: `${600 + index * 100}ms` }}
                 >
                   <AccordionTrigger className="flex items-center justify-between gap-4 px-6 py-5 hover:no-underline [&[data-state=open]>svg]:rotate-180 transition-all duration-300 hover:bg-gradient-to-r hover:from-gray-50/50 hover:to-transparent rounded-t-2xl group-hover:shadow-inner">
@@ -129,7 +129,7 @@ export const DesktopViewSection = () => {
             </Accordion>
           </div>
 
-          <div className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-gray-50 to-gray-100/50 border border-gray-200/50 hover:border-gray-300/70 transition-all duration-300 hover:shadow-lg hover:scale-105 animate-fade-up [--animation-delay:1000ms] group">
+          <div className="flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-gray-50 to-gray-100/50 border border-gray-200/50 hover:border-gray-300/70 transition-all duration-500 hover:shadow-lg hover:scale-105 hover:-translate-y-1 animate-fade-up [--animation-delay:1000ms] group">
             <MailIcon className="w-6 h-6 text-gray-600 group-hover:text-gray-700 transition-colors duration-300" />
             <div className="flex flex-col items-start">
               <div className="flex items-center justify-center gap-2 flex-wrap">

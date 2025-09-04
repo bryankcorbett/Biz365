@@ -40,7 +40,7 @@ export const ProjectsSection = () => {
       <div className="flex flex-col max-w-[1200px] items-center justify-center gap-11 w-full">
         {/* Header Section */}
         <header className="flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full translate-y-[-1rem] animate-fade-in opacity-0">
-          <Badge className="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-orbai-templateframerwebsitewild-sand rounded-[60px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border border-solid border-neutral-100">
+          <Badge variant="premium" className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-[60px] overflow-hidden group">
             <div className="flex flex-col w-4 h-5 items-start">
               <div className="relative self-stretch w-full h-5">
                 <img
@@ -71,7 +71,7 @@ export const ProjectsSection = () => {
 
         {/* Project Content */}
         <div className="flex flex-col max-w-[1200px] w-full items-start translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:600ms]">
-          <Card className="flex flex-col max-w-[1200px] items-start justify-center gap-5 p-5 w-full bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
+          <Card className="flex flex-col max-w-[1200px] items-start justify-center gap-5 p-5 w-full bg-orbai-templateframerwebsitewild-sand rounded-[20px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] hover:shadow-[0px_40px_40px_-8px_#00000010,0px_20px_20px_-6px_#00000015] hover:scale-[1.01] transition-all duration-500 group">
             <CardContent className="p-0 w-full">
               {/* Project Tabs */}
               <div className="flex flex-wrap items-center gap-4 mb-5">
@@ -79,7 +79,7 @@ export const ProjectsSection = () => {
                   <Button
                     key={index}
                     variant="ghost"
-                    className={`h-11 px-[157px] py-[13.8px] bg-orbai-templateframerwebsitewild-sand rounded-lg overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] ${!tab.active ? "opacity-50" : ""}`}
+                    className={`h-11 px-[157px] py-[13.8px] bg-orbai-templateframerwebsitewild-sand rounded-lg overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] hover:bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 group ${!tab.active ? "opacity-50" : ""}`}
                     onClick={() => setActiveProject(index)}
                   >
                     <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[11.4px] tracking-[0] leading-[14.4px] whitespace-nowrap">
@@ -142,7 +142,7 @@ export const ProjectsSection = () => {
                     {projects[activeProject].metrics.map((metric, index) => (
                       <Card
                         key={index}
-                        className={`flex flex-col min-w-[100px] items-start flex-1 ${metric.opacity}`}
+                        className={`flex flex-col min-w-[100px] items-start flex-1 hover:scale-105 hover:shadow-lg transition-all duration-300 group ${metric.opacity}`}
                       >
                         <CardContent className="flex flex-col items-center justify-center gap-2 p-5 w-full bg-orbai-templateframerwebsitewild-sand rounded-xl overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014]">
                           <div className="flex items-center justify-center gap-1">
