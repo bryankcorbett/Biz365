@@ -1,12 +1,12 @@
 import React from "react";
 
 /**
- * Login Pulse Button - Final React component matching HTML demo exactly
+ * Login Button with Hover Effect - Updated with new design
  * Features:
- * - Black pill button with continuous black pulse ring animation
- * - Hover: lift + scale + enhanced shadow + glow
+ * - White background with black text and border
+ * - Hover: lift + translate with shadow effect
  * - Active press state with scale down
- * - Keyboard focus ring for accessibility
+ * - Smooth transitions
  * - Respects prefers-reduced-motion
  */
 const LoginPulseButton = ({
@@ -22,33 +22,20 @@ const LoginPulseButton = ({
     <>
       <style jsx>{`
         .login-pulse-btn {
-          --btn-bg: #000;
-          --btn-fg: #fff;
-          --pulse: rgba(0, 0, 0, .30);
-          --shadow: rgba(0, 0, 0, .20);
-          --shadow-strong: rgba(0, 0, 0, .35);
-
-          appearance: none;
-          border: none;
-          outline: none;
+          background-color: white;
+          color: black;
+          border-radius: 10em;
+          font-size: 17px;
+          font-weight: 600;
+          padding: 0.6em 1.5em;
           cursor: pointer;
-
-          background: var(--btn-bg);
-          color: var(--btn-fg);
-          border-radius: 9999px;
-          padding: 14px 32px;
-          font-weight: 700;
-          letter-spacing: .2px;
-          font-size: 1rem;
-          line-height: 1;
-
+          transition: all 0.3s ease-in-out;
+          border: 1px solid black;
+          box-shadow: 0 0 0 0 black;
+          appearance: none;
+          outline: none;
           position: relative;
           isolation: isolate;
-          transition: transform .22s cubic-bezier(.2, .8, .2, 1), 
-                      box-shadow .22s cubic-bezier(.2, .8, .2, 1), 
-                      filter .22s ease;
-
-          box-shadow: 0 6px 18px -6px var(--shadow);
         }
 
         .login-pulse-btn:disabled {
@@ -56,25 +43,14 @@ const LoginPulseButton = ({
           cursor: not-allowed;
         }
 
-        .login-pulse-btn::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          z-index: -1;
-          box-shadow: 0 0 0 0 var(--pulse);
-          animation: pulse-ring var(--speed, ${speed}) infinite;
-        }
-
-        .login-pulse-btn:hover:not(:disabled),
-        .login-pulse-btn:focus-visible:not(:disabled) {
-          transform: translateY(-3px) scale(1.03);
-          box-shadow: 0 18px 34px -10px var(--shadow-strong);
-          filter: drop-shadow(0 0 10px rgba(0, 0, 0, .12));
+        .login-pulse-btn:hover:not(:disabled) {
+          transform: translateY(-4px) translateX(-2px);
+          box-shadow: 2px 5px 0 0 black;
         }
 
         .login-pulse-btn:active:not(:disabled) {
-          transform: translateY(-1px) scale(0.99);
+          transform: translateY(2px) translateX(1px);
+          box-shadow: 0 0 0 0 black;
         }
 
         .login-pulse-btn:focus-visible {
@@ -82,22 +58,7 @@ const LoginPulseButton = ({
           outline-offset: 3px;
         }
 
-        @keyframes pulse-ring {
-          0% {
-            box-shadow: 0 0 0 0 var(--pulse);
-          }
-          60% {
-            box-shadow: 0 0 0 18px rgba(0, 0, 0, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-          }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-          .login-pulse-btn::after {
-            animation: none;
-          }
           .login-pulse-btn { 
             transition: none;
           }

@@ -142,7 +142,7 @@ export const ReviewsSection = () => {
         {/* Header Section (unchanged visual) */}
         <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:0ms] flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full">
           <div className="flex flex-col items-start">
-            <Badge className="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-orbai-templateframerwebsitewild-sand rounded-[60px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border border-solid border-neutral-100">
+            <Badge variant="premium" className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-[60px] group">
               <div className="flex flex-col w-4 h-5 items-start">
                 <div className="relative w-full h-5">
                   <img className="absolute w-6 h-5 top left-px" alt="Group" src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/bb139178-e08a-429e-826c-1b8d041be1d7" />
@@ -172,7 +172,7 @@ export const ReviewsSection = () => {
           {/* Animated Testimonial Card with reveal + hover float */}
           <RevealOnScroll delayMs={150} durationMs={900}>
             <div className="flex justify-center w-full mb-6">
-              <Card className="flex flex-col max-w-[800px] w-full bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/20 rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border border-amber-200/30 backdrop-blur-sm transition-transform duration-500 hover:-translate-y-1 hover:shadow-lg">
+              <Card className="flex flex-col max-w-[800px] w-full bg-gradient-to-br from-white via-gray-50/30 to-gray-100/20 rounded-[20px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] border border-gray-200/30 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-[0px_40px_40px_-8px_#00000010,0px_20px_20px_-6px_#00000015] hover:border-gray-300/50 group">
                 <CardContent className="flex flex-col items-center pt-[60px] pb-10 px-10">
                   <div className="flex flex-col max-w-screen-sm items-center justify-center gap-6 w-full">
                     {/* Animated Text (staggered words) */}
@@ -189,7 +189,7 @@ export const ReviewsSection = () => {
                     {/* Quote Icon */}
                     <div className="flex flex-col w-[38px] items-start">
                       <div className="relative w-full h-[41px]">
-                        <img className="absolute w-[31px] h-[23px] top-2.5 left-1" alt="Group" src="https://c.animaapp.com/mewus0n76JsNvN/img/group-2.png" />
+                        <img className="absolute w-[31px] h-[30px] top-2.5 left-1" alt="Group" src="https://cdn1.genspark.ai/user-upload-image/gpt_image_generated/77a15f15-7134-40cc-85e3-c9a483c3c14e" />
                       </div>
                     </div>
                   </div>
