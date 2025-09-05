@@ -18,8 +18,8 @@ function App() {
       <ToastProvider>
         <Router>
           <Routes>
-            {/* Landing Page - Redirect to Signup */}
-            <Route path="/" element={<Navigate to="/signup" replace />} />
+            {/* Main Landing Page */}
+            <Route path="/" element={<Corementors />} />
             
             {/* CoreMentors Page */}
             <Route path="/corementors" element={<Corementors />} />
