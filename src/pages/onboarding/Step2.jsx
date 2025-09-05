@@ -58,15 +58,15 @@ const OnboardingStep2 = () => {
     const timers = [];
     
     // Elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: true })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: true })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: true })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: true })), 1200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: true })), 1400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: true })), 300));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: true })), 500));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: true })), 700));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 800));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 900));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -129,19 +129,19 @@ const OnboardingStep2 = () => {
     // Exit animations in reverse order
     const timers = [];
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: false })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: false })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: false })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: false })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: false })), 1200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 50));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, pincode: false })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, country: false })), 150));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, state: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, city: false })), 250));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, address: false })), 300));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 350));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 400));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       navigate(ROUTES.ONBOARDING.STEP3, { replace: true });
-    }, 1800));
+    }, 450));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -180,14 +180,14 @@ const OnboardingStep2 = () => {
       </div>
       <div className="relative z-10 min-h-screen flex flex-col px-6 py-8">
         <div 
-          className={`w-full max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
+          className={`w-full max-w-2xl mx-auto transform transition-all duration-500 ease-out ${
             isFormVisible 
               ? 'translate-y-0 opacity-100 scale-100' 
               : 'translate-y-8 opacity-0 scale-95'
           }`}
         >
           {/* Logo */}
-          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mb-6 transition-all duration-500 ease-out ${
             showElements.logo 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -204,7 +204,7 @@ const OnboardingStep2 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <div className={`transition-all duration-1000 ease-out ${
+          <div className={`transition-all duration-500 ease-out ${
             showElements.stepper 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -216,7 +216,7 @@ const OnboardingStep2 = () => {
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Address Field */}
-              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+              <div className={`space-y-2 transition-all duration-500 ease-out ${
                 showElements.address 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -254,7 +254,7 @@ const OnboardingStep2 = () => {
               {/* City and Country Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* City */}
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.city 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -289,7 +289,7 @@ const OnboardingStep2 = () => {
                 </div>
 
                 {/* Country */}
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.country 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -335,7 +335,7 @@ const OnboardingStep2 = () => {
               {/* State and Pincode Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* State */}
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.state 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -388,7 +388,7 @@ const OnboardingStep2 = () => {
                 </div>
 
                 {/* Pincode */}
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.pincode 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -426,7 +426,7 @@ const OnboardingStep2 = () => {
              
 
               {/* Back and Submit Buttons */}
-              <div className={`flex gap-4 transition-all duration-1000 ease-out ${
+              <div className={`flex gap-4 transition-all duration-500 ease-out ${
                 showElements.submitButton 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -480,7 +480,7 @@ const OnboardingStep2 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mt-6 transition-all duration-500 ease-out ${
             showElements.progressIndicator 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'

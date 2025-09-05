@@ -36,7 +36,6 @@ const VerifyOTP = () => {
   
   // Animation states for right panel elements
   const [showRightElements, setShowRightElements] = useState({
-    logo: false,
     welcomeText: false,
     otpInputs: false,
     verifyButton: false,
@@ -57,7 +56,6 @@ const VerifyOTP = () => {
   useEffect(() => {
     // Reset all animation states
     setShowRightElements({
-      logo: false,
       welcomeText: false,
       otpInputs: false,
       verifyButton: false,
@@ -70,13 +68,12 @@ const VerifyOTP = () => {
     const timers = [];
     
     // Right panel elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInputs: true })), 600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, verifyButton: true })), 800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendSection: true })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, changeMobileLink: true })), 1200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, backToLoginLink: true })), 1400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 100));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInputs: true })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, verifyButton: true })), 300));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendSection: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, changeMobileLink: true })), 500));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, backToLoginLink: true })), 600));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -256,24 +253,24 @@ const VerifyOTP = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+      {/* Logo at top center */}
+      <div className="flex justify-center pt-6 pb-4">
+        <img 
+          src="public/logoblack.png" 
+          alt="Biz365 Logo" 
+          className="h-16 w-auto"
+        />
+      </div>
+      
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
+      <main className="px-4 sm:px-6 lg:px-8 pt-2">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-8">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 my-auto space-y-6">
-              {/* Image Container */}
-              <div className="mb-4">
-                <img 
-                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
-                  alt="Business success illustration" 
-                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
-                />
-              </div>
-              
-              <h1 className="text-4xl font-semibold leading-tight">
+            <div className="relative z-10 my-auto space-y-4">
+              <h1 className="text-3xl font-semibold leading-tight">
                 Turn everyday customers into raving fans.
               </h1>
               <p className="text-gray-300 text-lg">
@@ -300,6 +297,7 @@ const VerifyOTP = () => {
           <div>
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
+<<<<<<< HEAD
                 {/* BIZ365 Logo */}
                 <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
                   showRightElements.logo 
@@ -313,8 +311,10 @@ const VerifyOTP = () => {
                   />
                 </div>
 
+=======
+>>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
                 {/* Welcome Text */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                <div className={`text-center mb-8 transition-all duration-500 ease-out ${
                   showRightElements.welcomeText 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -329,7 +329,7 @@ const VerifyOTP = () => {
                 {/* OTP Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* OTP Input */}
-                  <div className={`space-y-4 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-4 transition-all duration-500 ease-out ${
                     showRightElements.otpInputs 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -369,7 +369,7 @@ const VerifyOTP = () => {
                   </div>
 
                   {/* Verify Button */}
-                  <div className={`transition-all duration-1000 ease-out ${
+                  <div className={`transition-all duration-500 ease-out ${
                     showRightElements.verifyButton 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -385,7 +385,7 @@ const VerifyOTP = () => {
                 </form>
 
                 {/* Resend Section */}
-                <div className={`mt-6 text-center space-y-4 transition-all duration-1000 ease-out ${
+                <div className={`mt-6 text-center space-y-4 transition-all duration-500 ease-out ${
                   showRightElements.resendSection 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -412,7 +412,7 @@ const VerifyOTP = () => {
                 </div>
 
                 {/* Change Mobile Link */}
-                <div className={`mt-4 text-center transition-all duration-1000 ease-out ${
+                <div className={`mt-4 text-center transition-all duration-500 ease-out ${
                   showRightElements.changeMobileLink 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -428,7 +428,7 @@ const VerifyOTP = () => {
                 </div>
 
                 {/* Back to Login */}
-                <div className={`mt-6 text-center transition-all duration-1000 ease-out ${
+                <div className={`mt-6 text-center transition-all duration-500 ease-out ${
                   showRightElements.backToLoginLink 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -447,20 +447,20 @@ const VerifyOTP = () => {
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          © 2025 Biz365. All rights reserved. Powered by{' '}
-          <a 
-            href="https://corementors.in/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
-          >
-            CoreMentors
-          </a>
-        </footer>
       </main>
+      
+      {/* Footer at bottom center */}
+      <footer className="mt-20 text-center text-sm text-gray-500 dark:text-gray-400">
+        © 2025 Biz365. All rights reserved. Powered by{' '}
+        <a 
+          href="https://corementors.in/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          CoreMentors
+        </a>
+      </footer>
     </div>
   );
 };

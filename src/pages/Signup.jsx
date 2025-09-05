@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
+<<<<<<< HEAD
 import logoblack from '../assets/logoblack.png';
 import countryCodesData from '../assets/CountryCodes.json';
 
@@ -43,10 +44,20 @@ function getCountryFlag(countryCode) {
   };
   return flagMap[countryCode] || '🌍';
 }
+=======
+const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
+// Manual country codes - only 3 countries
+const COUNTRY_CODES = [
+  { code: '+1', country: 'United States', flag: '🇺🇸' },
+  { code: '+1', country: 'Canada', flag: '🇨🇦' },
+  { code: '+91', country: 'India', flag: '🇮🇳' }
+];
+>>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     mobile: '',
     countryCode: '+1',
@@ -65,12 +76,12 @@ const Signup = () => {
   // Animation states for right panel elements
   const [isExiting, setIsExiting] = useState(false);
   const [showRightElements, setShowRightElements] = useState({
-    logo: false,
     welcomeText: false,
     googleButton: false,
     appleButton: false,
     separator: false,
-    nameInput: false,
+    firstNameInput: false,
+    lastNameInput: false,
     emailInput: false,
     mobileInput: false,
     passwordInput: false,
@@ -87,12 +98,12 @@ const Signup = () => {
     // Reset all animation states
     setIsExiting(false);
     setShowRightElements({
-      logo: false,
       welcomeText: false,
       googleButton: false,
       appleButton: false,
       separator: false,
-      nameInput: false,
+      firstNameInput: false,
+      lastNameInput: false,
       emailInput: false,
       mobileInput: false,
       passwordInput: false,
@@ -104,19 +115,20 @@ const Signup = () => {
     // Start entrance animations after a brief delay
     const timers = [];
     
+    // Left panel elements appear first (from left)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 100));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, firstNameInput: true })), 200));
+    
     // Right panel elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: true })), 800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: true })), 1200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 1400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: true })), 1600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 1800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, termsCheckbox: true })), 2000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccountButton: true })), 2200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInLink: true })), 2400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 300));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, lastNameInput: true })), 500));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: true })), 700));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, termsCheckbox: true })), 900));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccountButton: true })), 1000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInLink: true })), 1100));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -138,17 +150,18 @@ const Signup = () => {
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: false })), 800));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: false })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, lastNameInput: false })), 1200));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1400));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1600));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, firstNameInput: false })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2400));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       navigate(ROUTES.LOGIN);
-    }, 2400));
+    }, 2000));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -169,17 +182,18 @@ const Signup = () => {
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, mobileInput: false })), 800));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, nameInput: false })), 1200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, lastNameInput: false })), 1200));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1400));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1600));
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, firstNameInput: false })), 2000));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 2200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 2400));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       navigate(`${ROUTES.VERIFY_OTP}?mobile=${encodeURIComponent(formData.mobile)}`, { replace: true });
-    }, 2400));
+    }, 2000));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -240,13 +254,22 @@ const Signup = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters long';
-    } else if (formData.name.trim().length > 50) {
-      newErrors.name = 'Name must be no more than 50 characters long';
+    // First Name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    } else if (formData.firstName.trim().length < 2) {
+      newErrors.firstName = 'First name must be at least 2 characters long';
+    } else if (formData.firstName.trim().length > 25) {
+      newErrors.firstName = 'First name must be no more than 25 characters long';
+    }
+
+    // Last Name validation
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    } else if (formData.lastName.trim().length < 2) {
+      newErrors.lastName = 'Last name must be at least 2 characters long';
+    } else if (formData.lastName.trim().length > 25) {
+      newErrors.lastName = 'Last name must be no more than 25 characters long';
     }
 
     // Email validation
@@ -403,11 +426,16 @@ const Signup = () => {
     }
 
     try {
-      // Combine country code with mobile number
+      // Combine country code with mobile number and combine names
       const signupData = {
         ...formData,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
         mobile: `${formData.countryCode}${formData.mobile}`
       };
+      
+      // Remove firstName and lastName from the data sent to backend
+      delete signupData.firstName;
+      delete signupData.lastName;
       
       await signup(signupData);
       showToast('success', SUCCESS_MESSAGES.SIGNUP_SUCCESS);
@@ -421,48 +449,72 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+    <div className="h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950 overflow-hidden">
+      {/* Logo in top-left */}
+      <div className="absolute top-4 left-4 z-20">
+        <img 
+          src="public/logoblack.png" 
+          alt="Biz365 Logo"
+          className="h-12 w-auto"
+        />
+      </div>
+
+      {/* Center Welcome Text */}
+      <div className="absolute top-5 left-1/2 transform -translate-x-1/2 z-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white text-center mb-4">
+          Join the Revolution!
+        </h1>
+      </div>
+
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16">
+        <div className="w-full max-w-5xl grid gap-8 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-4">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 my-auto space-y-6">
-              {/* Image Container */}
-              <div className="mb-4">
-                <img 
-                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
-                  alt="Business success illustration" 
-                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
-                />
-      </div>
-      
-              <h1 className="text-4xl font-semibold leading-tight">
-                Turn everyday customers into raving fans.
-              </h1>
-              <p className="text-gray-300 text-lg">
-                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
-              </p>
-              <ul className="space-y-3 text-gray-200">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  NFC/QR review capture that just works
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  Auto-routes unhappy customers to private help
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  One dashboard. All platforms. Zero chaos.
-                </li>
-              </ul>
+            <div className="relative z-10 flex flex-col justify-center space-y-4">
+              {/* Main Text */}
+              <div className={`transition-all duration-1000 ease-out ${
+                showRightElements.welcomeText 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Be part of something extraordinary</h2>
+              </div>
+              
+              {/* Content */}
+              <div className={`transition-all duration-1000 ease-out ${
+                showRightElements.firstNameInput 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <h3 className="text-2xl font-semibold leading-tight">
+                  Turn everyday customers into raving fans.
+                </h3>
+                <p className="text-gray-300 text-base">
+                  BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
+                </p>
+                <ul className="space-y-2 text-gray-200">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    NFC/QR review capture that just works
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    Auto-routes unhappy customers to private help
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    One dashboard. All platforms. Zero chaos.
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
 
           {/* Right Panel - White Signup Form */}
+<<<<<<< HEAD
           <div>
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 relative">
               <div className="p-6 sm:p-8 relative">
@@ -488,17 +540,23 @@ const Signup = () => {
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Join the Revolution!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Be part of something extraordinary</p>
                 </div>
+=======
+          <div className="flex items-center">
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 w-full">
+              <div className="p-4 sm:p-6">
+>>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
 
                 {/* Social Signup Buttons */}
-                <div className={`space-y-3 mb-6 transition-all duration-1000 ease-out ${
+                <div className={`flex gap-3 mb-4 transition-all duration-1000 ease-out ${
                   showRightElements.googleButton 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
                 }`}>
+                  {/* Google Button */}
                   <button 
                     onClick={handleGoogleSignup}
                     disabled={isGoogleLoading || isAppleLoading}
-                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 w-full h-12 justify-center bg-white border-gray-300 text-black"
+                    className="flex-1 inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 h-12 justify-center bg-white border-gray-300 text-black"
                   >
                     <div className="mr-3" aria-hidden="true">
                       {isGoogleLoading ? (
@@ -517,20 +575,14 @@ const Signup = () => {
                         </svg>
                       )}
                     </div>
-                    {isGoogleLoading ? 'Signing up...' : 'Sign up with Google'}
+                    {isGoogleLoading ? 'Signing up...' : 'Google'}
                   </button>
-          </div>
 
-                {/* Apple Button */}
-                <div className={`mb-6 transition-all duration-1000 ease-out ${
-                  showRightElements.appleButton 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
+                  {/* Apple Button */}
                   <button 
                     onClick={handleAppleSignup}
                     disabled={isGoogleLoading || isAppleLoading}
-                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-12 justify-center bg-black text-white"
+                    className="flex-1 inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 h-12 justify-center bg-black text-white"
                   >
                     <div className="mr-3" aria-hidden="true">
                       {isAppleLoading ? (
@@ -541,15 +593,15 @@ const Signup = () => {
                       ) : (
                         <svg width="16" height="20" viewBox="0 0 384 512" fill="currentColor">
                           <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
-                  </svg>
+                        </svg>
                       )}
                     </div>
-                    {isAppleLoading ? 'Signing up...' : 'Sign up with Apple'}
+                    {isAppleLoading ? 'Signing up...' : 'Apple'}
                   </button>
                 </div>
 
                 {/* Separator */}
-                <div className={`relative mb-6 transition-all duration-1000 ease-out ${
+                <div className={`relative mb-4 transition-all duration-1000 ease-out ${
                   showRightElements.separator 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -563,34 +615,63 @@ const Signup = () => {
                 </div>
 
                 {/* Email Form */}
-                <form onSubmit={handleSubmit} className="space-y-4 relative">
-                  {/* Name Field */}
+                <form onSubmit={handleSubmit} className="space-y-3 relative">
+                  {/* Name Fields */}
                   <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
-                    showRightElements.nameInput 
+                    showRightElements.firstNameInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
                   }`}>
-                    <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
-                <div className="relative">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                  <input
-                    type="text"
-                        name="name"
-                        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                    id="name"
-                        placeholder="Enter your full name" 
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    disabled={isLoading}
-                  />
-                </div>
-                {errors.name && (
-                      <p className="text-sm text-red-600">{errors.name}</p>
-                )}
-              </div>
+                    <div className="flex gap-3">
+                      {/* First Name Field */}
+                      <div className="flex-1">
+                        <label htmlFor="firstName" className="text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
+                        <div className="relative">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                          </svg>
+                          <input
+                            type="text"
+                            name="firstName"
+                            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
+                            id="firstName"
+                            placeholder="First name" 
+                            value={formData.firstName}
+                            onChange={handleInputChange}
+                            disabled={isLoading}
+                          />
+                        </div>
+                        {errors.firstName && (
+                          <p className="text-sm text-red-600">{errors.firstName}</p>
+                        )}
+                      </div>
+
+                      {/* Last Name Field */}
+                      <div className="flex-1">
+                        <label htmlFor="lastName" className="text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
+                        <div className="relative">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                          </svg>
+                          <input
+                            type="text"
+                            name="lastName"
+                            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
+                            id="lastName"
+                            placeholder="Last name" 
+                            value={formData.lastName}
+                            onChange={handleInputChange}
+                            disabled={isLoading}
+                          />
+                        </div>
+                        {errors.lastName && (
+                          <p className="text-sm text-red-600">{errors.lastName}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
 
               {/* Email Field */}
                   <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
@@ -627,7 +708,7 @@ const Signup = () => {
                       : 'translate-x-full opacity-0'
                   }`}>
                     <label htmlFor="mobile" className="text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Number</label>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 relative">
                       {/* Country Code Dropdown */}
                       <div className="relative country-dropdown z-50">
                         <button
@@ -642,49 +723,49 @@ const Signup = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
                         </button>
-                        
-                        {/* Dropdown Menu */}
-                        {showCountryDropdown && (
-                          <div 
-                            data-country-dropdown
-                            className="absolute bottom-full left-0 mb-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-[9999] max-h-60 overflow-y-auto"
-                          >
-                            {COUNTRY_CODES.map((country) => (
-                              <button
-                                key={country.code}
-                                type="button"
-                                onClick={() => {
-                                  setFormData(prev => ({ ...prev, countryCode: country.code }));
-                                  setShowCountryDropdown(false);
-                                }}
-                                className="w-full flex items-center gap-3 px-3 py-2 text-sm text-left hover:bg-gray-50 transition-colors"
-                              >
-                                <span className="text-lg">{country.flag}</span>
-                                <span className="text-gray-700">{country.code}</span>
-                                <span className="text-gray-500 ml-auto">{country.country}</span>
-                              </button>
-                            ))}
-                          </div>
-                        )}
                       </div>
                       
                       {/* Mobile Number Input */}
                       <div className="relative flex-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-phone absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400">
                           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                  </svg>
-                  <input
-                    type="tel"
+                        </svg>
+                        <input
+                          type="tel"
                           name="mobile"
                           className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent hover:border-gray-400 hover:shadow-md pl-9 h-11" 
-                    id="mobile"
+                          id="mobile"
                           placeholder="Enter your mobile number" 
-                    value={formData.mobile}
-                    onChange={handleInputChange}
-                    disabled={isLoading}
-                  />
+                          value={formData.mobile}
+                          onChange={handleInputChange}
+                          disabled={isLoading}
+                        />
                       </div>
-                </div>
+                      
+                      {/* Dropdown Menu - Full Width, Opens Upward */}
+                      {showCountryDropdown && (
+                        <div 
+                          data-country-dropdown
+                          className="absolute bottom-full left-0 mb-1 w-full bg-white border border-gray-300 rounded-md shadow-lg z-[9999] max-h-60 overflow-y-auto"
+                        >
+                          {COUNTRY_CODES.map((country, index) => (
+                            <button
+                              key={`${country.code}-${country.country}-${index}`}
+                              type="button"
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, countryCode: country.code }));
+                                setShowCountryDropdown(false);
+                              }}
+                              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-left hover:bg-gray-50 transition-colors"
+                            >
+                              <span className="text-lg">{country.flag}</span>
+                              <span className="text-gray-700">{country.code}</span>
+                              <span className="text-gray-500 ml-auto">{country.country}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                 {errors.mobile && (
                       <p className="text-sm text-red-600">{errors.mobile}</p>
                 )}
@@ -783,40 +864,41 @@ const Signup = () => {
             </form>
 
                 {/* Sign In Link */}
-                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
+                <div className={`mt-4 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
                   showRightElements.signInLink 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
                 }`}>
-                                    <p>
-                 Already have an account?{' '}
-                 <button 
-                   onClick={handleNavigateToLogin}
-                   disabled={isExiting}
-                     className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                 >
-                    Sign in
-                  </button>
+                  <p>
+                    Already have an account?{' '}
+                    <button 
+                      onClick={handleNavigateToLogin}
+                      disabled={isExiting}
+                      className="font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 hover:underline bg-transparent p-0 border-0 shadow-none underline underline-offset-2 focus-visible:outline-none focus-visible:ring-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Sign in
+                    </button>
                   </p>
+                </div>
+
+              </div>
             </div>
           </div>
-          </div>
         </div>
-      </div>
-
-        {/* Footer */}
-        <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          © 2025 Biz365. All rights reserved. Powered by{' '}
-          <a 
-            href="https://corementors.in/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium  text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
-          >
-            CoreMentors
-          </a>
-        </footer>
       </main>
+
+      {/* Footer */}
+      <footer className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center text-xs text-gray-500 dark:text-gray-400">
+        © 2025 Biz365. All rights reserved. Powered by{' '}
+        <a 
+          href="https://corementors.in/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center px-2 py-1 rounded-lg text-xs font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          CoreMentors
+        </a>
+      </footer>
     </div>
   );
 };
