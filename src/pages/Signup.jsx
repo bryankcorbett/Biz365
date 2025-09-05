@@ -48,6 +48,16 @@ const Signup = () => {
   const { signup, isLoading, error, clearError } = useAuth();
   const { showToast } = useToast();
 
+  // Initialize Google OAuth
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: OAUTH_CONFIG.GOOGLE.CLIENT_ID,
+        callback: handleGoogleSignup
+      });
+    }
+  }, []);
+
   // Reset animation states and start entrance animations
   useEffect(() => {
     // Reset all animation states
@@ -334,15 +344,17 @@ const Signup = () => {
         const data = await window.AppleID.auth.signIn();
         
         // Send to your backend for signup
-        const authResponse = await fetch('/api/auth/apple-signup', {
+        const authResponse = await fetch(`${API_CONFIG.BASE_URL}/api/auth/apple`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            email: data.user?.email || '',
+            name: data.user?.name || '',
+            appleId: data.user?.id || '',
             identityToken: data.authorization.id_token,
             authorizationCode: data.authorization.code,
-            user: data.user,
           }),
         });
 
@@ -361,7 +373,7 @@ const Signup = () => {
         }
       } else {
         // Fallback: redirect to Apple OAuth
-        const appleAuthUrl = `https://appleid.apple.com/auth/authorize?client_id=${process.env.REACT_APP_APPLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(window.location.origin + '/auth/apple/callback')}&response_type=code&scope=name email`;
+        const appleAuthUrl = `https://appleid.apple.com/auth/authorize?client_id=${OAUTH_CONFIG.APPLE.CLIENT_ID}&redirect_uri=${encodeURIComponent(OAUTH_CONFIG.APPLE.REDIRECT_URI)}&response_type=code&scope=name email`;
         window.location.href = appleAuthUrl;
       }
     } catch (error) {
@@ -400,6 +412,7 @@ const Signup = () => {
       handleNavigateToVerifyOTP();
     } catch (error) {
       console.error('Signup failed:', error);
+      showToast('error', error.message || 'Signup failed. Please try again.');
     }
   };
 
