@@ -194,7 +194,7 @@ const ForgotPassword = () => {
       </div>
       
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pt-2">
+      <main className="px-4 sm:px-6 lg:px-8 pt-2 mt-10">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
           <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-8">

@@ -431,7 +431,6 @@ const VerifyOTP = () => {
             </div>
           </div>
         </div>
-
       </main>
       
       {/* Footer at bottom center */}

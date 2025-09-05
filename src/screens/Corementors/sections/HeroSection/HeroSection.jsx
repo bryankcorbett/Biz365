@@ -292,7 +292,7 @@ export default function Orb({
           {/* Title - Inside the circle */}
           <div className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms] flex items-center justify-center pointer-events-auto mt-64 text-md">
               <h1 className="bg-[linear-gradient(11deg,rgba(0,0,0,1)_34%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] font-orbai-template-framer-website-semantic-heading-1 font-[number:var(--orbai-template-framer-website-semantic-heading-1-font-weight)] text-[length:var(--orbai-template-framer-website-semantic-heading-1-font-size)] tracking-[var(--zai-template-framer-website-semantic-heading-1-letter-spacing)] leading-[var(--orbai-template-framer-website-semantic-heading-1-line-height)] [font-style:var(--orbai-template-framer-website-semantic-heading-1-font-style)]">
-              <img src="public/logoblack.png" alt="" className="w-64"/>
+              <img src="src/assets/logoblack.png" alt="" className="w-64"/>
               </h1>
             
             </div>
