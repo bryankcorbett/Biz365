@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
-const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
+import logoblack from '../assets/logoblack.png';
 import countryCodesData from '../assets/CountryCodes.json';
 
 // Get country codes from JSON file
@@ -473,9 +473,9 @@ const Signup = () => {
                     : 'translate-x-full opacity-0'
                 }`}>
                   <img 
-                    src={logoImage} 
+                    src={logoblack} 
                 alt="Biz365 Logo"
-                    className="h-36 w-auto mx-auto mb-4"
+                    className="h-36 w-auto mx-auto mb-4 object-contain"
               />
             </div>
 

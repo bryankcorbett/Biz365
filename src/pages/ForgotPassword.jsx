@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, ERROR_MESSAGES } from '../constants';
-const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
+import logoblack from '../assets/logoblack.png';
 
 // Country codes for mobile number
 const COUNTRY_CODES = [
@@ -231,9 +231,9 @@ const ForgotPassword = () => {
                 {/* BIZ365 Logo */}
                 <div className="text-center mb-8">
                   <img 
-                    src={logoImage} 
+                    src={logoblack} 
                     alt="Biz365 Logo" 
-                    className="h-36 w-auto mx-auto mb-4"
+                    className="h-36 w-auto mx-auto mb-4 object-contain"
                   />
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     {step === 1 ? 'Reset Password' : 'Verify OTP'}
