@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
-<<<<<<< HEAD
 import logoblack from '../assets/logoblack.png';
 import countryCodesData from '../assets/CountryCodes.json';
 
@@ -44,15 +43,6 @@ function getCountryFlag(countryCode) {
   };
   return flagMap[countryCode] || '🌍';
 }
-=======
-const logoImage = "https://ik.imagekit.io/corementorid/logo.png?updatedAt=1756895388200";
-// Manual country codes - only 3 countries
-const COUNTRY_CODES = [
-  { code: '+1', country: 'United States', flag: '🇺🇸' },
-  { code: '+1', country: 'Canada', flag: '🇨🇦' },
-  { code: '+91', country: 'India', flag: '🇮🇳' }
-];
->>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -514,7 +504,6 @@ const Signup = () => {
           </section>
 
           {/* Right Panel - White Signup Form */}
-<<<<<<< HEAD
           <div>
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 relative">
               <div className="p-6 sm:p-8 relative">
@@ -526,10 +515,10 @@ const Signup = () => {
                 }`}>
                   <img 
                     src={logoblack} 
-                alt="Biz365 Logo"
+                    alt="Biz365 Logo"
                     className="h-36 w-auto mx-auto mb-4 object-contain"
-              />
-            </div>
+                  />
+                </div>
 
                 {/* Welcome Text */}
                 <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
@@ -540,11 +529,6 @@ const Signup = () => {
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Join the Revolution!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Be part of something extraordinary</p>
                 </div>
-=======
-          <div className="flex items-center">
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 w-full">
-              <div className="p-4 sm:p-6">
->>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
 
                 {/* Social Signup Buttons */}
                 <div className={`flex gap-3 mb-4 transition-all duration-1000 ease-out ${
