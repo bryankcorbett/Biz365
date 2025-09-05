@@ -1,144 +1,128 @@
 // API Client for Biz365
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.biz365.ai';
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || 'https://api.biz365.ai';
 
 class ApiClient {
-  constructor() {
-    this.baseURL = API_BASE_URL;
-  }
-
-  // Get auth token from localStorage
-  getAuthToken() {
-    return localStorage.getItem('auth_token');
-  }
-
-  // Get headers with auth token
-  getHeaders(includeAuth = true) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
-    if (includeAuth) {
-      const token = this.getAuthToken();
-      if (token) {
-        headers.Authorization = `Bearer ${token}`;
-      }
+    constructor() {
+        this.baseURL = API_BASE_URL;
     }
 
-    return headers;
-  }
+    // Get auth token from localStorage
+    getAuthToken() {
+        return localStorage.getItem('auth_token');
+    }
 
-  // Generic request method
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      headers: this.getHeaders(options.includeAuth !== false),
-      ...options,
-    };
+    // Get headers with auth token
+    getHeaders(includeAuth = true) {
+        const headers = {
+            'Content-Type': 'application/json',
+        };
 
-    try {
-      const response = await fetch(url, config);
-      
-      // Handle non-JSON responses
-      const contentType = response.headers.get('content-type');
-      let data;
-      
-      if (contentType && contentType.includes('application/json')) {
-        data = await response.json();
-      } else {
-        data = await response.text();
-      }
-
-      if (!response.ok) {
-        // Handle different error response formats
-        let errorMessage = `HTTP error! status: ${response.status}`;
-        
-        if (typeof data === 'string') {
-          errorMessage = data;
-        } else if (data && typeof data === 'object') {
-          if (data.message) {
-            errorMessage = data.message;
-          } else if (data.error) {
-            errorMessage = data.error;
-          } else if (data.details) {
-            errorMessage = data.details;
-          } else {
-            errorMessage = JSON.stringify(data);
-          }
+        if (includeAuth) {
+            const token = this.getAuthToken();
+            if (token) {
+                headers.Authorization = `Bearer ${token}`;
+            }
         }
-        
-        throw new Error(errorMessage);
-      }
 
-      return data;
-    } catch (error) {
-      console.error('API Request failed:', error);
-      throw error;
+        return headers;
     }
-  }
 
-  // GET request
-  async get(endpoint, options = {}) {
-    return this.request(endpoint, {
-      method: 'GET',
-      ...options,
-    });
-  }
+    // Generic request method
+    async request(endpoint, options = {}) {
+        const url = `${this.baseURL}${endpoint}`;
+        const config = {
+            headers: this.getHeaders(options.includeAuth !== false),
+            ...options,
+        };
 
-  // POST request
-  async post(endpoint, data, options = {}) {
-    return this.request(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      ...options,
-    });
-  }
+        try {
+            const response = await fetch(url, config);
 
-  // PUT request
-  async put(endpoint, data, options = {}) {
-    return this.request(endpoint, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      ...options,
-    });
-  }
+            // Handle non-JSON responses
+            const contentType = response.headers.get('content-type');
+            let data;
 
-  // DELETE request
-  async delete(endpoint, options = {}) {
-    return this.request(endpoint, {
-      method: 'DELETE',
-      ...options,
-    });
-  }
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                data = await response.text();
+            }
 
-  // Upload file
-  async uploadFile(endpoint, file, options = {}) {
-    const formData = new FormData();
-    formData.append('file', file);
+            if (!response.ok) {
+                throw new Error(data.message || data || `HTTP error! status: ${response.status}`);
+            }
 
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${this.getAuthToken()}`,
-      },
-      body: formData,
-      ...options,
-    };
-
-    try {
-      const response = await fetch(url, config);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || `HTTP error! status: ${response.status}`);
-      }
-
-      return data;
-    } catch (error) {
-      console.error('File upload failed:', error);
-      throw error;
+            return data;
+        } catch (error) {
+            console.error('API Request failed:', error);
+            throw error;
+        }
     }
-  }
+
+    // GET request
+    async get(endpoint, options = {}) {
+        return this.request(endpoint, {
+            method: 'GET',
+            ...options,
+        });
+    }
+
+    // POST request
+    async post(endpoint, data, options = {}) {
+        return this.request(endpoint, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            ...options,
+        });
+    }
+
+    // PUT request
+    async put(endpoint, data, options = {}) {
+        return this.request(endpoint, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            ...options,
+        });
+    }
+
+    // DELETE request
+    async delete(endpoint, options = {}) {
+        return this.request(endpoint, {
+            method: 'DELETE',
+            ...options,
+        });
+    }
+
+    // Upload file
+    async uploadFile(endpoint, file, options = {}) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const url = `${this.baseURL}${endpoint}`;
+        const config = {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${this.getAuthToken()}`,
+            },
+            body: formData,
+            ...options,
+        };
+
+        try {
+            const response = await fetch(url, config);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || `HTTP error! status: ${response.status}`);
+            }
+
+            return data;
+        } catch (error) {
+            console.error('File upload failed:', error);
+            throw error;
+        }
+    }
 }
 
 // Create and export singleton instance
