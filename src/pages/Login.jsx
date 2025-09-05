@@ -21,7 +21,6 @@ const Login = () => {
   const [showLeftText, setShowLeftText] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [showRightElements, setShowRightElements] = useState({
-    logo: false,
     welcomeText: false,
     googleButton: false,
     appleButton: false,
@@ -47,7 +46,6 @@ const Login = () => {
     setShowLeftText(false);
     setIsExiting(false);
     setShowRightElements({
-      logo: false,
       welcomeText: false,
       googleButton: false,
       appleButton: false,
@@ -62,23 +60,18 @@ const Login = () => {
     // Start entrance animations after a brief delay
     const timers = [];
     
-    // Left panel image appears first (from left)
-    timers.push(setTimeout(() => setShowLeftImage(true), 200));
-    
-    // Left panel text appears after image (from left)
-    timers.push(setTimeout(() => setShowLeftText(true), 600));
+    // Left panel elements appear first (from left)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 100));
+    timers.push(setTimeout(() => setShowLeftText(true), 200));
     
     // Right panel elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: true })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 1200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 1400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: true })), 1600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 1800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 2000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 2200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: true })), 2400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: true })), 2600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccount: true })), 2800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: true })), 300));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: true })), 500));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: true })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: true })), 700));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: true })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccount: true })), 900));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -124,20 +117,19 @@ const Login = () => {
     // Exit animations in reverse order
     const timers = [];
     timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, createAccount: false })), 0));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: false })), 200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: false })), 400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 800));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 1000));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, appleButton: false })), 1200));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 1400));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 1600));
-    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, logo: false })), 1800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, signInButton: false })), 50));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, rememberForgot: false })), 100));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, passwordInput: false })), 150));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, emailInput: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, separator: false })), 250));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, googleButton: false })), 300));
+    timers.push(setTimeout(() => setShowLeftText(false), 350));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 400));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       navigate(ROUTES.SIGNUP);
-    }, 2000));
+    }, 450));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -301,41 +293,53 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+    <div className="h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950 overflow-hidden">
+      {/* Logo in top-left */}
+      <div className="absolute top-4 left-4 z-20">
+        <img 
+          src="public/logoblack.png" 
+          alt="Biz365 Logo"
+          className="h-12 w-auto"
+        />
+      </div>
+
+      {/* Center Welcome Text */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white text-center">
+          Let's get started!
+        </h1>
+      </div>
+
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 lg:pt-16">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+        <div className="w-full max-w-5xl grid gap-8 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-10">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-6">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 my-auto space-y-6">
-              {/* Image Container */}
-              <div className={`mb-4 transition-all duration-1000 ease-out ${
-                showLeftImage 
+            <div className="relative z-10 flex flex-col justify-center space-y-6">
+              {/* Dashboard Text */}
+              <div className={`transition-all duration-500 ease-out ${
+                showRightElements.welcomeText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <img 
-                  src="https://cdn.pixabay.com/photo/2021/05/27/02/07/gamestop-6286877_1280.jpg" 
-                  alt="Business success illustration" 
-                  className="w-full h-72 object-cover rounded-2xl shadow-2xl"
-                />
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Access your BizTag dashboard</h2>
               </div>
-      
-              {/* Text Content */}
-              <div className={`transition-all duration-1000 ease-out ${
+              
+              {/* Text Content - Image removed */}
+              <div className={`transition-all duration-500 ease-out ${
                 showLeftText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h1 className="text-4xl font-semibold leading-tight">
+                <h3 className="text-2xl font-semibold leading-tight">
                   Turn everyday customers into raving fans.
-                </h1>
-                <p className="text-gray-300 text-lg">
+                </h3>
+                <p className="text-gray-300 text-base">
                   BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
                 </p>
-                <ul className="space-y-3 text-gray-200">
+                <ul className="space-y-2 text-gray-200">
                   <li className="flex items-start gap-3">
                     <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
                     NFC/QR review capture that just works
@@ -354,45 +358,22 @@ const Login = () => {
           </section>
 
           {/* Right Panel - White Login Form */}
-          <div>
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
+          <div className="flex items-center">
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
               <div className="p-6 sm:p-8">
-                {/* BIZ365 Logo */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.logo 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <img 
-                    src={logoImage} 
-                    alt="Biz365 Logo"
-                    className="h-36 w-auto mx-auto mb-4"
-                  />
-                </div>
-
-                {/* Welcome Text */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.welcomeText 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Let's get started!</h2>
-                  <p className="mt-1 text-gray-600 dark:text-gray-400">Access your BizTag dashboard</p>
-                </div>
 
                 {/* Social Login Buttons */}
-                <div className="space-y-3 mb-6">
+                <div className={`flex gap-3 mb-6 transition-all duration-500 ease-out ${
+                  showRightElements.googleButton 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
                   {/* Google Button */}
-                  <div className={`transition-all duration-1000 ease-out ${
-                    showRightElements.googleButton 
-                      ? 'translate-x-0 opacity-100' 
-                      : 'translate-x-full opacity-0'
-                  }`}>
-                    <button 
-                      onClick={handleGoogleLogin}
-                      disabled={isGoogleLoading || isAppleLoading}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 w-full h-12 justify-center bg-white border-gray-300 text-black"
-                    >
+                  <button 
+                    onClick={handleGoogleLogin}
+                    disabled={isGoogleLoading || isAppleLoading}
+                    className="flex-1 inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 hover:border-gray-400 px-4 py-2 h-12 justify-center bg-white border-gray-300 text-black"
+                  >
                     <div className="mr-3" aria-hidden="true">
                       {isGoogleLoading ? (
                         <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -410,21 +391,15 @@ const Login = () => {
                         </svg>
                       )}
                     </div>
-                      {isGoogleLoading ? 'Signing in...' : 'Continue with Google'}
-                    </button>
-                  </div>
+                    {isGoogleLoading ? 'Signing in...' : 'Google'}
+                  </button>
 
                   {/* Apple Button */}
-                  <div className={`transition-all duration-1000 ease-out ${
-                    showRightElements.appleButton 
-                      ? 'translate-x-0 opacity-100' 
-                      : 'translate-x-full opacity-0'
-                  }`}>
-                    <button 
-                      onClick={handleAppleLogin}
-                      disabled={isGoogleLoading || isAppleLoading}
-                      className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-12 justify-center bg-black text-white"
-                    >
+                  <button 
+                    onClick={handleAppleLogin}
+                    disabled={isGoogleLoading || isAppleLoading}
+                    className="flex-1 inline-flex items-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 h-12 justify-center bg-black text-white"
+                  >
                     <div className="mr-3" aria-hidden="true">
                       {isAppleLoading ? (
                         <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -437,13 +412,12 @@ const Login = () => {
                         </svg>
                       )}
                     </div>
-                      {isAppleLoading ? 'Signing in...' : 'Continue with Apple'}
-                    </button>
-                  </div>
+                    {isAppleLoading ? 'Signing in...' : 'Apple'}
+                  </button>
                 </div>
 
                 {/* Separator */}
-                <div className={`relative mb-6 transition-all duration-1000 ease-out ${
+                <div className={`relative mb-6 transition-all duration-500 ease-out ${
                   showRightElements.separator 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -459,7 +433,7 @@ const Login = () => {
                 {/* Login Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Email Field */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1.5 transition-all duration-500 ease-out ${
                     showRightElements.emailInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -487,7 +461,7 @@ const Login = () => {
               </div>
 
                   {/* Password Field */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1.5 transition-all duration-500 ease-out ${
                     showRightElements.passwordInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -535,7 +509,7 @@ const Login = () => {
               </div>
 
                   {/* Remember me and Forgot password */}
-                  <div className={`flex items-center justify-between text-sm transition-all duration-1000 ease-out ${
+                  <div className={`flex items-center justify-between text-sm transition-all duration-500 ease-out ${
                     showRightElements.rememberForgot 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -553,7 +527,7 @@ const Login = () => {
                   </div>
 
                   {/* Sign In Button */}
-                  <div className={`transition-all duration-1000 ease-out ${
+                  <div className={`transition-all duration-500 ease-out ${
                     showRightElements.signInButton 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -569,7 +543,7 @@ const Login = () => {
             </form>
 
                 {/* Create Account Link */}
-                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
+                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-500 ease-out ${
                   showRightElements.createAccount 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -585,24 +559,27 @@ const Login = () => {
                   </button>
                   </p>
                 </div>
+
             </div>
           </div>
           </div>
         </div>
-
-                  {/* Footer */}
-          <footer className="mx-auto max-w-6xl mt-10 mb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            © 2025 Biz365. All rights reserved. Powered by{' '}
-            <a 
-              href="https://corementors.in/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-3 py-1 rounded-lg text-sm font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
-            >
-              CoreMentors
-            </a>
-          </footer>
       </main>
+
+      {/* Footer - Outside main container, positioned at bottom center */}
+      <footer className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="text-center text-xs text-gray-500 dark:text-gray-400 mb-8">
+          © 2025 Biz365. All rights reserved. Powered by{' '}
+          <a 
+            href="https://corementors.in/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-2 py-1 rounded-lg text-xs font-medium text-black hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            CoreMentors
+          </a>
+        </div>
+      </footer>
     </div>
   );
 };

@@ -83,14 +83,14 @@ const OnboardingStep1 = () => {
     const timers = [];
     
     // Elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: true })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: true })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: true })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: true })), 1200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: true })), 300));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: true })), 500));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 700));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 800));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -143,18 +143,18 @@ const OnboardingStep1 = () => {
     // Exit animations in reverse order
     const timers = [];
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: false })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: false })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: false })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: false })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 50));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, numberOfBranches: false })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, subIndustry: false })), 150));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, industry: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, companyName: false })), 250));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 300));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 350));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       navigate(ROUTES.ONBOARDING.STEP2, { replace: true });
-    }, 1600));
+    }, 400));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -199,14 +199,14 @@ const OnboardingStep1 = () => {
       </div>
       <div className="relative z-10 min-h-screen flex flex-col px-6 py-8">
         <div 
-          className={`w-full max-w-2xl mx-auto transform transition-all duration-1000 ease-out ${
+          className={`w-full max-w-2xl mx-auto transform transition-all duration-500 ease-out ${
             isFormVisible 
               ? 'translate-y-0 opacity-100 scale-100' 
               : 'translate-y-8 opacity-0 scale-95'
           }`}
         >
           {/* Logo */}
-          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mb-6 transition-all duration-500 ease-out ${
             showElements.logo 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -223,7 +223,7 @@ const OnboardingStep1 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <div className={`transition-all duration-1000 ease-out ${
+          <div className={`transition-all duration-500 ease-out ${
             showElements.stepper 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -240,7 +240,7 @@ const OnboardingStep1 = () => {
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Company Name */}
-              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+              <div className={`space-y-2 transition-all duration-500 ease-out ${
                 showElements.companyName 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -275,7 +275,7 @@ const OnboardingStep1 = () => {
               </div>
 
               {/* Industry Selection */}
-              <div className={`space-y-4 transition-all duration-1000 ease-out ${
+              <div className={`space-y-4 transition-all duration-500 ease-out ${
                 showElements.industry 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -589,7 +589,7 @@ const OnboardingStep1 = () => {
 
               {/* Sub-Industry Selection - Shows only when industry is selected */}
               {formData.industry && subIndustries.length > 0 && (
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.subIndustry 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -645,7 +645,7 @@ const OnboardingStep1 = () => {
               )}
 
               {/* Number of Branches Field */}
-              <div className={`space-y-2 transition-all duration-1000 ease-out ${
+              <div className={`space-y-2 transition-all duration-500 ease-out ${
                 showElements.numberOfBranches 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -693,7 +693,7 @@ const OnboardingStep1 = () => {
               
 
               {/* Submit Button */}
-              <div className={`transition-all duration-1000 ease-out ${
+              <div className={`transition-all duration-500 ease-out ${
                 showElements.submitButton 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -732,7 +732,7 @@ const OnboardingStep1 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mt-6 transition-all duration-500 ease-out ${
             showElements.progressIndicator 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'

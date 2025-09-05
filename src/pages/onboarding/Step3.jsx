@@ -94,13 +94,13 @@ const OnboardingStep3 = () => {
     const timers = [];
     
     // Elements appear one by one (from right)
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: true })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: true })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: true })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 1200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 1400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: true })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: true })), 300));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: true })), 400));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: true })), 500));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: true })), 600));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: true })), 700));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -326,17 +326,17 @@ const OnboardingStep3 = () => {
     // Exit animations in reverse order
     const timers = [];
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, progressIndicator: false })), 0));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 200));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: false })), 400));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: false })), 600));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: false })), 800));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 1000));
-    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 1200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, submitButton: false })), 50));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, selectedAims: false })), 100));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, otherAim: false })), 150));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, businessAims: false })), 200));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, stepper: false })), 250));
+    timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: false })), 300));
     
     // Navigate after animations complete
     timers.push(setTimeout(() => {
       window.location.href = ROUTES.DASHBOARD;
-    }, 1400));
+    }, 350));
     
     return () => {
       timers.forEach(timer => clearTimeout(timer));
@@ -396,7 +396,7 @@ const OnboardingStep3 = () => {
       <div className="relative z-10 min-h-screen flex flex-col px-6 py-8">
         <div className="w-full max-w-4xl mx-auto">
           {/* Logo */}
-          <div className={`text-center mb-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mb-6 transition-all duration-500 ease-out ${
             showElements.logo 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -413,7 +413,7 @@ const OnboardingStep3 = () => {
           </div>
 
           {/* Onboarding Stepper */}
-          <div className={`transition-all duration-1000 ease-out ${
+          <div className={`transition-all duration-500 ease-out ${
             showElements.stepper 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
@@ -425,7 +425,7 @@ const OnboardingStep3 = () => {
           <div className="bg-white rounded-2xl shadow-2xl shadow-black/20 border-2 border-black p-6 animate-scale-in hover:shadow-3xl hover:shadow-black/30 transition-all duration-500">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Business Aims Selection */}
-              <div className={`space-y-4 transition-all duration-1000 ease-out ${
+              <div className={`space-y-4 transition-all duration-500 ease-out ${
                 showElements.businessAims 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -494,7 +494,7 @@ const OnboardingStep3 = () => {
 
               {/* Other Aim Input */}
               {formData.businessAims.includes('other') && (
-                <div className={`space-y-2 transition-all duration-1000 ease-out ${
+                <div className={`space-y-2 transition-all duration-500 ease-out ${
                   showElements.otherAim 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -528,7 +528,7 @@ const OnboardingStep3 = () => {
 
               {/* Selected Aims Summary */}
               {formData.businessAims.length > 0 && (
-                <div className={`bg-gray-100 border-2 border-black rounded-xl p-4 transition-all duration-1000 ease-out ${
+                <div className={`bg-gray-100 border-2 border-black rounded-xl p-4 transition-all duration-500 ease-out ${
                   showElements.selectedAims 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -557,7 +557,7 @@ const OnboardingStep3 = () => {
               )}
 
               {/* Back and Submit Buttons */}
-              <div className={`flex gap-4 transition-all duration-1000 ease-out ${
+              <div className={`flex gap-4 transition-all duration-500 ease-out ${
                 showElements.submitButton 
                   ? 'translate-x-0 opacity-100' 
                   : 'translate-x-full opacity-0'
@@ -614,7 +614,7 @@ const OnboardingStep3 = () => {
           </div>
 
           {/* Progress Indicator */}
-          <div className={`text-center mt-6 transition-all duration-1000 ease-out ${
+          <div className={`text-center mt-6 transition-all duration-500 ease-out ${
             showElements.progressIndicator 
               ? 'translate-x-0 opacity-100' 
               : 'translate-x-full opacity-0'
