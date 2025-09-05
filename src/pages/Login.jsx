@@ -297,7 +297,7 @@ const Login = () => {
       {/* Logo in top-left */}
       <div className="absolute top-4 left-4 z-20">
         <img 
-          src="public/logoblack.png" 
+          src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
           alt="Biz365 Logo"
           className="h-12 w-auto"
         />
@@ -310,25 +310,26 @@ const Login = () => {
         </h1>
       </div>
 
-      {/* Main Content */}
-      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
-        <div className="w-full max-w-5xl grid gap-8 lg:grid-cols-2">
+      {/* Main Content - Centered */}
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4">
+        <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-6">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-1 min-h-[300px]">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 flex flex-col justify-center space-y-6">
+            <div className="relative z-10 flex flex-col justify-center space-y-1">
               {/* Dashboard Text */}
               <div className={`transition-all duration-500 ease-out ${
                 showRightElements.welcomeText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Access your BizTag dashboard</h2>
+                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-16 px-4">Access your BizTag 
+                  dashboard</h2>
               </div>
               
               {/* Text Content - Image removed */}
-              <div className={`transition-all duration-500 ease-out ${
+              <div className={`transition-all duration-500 ease-out px-4 ${
                 showLeftText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
@@ -360,32 +361,11 @@ const Login = () => {
           {/* Right Panel - White Login Form */}
           <div className="flex items-center">
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
-              <div className="p-6 sm:p-8">
-                {/* BIZ365 Logo */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.logo 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <img 
-                    src={logoblack} 
-                    alt="Biz365 Logo"
-                    className="h-36 w-auto mx-auto mb-4 object-contain"
-                  />
-                </div>
-
-                {/* Welcome Text */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.welcomeText 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Let's get started!</h2>
-                  <p className="mt-1 text-gray-600 dark:text-gray-400">Access your BizTag dashboard</p>
-                </div>
+              <div className="p-1 flex flex-col justify-start min-h-[300px]">
+                
 
                 {/* Social Login Buttons */}
-                <div className={`flex gap-3 mb-6 transition-all duration-500 ease-out ${
+                <div className={`flex gap-3 mb-6 transition-all duration-500 ease-out mt-4 ${
                   showRightElements.googleButton 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -439,7 +419,7 @@ const Login = () => {
                 </div>
 
                 {/* Separator */}
-                <div className={`relative mb-6 transition-all duration-500 ease-out ${
+                <div className={`relative mb-2 transition-all duration-500 ease-out ${
                   showRightElements.separator 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -453,7 +433,7 @@ const Login = () => {
                 </div>
 
                 {/* Login Form */}
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-1.5">
                   {/* Email Field */}
                   <div className={`space-y-1.5 transition-all duration-500 ease-out ${
                     showRightElements.emailInput 
@@ -565,7 +545,7 @@ const Login = () => {
             </form>
 
                 {/* Create Account Link */}
-                <div className={`mt-6 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-500 ease-out ${
+                <div className={`mt-2 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-500 ease-out mb-4 ${
                   showRightElements.createAccount 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'

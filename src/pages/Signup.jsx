@@ -4,45 +4,12 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
 import logoblack from '../assets/logoblack.png';
-import countryCodesData from '../assets/CountryCodes.json';
-
-// Get country codes from JSON file
-const COUNTRY_CODES = countryCodesData.map(country => ({
-  code: country.dial_code,
-  country: country.name,
-  flag: getCountryFlag(country.code)
-}));
-
-// Function to get country flag emoji based on country code
-function getCountryFlag(countryCode) {
-  const flagMap = {
-    'AF': '🇦🇫', 'AL': '🇦🇱', 'DZ': '🇩🇿', 'AS': '🇦🇸', 'AD': '🇦🇩', 'AO': '🇦🇴', 'AI': '🇦🇮', 'AQ': '🇦🇶', 'AG': '🇦🇬', 'AR': '🇦🇷',
-    'AM': '🇦🇲', 'AW': '🇦🇼', 'AU': '🇦🇺', 'AT': '🇦🇹', 'AZ': '🇦🇿', 'BS': '🇧🇸', 'BH': '🇧🇭', 'BD': '🇧🇩', 'BB': '🇧🇧', 'BY': '🇧🇾',
-    'BE': '🇧🇪', 'BZ': '🇧🇿', 'BJ': '🇧🇯', 'BM': '🇧🇲', 'BT': '🇧🇹', 'BO': '🇧🇴', 'BA': '🇧🇦', 'BW': '🇧🇼', 'BR': '🇧🇷', 'IO': '🇮🇴',
-    'BN': '🇧🇳', 'BG': '🇧🇬', 'BF': '🇧🇫', 'BI': '🇧🇮', 'KH': '🇰🇭', 'CM': '🇨🇲', 'CA': '🇨🇦', 'CV': '🇨🇻', 'KY': '🇰🇾', 'CF': '🇨🇫',
-    'TD': '🇹🇩', 'CL': '🇨🇱', 'CN': '🇨🇳', 'CX': '🇨🇽', 'CC': '🇨🇨', 'CO': '🇨🇴', 'KM': '🇰🇲', 'CG': '🇨🇬', 'CD': '🇨🇩', 'CK': '🇨🇰',
-    'CR': '🇨🇷', 'CI': '🇨🇮', 'HR': '🇭🇷', 'CU': '🇨🇺', 'CY': '🇨🇾', 'CZ': '🇨🇿', 'DK': '🇩🇰', 'DJ': '🇩🇯', 'DM': '🇩🇲', 'DO': '🇩🇴',
-    'EC': '🇪🇨', 'EG': '🇪🇬', 'SV': '🇸🇻', 'GQ': '🇬🇶', 'ER': '🇪🇷', 'EE': '🇪🇪', 'ET': '🇪🇹', 'FK': '🇫🇰', 'FO': '🇫🇴', 'FJ': '🇫🇯',
-    'FI': '🇫🇮', 'FR': '🇫🇷', 'GF': '🇬🇫', 'PF': '🇵🇫', 'GA': '🇬🇦', 'GM': '🇬🇲', 'GE': '🇬🇪', 'DE': '🇩🇪', 'GH': '🇬🇭', 'GI': '🇬🇮',
-    'GR': '🇬🇷', 'GL': '🇬🇱', 'GD': '🇬🇩', 'GP': '🇬🇵', 'GU': '🇬🇺', 'GT': '🇬🇹', 'GG': '🇬🇬', 'GN': '🇬🇳', 'GW': '🇬🇼', 'GY': '🇬🇾',
-    'HT': '🇭🇹', 'VA': '🇻🇦', 'HN': '🇭🇳', 'HK': '🇭🇰', 'HU': '🇭🇺', 'IS': '🇮🇸', 'IN': '🇮🇳', 'ID': '🇮🇩', 'IR': '🇮🇷', 'IQ': '🇮🇶',
-    'IE': '🇮🇪', 'IM': '🇮🇲', 'IL': '🇮🇱', 'IT': '🇮🇹', 'JM': '🇯🇲', 'JP': '🇯🇵', 'JE': '🇯🇪', 'JO': '🇯🇴', 'KZ': '🇰🇿', 'KE': '🇰🇪',
-    'KI': '🇰🇮', 'KP': '🇰🇵', 'KR': '🇰🇷', 'KW': '🇰🇼', 'KG': '🇰🇬', 'LA': '🇱🇦', 'LV': '🇱🇻', 'LB': '🇱🇧', 'LS': '🇱🇸', 'LR': '🇱🇷',
-    'LY': '🇱🇾', 'LI': '🇱🇮', 'LT': '🇱🇹', 'LU': '🇱🇺', 'MO': '🇲🇴', 'MK': '🇲🇰', 'MG': '🇲🇬', 'MW': '🇲🇼', 'MY': '🇲🇾', 'MV': '🇲🇻',
-    'ML': '🇲🇱', 'MT': '🇲🇹', 'MH': '🇲🇭', 'MQ': '🇲🇶', 'MR': '🇲🇷', 'MU': '🇲🇺', 'YT': '🇾🇹', 'MX': '🇲🇽', 'FM': '🇫🇲', 'MD': '🇲🇩',
-    'MC': '🇲🇨', 'MN': '🇲🇳', 'ME': '🇲🇪', 'MS': '🇲🇸', 'MA': '🇲🇦', 'MZ': '🇲🇿', 'MM': '🇲🇲', 'NA': '🇳🇦', 'NR': '🇳🇷', 'NP': '🇳🇵',
-    'NL': '🇳🇱', 'AN': '🇦🇳', 'NC': '🇳🇨', 'NZ': '🇳🇿', 'NI': '🇳🇮', 'NE': '🇳🇪', 'NG': '🇳🇬', 'NU': '🇳🇺', 'NF': '🇳🇫', 'MP': '🇲🇵',
-    'NO': '🇳🇴', 'OM': '🇴🇲', 'PK': '🇵🇰', 'PW': '🇵🇼', 'PS': '🇵🇸', 'PA': '🇵🇦', 'PG': '🇵🇬', 'PY': '🇵🇾', 'PE': '🇵🇪', 'PH': '🇵🇭',
-    'PN': '🇵🇳', 'PL': '🇵🇱', 'PT': '🇵🇹', 'PR': '🇵🇷', 'QA': '🇶🇦', 'RO': '🇷🇴', 'RU': '🇷🇺', 'RW': '🇷🇼', 'RE': '🇷🇪', 'BL': '🇧🇱',
-    'SH': '🇸🇭', 'KN': '🇰🇳', 'LC': '🇱🇨', 'MF': '🇲🇫', 'PM': '🇵🇲', 'VC': '🇻🇨', 'WS': '🇼🇸', 'SM': '🇸🇲', 'ST': '🇸🇹', 'SA': '🇸🇦',
-    'SN': '🇸🇳', 'RS': '🇷🇸', 'SC': '🇸🇨', 'SL': '🇸🇱', 'SG': '🇸🇬', 'SK': '🇸🇰', 'SI': '🇸🇮', 'SB': '🇸🇧', 'SO': '🇸🇴', 'ZA': '🇿🇦',
-    'SS': '🇸🇸', 'GS': '🇬🇸', 'ES': '🇪🇸', 'LK': '🇱🇰', 'SD': '🇸🇩', 'SR': '🇸🇷', 'SJ': '🇸🇯', 'SZ': '🇸🇿', 'SE': '🇸🇪', 'CH': '🇨🇭',
-    'SY': '🇸🇾', 'TW': '🇹🇼', 'TJ': '🇹🇯', 'TZ': '🇹🇿', 'TH': '🇹🇭', 'TL': '🇹🇱', 'TG': '🇹🇬', 'TK': '🇹🇰', 'TO': '🇹🇴', 'TT': '🇹🇹',
-    'TN': '🇹🇳', 'TR': '🇹🇷', 'TM': '🇹🇲', 'TC': '🇹🇨', 'TV': '🇹🇻', 'UG': '🇺🇬', 'UA': '🇺🇦', 'AE': '🇦🇪', 'GB': '🇬🇧', 'US': '🇺🇸',
-    'UY': '🇺🇾', 'UZ': '🇺🇿', 'VU': '🇻🇺', 'VE': '🇻🇪', 'VN': '🇻🇳', 'VG': '🇻🇬', 'VI': '🇻🇮', 'WF': '🇼🇫', 'YE': '🇾🇪', 'ZM': '🇿🇲', 'ZW': '🇿🇼'
-  };
-  return flagMap[countryCode] || '🌍';
-}
+// Country codes for mobile number - only USA, India, and Canada
+const COUNTRY_CODES = [
+  { code: '+1', country: 'USA', flag: '🇺🇸' },
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'Canada', flag: '🇨🇦' }
+];
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -443,38 +410,38 @@ const Signup = () => {
       {/* Logo in top-left */}
       <div className="absolute top-4 left-4 z-20">
         <img 
-          src="public/logoblack.png" 
+          src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
           alt="Biz365 Logo"
           className="h-12 w-auto"
         />
       </div>
 
       {/* Center Welcome Text */}
-      <div className="absolute top-5 left-1/2 transform -translate-x-1/2 z-10">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white text-center mb-4">
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white text-center">
           Join the Revolution!
         </h1>
       </div>
 
       {/* Main Content */}
-      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16">
-        <div className="w-full max-w-5xl grid gap-8 lg:grid-cols-2">
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+        <div className="w-full max-w-4xl grid gap-4 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-4">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-4 min-h-[200px]">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 flex flex-col justify-center space-y-4">
+            <div className="relative z-10 flex flex-col justify-center space-y-1">
               {/* Main Text */}
               <div className={`transition-all duration-1000 ease-out ${
                 showRightElements.welcomeText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Be part of something extraordinary</h2>
+                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-24 mt-0">Be part of something extraordinary</h2>
               </div>
               
               {/* Content */}
-              <div className={`transition-all duration-1000 ease-out ${
+              <div className={`transition-all duration-1000 ease-out mb-14 ${
                 showRightElements.firstNameInput 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
@@ -504,34 +471,14 @@ const Signup = () => {
           </section>
 
           {/* Right Panel - White Signup Form */}
-          <div>
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 relative">
-              <div className="p-6 sm:p-8 relative">
-                {/* BIZ365 Logo */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.logo 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <img 
-                    src={logoblack} 
-                    alt="Biz365 Logo"
-                    className="h-36 w-auto mx-auto mb-4 object-contain"
-                  />
-                </div>
+          <div className="flex items-center">
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
+              <div className="p-4 flex flex-col justify-start min-h-[200px]">
+                
 
-                {/* Welcome Text */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
-                  showRightElements.welcomeText 
-                    ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-full opacity-0'
-                }`}>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Join the Revolution!</h2>
-                  <p className="mt-1 text-gray-600 dark:text-gray-400">Be part of something extraordinary</p>
-                </div>
 
                 {/* Social Signup Buttons */}
-                <div className={`flex gap-3 mb-4 transition-all duration-1000 ease-out ${
+                <div className={`flex gap-3 mb-2 transition-all duration-1000 ease-out ${
                   showRightElements.googleButton 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -585,7 +532,7 @@ const Signup = () => {
                 </div>
 
                 {/* Separator */}
-                <div className={`relative mb-4 transition-all duration-1000 ease-out ${
+                <div className={`relative mb-2 transition-all duration-1000 ease-out ${
                   showRightElements.separator 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -599,9 +546,9 @@ const Signup = () => {
                 </div>
 
                 {/* Email Form */}
-                <form onSubmit={handleSubmit} className="space-y-3 relative">
+                <form onSubmit={handleSubmit} className="space-y-1 relative">
                   {/* Name Fields */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1 transition-all duration-1000 ease-out ${
                     showRightElements.firstNameInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -658,7 +605,7 @@ const Signup = () => {
                   </div>
 
               {/* Email Field */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1 transition-all duration-1000 ease-out ${
                     showRightElements.emailInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -686,7 +633,7 @@ const Signup = () => {
               </div>
 
               {/* Mobile Field */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1 transition-all duration-1000 ease-out ${
                     showRightElements.mobileInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -756,7 +703,7 @@ const Signup = () => {
               </div>
 
               {/* Password Field */}
-                  <div className={`space-y-1.5 transition-all duration-1000 ease-out ${
+                  <div className={`space-y-1 transition-all duration-1000 ease-out ${
                     showRightElements.passwordInput 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -848,7 +795,7 @@ const Signup = () => {
             </form>
 
                 {/* Sign In Link */}
-                <div className={`mt-4 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out ${
+                <div className={`mt-2 text-center text-sm text-gray-600 dark:text-gray-300 transition-all duration-1000 ease-out mb-4 ${
                   showRightElements.signInLink 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'

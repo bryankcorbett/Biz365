@@ -114,9 +114,9 @@ export const Corementors = () => {
           <div className="flex w-[100%] items-center justify-between relative pl-[9vw] pr-[4vw]">
             {/* Logo - Left Side (Start) */}
             <div className="absolute left-0 flex-shrink-0">
-              <div className="relative w-[230px] h-[80px] max-w-[230px] max-h-[150px]">
+              <div className="relative w-[170px] h-[80px] max-w-[230px] max-h-[150px]">
                 <img 
-                  src={iconblack}
+                  src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500"
                   alt="Biz365 Logo"
                   className="w-full h-full object-contain"
                 />

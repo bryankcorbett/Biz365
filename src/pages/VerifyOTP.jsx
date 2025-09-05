@@ -252,24 +252,24 @@ const VerifyOTP = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
+    <div className="h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950 overflow-hidden">
       {/* Logo at top center */}
-      <div className="flex justify-center pt-6 pb-4">
+      <div className="flex justify-center pt-4 pb-2">
         <img 
-          src="public/logoblack.png" 
+          src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
           alt="Biz365 Logo" 
-          className="h-16 w-auto"
+          className="h-12 w-auto"
         />
       </div>
       
       {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pt-2">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4">
+        <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-8">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-1 min-h-[300px]">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 my-auto space-y-4">
+            <div className="relative z-10 flex flex-col justify-center space-y-1">
               <h1 className="text-3xl font-semibold leading-tight">
                 Turn everyday customers into raving fans.
               </h1>
@@ -294,11 +294,11 @@ const VerifyOTP = () => {
           </section>
 
           {/* Right Panel - White OTP Verification Form */}
-          <div>
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
-              <div className="p-6 sm:p-8">
+          <div className="flex items-center">
+            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
+              <div className="p-1 flex flex-col justify-start min-h-[300px]">
                 {/* BIZ365 Logo */}
-                <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
+                <div className={`text-center mb-2 transition-all duration-1000 ease-out ${
                   showRightElements.logo 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -306,11 +306,11 @@ const VerifyOTP = () => {
                   <img 
                     src={logoblack} 
                     alt="Biz365 Logo" 
-                    className="h-36 w-auto mx-auto mb-4 object-contain"
+                    className="h-16 w-auto mx-auto object-contain"
                   />
                 </div>
                 {/* Welcome Text */}
-                <div className={`text-center mb-8 transition-all duration-500 ease-out ${
+                <div className={`text-center mb-2 transition-all duration-500 ease-out ${
                   showRightElements.welcomeText 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -323,9 +323,9 @@ const VerifyOTP = () => {
                 </div>
 
                 {/* OTP Form */}
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-2">
                   {/* OTP Input */}
-                  <div className={`space-y-4 transition-all duration-500 ease-out ${
+                  <div className={`space-y-2 transition-all duration-500 ease-out ${
                     showRightElements.otpInputs 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-full opacity-0'
@@ -381,7 +381,7 @@ const VerifyOTP = () => {
                 </form>
 
                 {/* Resend Section */}
-                <div className={`mt-6 text-center space-y-4 transition-all duration-500 ease-out ${
+                <div className={`mt-2 text-center space-y-2 transition-all duration-500 ease-out ${
                   showRightElements.resendSection 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'
@@ -424,7 +424,7 @@ const VerifyOTP = () => {
                 </div>
 
                 {/* Back to Login */}
-                <div className={`mt-6 text-center transition-all duration-500 ease-out ${
+                <div className={`mt-2 text-center transition-all duration-500 ease-out mb-4 ${
                   showRightElements.backToLoginLink 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-full opacity-0'

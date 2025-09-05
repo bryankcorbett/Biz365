@@ -62,7 +62,7 @@ export const FooterSection = () => {
            <div className="flex flex-col items-center gap-4 ">
              <div className="relative w-[15vw] h-[10vh] ">
                <img 
-                 src={logowhite}
+                 src="https://ik.imagekit.io/corementorid/white_full_glow_biz365.png?updatedAt=1757074799715"
                  alt="Biz365 Logo"
                  className="w-[100%] h-[100%] object-contain"
                />
