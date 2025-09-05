@@ -18,6 +18,7 @@ import { FooterSection } from "./sections/FooterSection/FooterSection";
 import StarBorder from "../../components/loginButton";
 import AnimatedNavbar from "../../components/AnimatedNavbar";
 import ShinyText from "../../components/ShinyText";
+import iconblack from "../../assets/iconblack.png";
 
 const navigationItems = [
   {
@@ -114,12 +115,10 @@ export const Corementors = () => {
             {/* Logo - Left Side (Start) */}
             <div className="absolute left-0 flex-shrink-0">
               <div className="relative w-[230px] h-[80px] max-w-[230px] max-h-[150px]">
-                <ShinyText 
-                  src="public/iconblack.png"
+                <img 
+                  src={iconblack}
                   alt="Biz365 Logo"
-                  disabled={false} 
-                  speed={3} 
-                  className="w-full h-full"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>

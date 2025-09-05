@@ -4,6 +4,7 @@ import Magnet from "../../../../components/Magnet";
 import Hyperspeed from "../../../../components/Hyperspeed";
 import StarBorder from "../../../../components/loginButton";
 import ShinyText from "../../../../components/ShinyText";
+import logowhite from "../../../../assets/logowhite.png";
 
 export const FooterSection = () => {
   return (
@@ -61,7 +62,7 @@ export const FooterSection = () => {
            <div className="flex flex-col items-center gap-4 ">
              <div className="relative w-[15vw] h-[10vh] ">
                <ShinyText 
-                 src="public/logowhite.png"
+                 src="src/assets/logowhite.png"
                  alt="Biz365 Logo"
                  disabled={false} 
                  speed={3} 
