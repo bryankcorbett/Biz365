@@ -361,7 +361,6 @@ const Login = () => {
           <div className="flex items-center">
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
               <div className="p-6 sm:p-8">
-<<<<<<< HEAD
                 {/* BIZ365 Logo */}
                 <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
                   showRightElements.logo 
@@ -384,8 +383,6 @@ const Login = () => {
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Let's get started!</h2>
                   <p className="mt-1 text-gray-600 dark:text-gray-400">Access your BizTag dashboard</p>
                 </div>
-=======
->>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
 
                 {/* Social Login Buttons */}
                 <div className={`flex gap-3 mb-6 transition-all duration-500 ease-out ${

@@ -230,14 +230,11 @@ const ForgotPassword = () => {
               <div className="p-6 sm:p-8">
                 {/* Header */}
                 <div className="text-center mb-8">
-<<<<<<< HEAD
                   <img 
                     src={logoblack} 
                     alt="Biz365 Logo" 
                     className="h-36 w-auto mx-auto mb-4 object-contain"
                   />
-=======
->>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     {step === 1 ? 'Reset Password' : 'Verify OTP'}
                   </h2>

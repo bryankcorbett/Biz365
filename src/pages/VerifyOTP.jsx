@@ -297,7 +297,6 @@ const VerifyOTP = () => {
           <div>
             <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md">
               <div className="p-6 sm:p-8">
-<<<<<<< HEAD
                 {/* BIZ365 Logo */}
                 <div className={`text-center mb-8 transition-all duration-1000 ease-out ${
                   showRightElements.logo 
@@ -310,9 +309,6 @@ const VerifyOTP = () => {
                     className="h-36 w-auto mx-auto mb-4 object-contain"
                   />
                 </div>
-
-=======
->>>>>>> 829a901c98cb2cfb484a40ff47a2c67fb4a89f3f
                 {/* Welcome Text */}
                 <div className={`text-center mb-8 transition-all duration-500 ease-out ${
                   showRightElements.welcomeText 
