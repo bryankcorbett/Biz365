@@ -83,6 +83,16 @@ const Signup = () => {
   const { signup, isLoading, error, clearError } = useAuth();
   const { showToast } = useToast();
 
+  // Initialize Google OAuth
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: OAUTH_CONFIG.GOOGLE.CLIENT_ID,
+        callback: handleGoogleSignup
+      });
+    }
+  }, []);
+
   // Reset animation states and start entrance animations
   useEffect(() => {
     // Reset all animation states
@@ -369,15 +379,17 @@ const Signup = () => {
         const data = await window.AppleID.auth.signIn();
         
         // Send to your backend for signup
-        const authResponse = await fetch('/api/auth/apple-signup', {
+        const authResponse = await fetch(`${API_CONFIG.BASE_URL}/api/auth/apple`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            email: data.user?.email || '',
+            name: data.user?.name || '',
+            appleId: data.user?.id || '',
             identityToken: data.authorization.id_token,
             authorizationCode: data.authorization.code,
-            user: data.user,
           }),
         });
 

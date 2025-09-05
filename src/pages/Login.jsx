@@ -39,6 +39,16 @@ const Login = () => {
   // Get next parameter for redirect after login
   const next = searchParams.get('next');
 
+  // Initialize Google OAuth
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: OAUTH_CONFIG.GOOGLE.CLIENT_ID,
+        callback: handleGoogleLogin
+      });
+    }
+  }, []);
+
   // Reset animation states and start entrance animations
   useEffect(() => {
     // Reset all animation states
@@ -183,7 +193,7 @@ const Login = () => {
               const userData = await userInfo.json();
               
               // Send to your backend for authentication
-              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/auth/google`, {
+              const authResponse = await fetch(`${API_CONFIG.BASE_URL}/api/auth/google`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -238,15 +248,17 @@ const Login = () => {
         const data = await window.AppleID.auth.signIn();
         
         // Send to your backend for authentication
-        const authResponse = await fetch('/api/auth/apple', {
+        const authResponse = await fetch(`${API_CONFIG.BASE_URL}/api/auth/apple`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            email: data.user?.email || '',
+            name: data.user?.name || '',
+            appleId: data.user?.id || '',
             identityToken: data.authorization.id_token,
             authorizationCode: data.authorization.code,
-            user: data.user,
           }),
         });
 
