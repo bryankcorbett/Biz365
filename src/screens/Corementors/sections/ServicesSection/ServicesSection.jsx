@@ -28,13 +28,16 @@ const useInView = (options) => {
         { threshold: 0.5, ...(options || {}) }
       );
       obs.observe(el);
-    } catch {
+    } catch (error) {
+      console.warn('IntersectionObserver not supported:', error);
       setInView(true);
     }
     return () => {
       try {
         if (obs) obs.disconnect();
-      } catch {}
+      } catch (error) {
+        console.warn('Error disconnecting observer:', error);
+      }
     };
   }, [options]);
 

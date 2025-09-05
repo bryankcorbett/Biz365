@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, ERROR_MESSAGES } from '../constants';
-import logoblack from '../assets/logoblack.png';
 
 // Country codes for mobile number - only USA, India, and Canada
 const COUNTRY_CODES = [
@@ -19,9 +18,7 @@ const ForgotPassword = () => {
     countryCode: '+1'
   });
   const [errors, setErrors] = useState({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const navigate = useNavigate();

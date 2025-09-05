@@ -30,11 +30,16 @@ const useInView = (options) => {
         { threshold: 0.25, rootMargin: "0px 0px -10% 0px", ...(options || {}) }
       );
       obs.observe(el);
-    } catch {
+    } catch (error) {
+      console.warn('IntersectionObserver not supported:', error);
       setInView(true);
     }
     return () => {
-      try { obs && obs.disconnect(); } catch {}
+      try { 
+        obs && obs.disconnect(); 
+      } catch (error) {
+        console.warn('Error disconnecting observer:', error);
+      }
     };
   }, [options]);
 

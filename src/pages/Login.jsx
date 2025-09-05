@@ -3,7 +3,6 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
-import logoblack from '../assets/logoblack.png';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +10,6 @@ const Login = () => {
     password: '',
   });
   const [errors, setErrors] = useState({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isAppleLoading, setIsAppleLoading] = useState(false);
@@ -33,7 +31,7 @@ const Login = () => {
   });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login, isLoading, error, clearError, isAuthenticated, user } = useAuth();
+  const { isLoading, error, clearError, isAuthenticated, user } = useAuth();
   const { showToast } = useToast();
 
   // Get next parameter for redirect after login

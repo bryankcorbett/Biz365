@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
-import logoblack from '../assets/logoblack.png';
 // Country codes for mobile number - only USA, India, and Canada
 const COUNTRY_CODES = [
   { code: '+1', country: 'USA', flag: '🇺🇸' },
@@ -22,7 +21,6 @@ const Signup = () => {
     acceptTerms: false,
   });
   const [errors, setErrors] = useState({});
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);

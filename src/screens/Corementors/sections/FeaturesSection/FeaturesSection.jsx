@@ -164,12 +164,15 @@ const buttonsData = [
 
 /* -------------------- Animated Bullet -------------------- */
 const AnimatedBullet = ({ text, delay = 0 }) => {
-  if (text.trim() === "") return <div style={{ height: 8 }} />;
   const [on, setOn] = useState(false);
+  
   useEffect(() => {
+    if (text.trim() === "") return;
     const t = setTimeout(() => setOn(true), delay);
     return () => clearTimeout(t);
-  }, [delay]);
+  }, [delay, text]);
+
+  if (text.trim() === "") return <div style={{ height: 8 }} />;
 
   return (
     <div className={`transition-all duration-700 ease-out ${on ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}>
