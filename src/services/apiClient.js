@@ -49,7 +49,24 @@ class ApiClient {
       }
 
       if (!response.ok) {
-        throw new Error(data.message || data || `HTTP error! status: ${response.status}`);
+        // Handle different error response formats
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        
+        if (typeof data === 'string') {
+          errorMessage = data;
+        } else if (data && typeof data === 'object') {
+          if (data.message) {
+            errorMessage = data.message;
+          } else if (data.error) {
+            errorMessage = data.error;
+          } else if (data.details) {
+            errorMessage = data.details;
+          } else {
+            errorMessage = JSON.stringify(data);
+          }
+        }
+        
+        throw new Error(errorMessage);
       }
 
       return data;
