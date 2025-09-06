@@ -435,30 +435,31 @@ const Signup = () => {
       </div>
 
       {/* Main Content */}
-      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+      <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-4xl grid gap-4 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
           <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-4 min-h-[200px]">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
-            <div className="relative z-10 flex flex-col justify-center space-y-1">
+            <div className="relative z-10 flex flex-col justify-center">
               {/* Main Text */}
               <div className={`transition-all duration-1000 ease-out ${
                 showRightElements.welcomeText 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-24 mt-0">Be part of something extraordinary</h2>
+                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-10">Be part of something extraordinary</h2>
               </div>
               
               {/* Content */}
-              <div className={`transition-all duration-1000 ease-out mb-14 ${
+              <div className={`transition-all duration-1000 ease-out ${
                 showRightElements.firstNameInput 
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h3 className="text-2xl font-semibold leading-tight">
-                  Turn everyday customers into raving fans.
+                <h3 className="text-2xl font-semibold leading-tight mb-8">
+                  Turn everyday customers 
+                  <h3>into raving fans.</h3>
                 </h3>
                 <p className="text-gray-300 text-base">
                   BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
@@ -483,8 +484,8 @@ const Signup = () => {
 
           {/* Right Panel - White Signup Form */}
           <div className="flex items-center">
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
-              <div className="p-4 flex flex-col justify-start min-h-[200px]">
+            <div className="rounded-xl px-5 text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
+              <div className="pt-4 flex flex-col justify-start min-h-[200px]">
                 
 
 

@@ -5,9 +5,9 @@ import { ROUTES, SUCCESS_MESSAGES, ERROR_MESSAGES } from '../constants';
 
 // Country codes for mobile number - only USA, India, and Canada
 const COUNTRY_CODES = [
-  { code: '+1', country: 'USA', flag: '🇺🇸' },
-  { code: '+91', country: 'India', flag: '🇮🇳' },
-  { code: '+1', country: 'Canada', flag: '🇨🇦' }
+  { code: '+1', country: 'USA', flag: 'https://flagcdn.com/w320/us.png', ambre: 'US'},
+  { code: '+91', country: 'India', flag: 'https://flagcdn.com/w320/in.png', ambre: 'IN'},
+  { code: '+1', country: 'Canada', flag: 'https://flagcdn.com/w320/ca.png', ambre: 'CA' }
 ];
 
 const ForgotPassword = () => {
@@ -20,6 +20,7 @@ const ForgotPassword = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [otpSent, setOtpSent] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -182,17 +183,18 @@ const ForgotPassword = () => {
       <main className="h-full flex items-center justify-center px-4 sm:px-6 lg:px-8 py-4">
         <div className="w-full max-w-6xl grid gap-6 lg:grid-cols-2">
           {/* Left Panel - Dark Promotional Section */}
-          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-1 min-h-[350px] mt-8">
+          <section className="hidden lg:flex relative overflow-hidden rounded-3xl bg-gray-900 text-white p-1 min-h-[360px] mt-2">
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
             <div className="relative z-10 flex flex-col justify-center space-y-1">
-              <h1 className="text-4xl font-semibold leading-tight mb-4 px-4">
-                Turn everyday customers into raving fans.
+              <h1 className="text-4xl font-semibold leading-tight mb-8 px-4">
+                Turn everyday customers 
+                <h1>into raving fans.</h1>
               </h1>
-              <p className="text-gray-300 text-lg px-4">
+              <p className="text-gray-300 text-lg px-6">
                 BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
               </p>
-              <ul className="space-y-3 text-gray-200 px-4">
+              <ul className="space-y-3 text-gray-200 px-6">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
                   NFC/QR review capture that just works
@@ -211,15 +213,11 @@ const ForgotPassword = () => {
 
           {/* Right Panel - White Forgot Password Form */}
           <div className="flex items-center">
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
-              <div className="p-1 flex flex-col justify-start min-h-[350px]">
+            <div className="rounded-xl px-5 text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
+              <div className="p-1 flex flex-col justify-between min-h-[350px]">
                 {/* Header */}
                 <div className="text-center mb-2">
-                  
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2 mt-4">
-                    {step === 1 ? 'Reset Password' : 'Verify OTP'}
-                  </h2>
-                  <p className="mt-1 text-gray-600 dark:text-gray-400">
+                  <p className="mt-1 text-lg font-bold text-gray-700 dark:text-gray-400 mt-10">
                     {step === 1 
                       ? 'Enter your mobile number to receive OTP' 
                       : `OTP sent to ${formData.countryCode} ${formData.phoneNumber}`
@@ -228,8 +226,7 @@ const ForgotPassword = () => {
                 </div>
 
                 {/* Form */}
-                {step === 1 ? (
-                  <form onSubmit={handlePhoneSubmit} className="space-y-2">
+                <form onSubmit={otpSent ? handleOTPSubmit : handlePhoneSubmit} className="space-y-2">
                     {/* Mobile Number Field */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-4">
@@ -246,9 +243,11 @@ const ForgotPassword = () => {
                             onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                             className="flex items-center gap-1 text-sm text-gray-700 hover:text-gray-900 transition-colors"
                           >
-                            <span className="text-lg">
-                              {COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag}
-                            </span>
+                            <img 
+                              src={COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag} 
+                              alt={COUNTRY_CODES.find(c => c.code === formData.countryCode)?.country}
+                              className="w-6 h-4 object-cover rounded"
+                            />
                             <span>{formData.countryCode}</span>
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -256,7 +255,7 @@ const ForgotPassword = () => {
                           </button>
                           
                           {showCountryDropdown && (
-                            <div className="country-dropdown absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-20">
+                            <div className="country-dropdown absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-y-auto z-30 w-96 min-w-max">
                               {COUNTRY_CODES.map((country) => (
                                 <button
                                   key={country.code}
@@ -265,11 +264,20 @@ const ForgotPassword = () => {
                                     setFormData(prev => ({ ...prev, countryCode: country.code }));
                                     setShowCountryDropdown(false);
                                   }}
-                                  className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2 text-sm"
+                                  className="w-full px-6 py-2 text-left hover:bg-gray-50 flex items-center text-sm transition-colors duration-150"
                                 >
-                                  <span className="text-lg">{country.flag}</span>
-                                  <span>{country.code}</span>
-                                  <span className="text-gray-500">{country.country}</span>
+                                  <div className="flex items-center gap-10 flex-1">
+                                    <img 
+                                      src={country.flag} 
+                                      alt={country.country}
+                                      className="w-6 h-4 object-cover rounded flex-shrink-0"
+                                    />
+                                    <div className="flex items-center gap-20">
+                                      <span className="font-medium">{country.code}</span>
+                                      <span className="text-gray-500 text-xs">{country.ambre}</span>
+                                    </div>
+                                  </div>
+                                  <span className="text-gray-600 font-medium flex-shrink-0">{country.country}</span>
                                 </button>
                               ))}
                             </div>
@@ -297,37 +305,7 @@ const ForgotPassword = () => {
                       )}
                     </div>
 
-                    {/* Send OTP Button */}
-                    <div>
-                      <button 
-                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
-                        type="submit" 
-                        disabled={isLoading}
-                      >
-                        {isLoading ? 'Sending OTP...' : 'Send OTP'}
-                      </button>
-                    </div>
-
-                    {/* Navigation Links */}
-                    <div className="flex items-center justify-center gap-4 px-4 mt-4">
-                      <Link 
-                        to={ROUTES.LOGIN} 
-                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
-                      >
-                        Back to Login
-                      </Link>
-                      <span className="text-gray-400">|</span>
-                      <Link 
-                        to={ROUTES.SIGNUP} 
-                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
-                      >
-                        Sign up for free
-                      </Link>
-                    </div>
-                  </form>
-                ) : (
-                  <form onSubmit={handleOTPSubmit} className="space-y-2">
-                    {/* OTP Field */}
+                    {/* OTP Field - Always visible */}
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -355,31 +333,33 @@ const ForgotPassword = () => {
                       )}
                     </div>
 
-                    {/* Resend OTP */}
-                    <div className="text-center">
-                      <button
-                        type="button"
-                        onClick={handleResendOTP}
-                        disabled={countdown > 0 || isLoading}
-                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {countdown > 0 ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
-                      </button>
-                    </div>
+                    {/* Resend OTP - Show when OTP is sent */}
+                    {otpSent && (
+                      <div className="text-center">
+                        <button
+                          type="button"
+                          onClick={handleResendOTP}
+                          disabled={countdown > 0 || isLoading}
+                          className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {countdown > 0 ? `Resend OTP in ${countdown}s` : 'Resend OTP'}
+                        </button>
+                      </div>
+                    )}
 
-                    {/* Verify OTP Button */}
-                    <div>
+                    {/* Buttons in Flex */}
+                    <div className="flex gap-2">
                       <button 
-                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 w-full h-11 font-medium" 
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 flex-1 h-11 font-medium" 
                         type="submit" 
                         disabled={isLoading}
                       >
-                        {isLoading ? 'Verifying...' : 'Verify OTP'}
+                        {isLoading ? (otpSent ? 'Verifying...' : 'Sending OTP...') : (otpSent ? 'Verify OTP' : 'Send OTP')}
                       </button>
                     </div>
 
                     {/* Navigation Links */}
-                    <div className="flex items-center justify-center gap-4 mt-4">
+                    <div className="flex items-center justify-center gap-4 px-4 mt-4">
                       <Link 
                         to={ROUTES.LOGIN} 
                         className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
@@ -395,7 +375,6 @@ const ForgotPassword = () => {
                       </Link>
                     </div>
                   </form>
-                )}
 
               </div>
             </div>
