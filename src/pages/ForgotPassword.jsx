@@ -5,9 +5,9 @@ import { ROUTES, SUCCESS_MESSAGES, ERROR_MESSAGES } from '../constants';
 
 // Country codes for mobile number - only USA, India, and Canada
 const COUNTRY_CODES = [
-  { code: '+1', country: 'USA', flag: 'https://flagcdn.com/w320/us.png', ambre: 'US'},
-  { code: '+91', country: 'India', flag: 'https://flagcdn.com/w320/in.png', ambre: 'IN'},
-  { code: '+1', country: 'Canada', flag: 'https://flagcdn.com/w320/ca.png', ambre: 'CA' }
+  { id: 'usa', code: '+1', country: 'USA', flag: 'https://flagcdn.com/w320/us.png', ambre: 'US'},
+  { id: 'india', code: '+91', country: 'India', flag: 'https://flagcdn.com/w320/in.png', ambre: 'IN'},
+  { id: 'canada', code: '+1', country: 'Canada', flag: 'https://flagcdn.com/w320/ca.png', ambre: 'CA' }
 ];
 
 const ForgotPassword = () => {
@@ -15,7 +15,8 @@ const ForgotPassword = () => {
   const [formData, setFormData] = useState({
     phoneNumber: '',
     otp: '',
-    countryCode: '+1'
+    countryCode: '+1',
+    countryId: 'usa'
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -355,7 +356,7 @@ const ForgotPassword = () => {
                   <p className="mt-10 text-lg font-bold text-gray-700 dark:text-gray-400">
                     {step === 1 
                       ? 'Enter your mobile number to receive OTP' 
-                      : `OTP sent to ${formData.countryCode} ${formData.phoneNumber}`
+                      : `OTP sent to ${COUNTRY_CODES.find(c => c.id === formData.countryId)?.code} ${formData.phoneNumber}`
                     }
                   </p>
                 </div>
@@ -384,11 +385,11 @@ const ForgotPassword = () => {
                             className="flex items-center gap-1 text-sm text-gray-700 hover:text-gray-900 transition-colors"
                           >
                             <img 
-                              src={COUNTRY_CODES.find(c => c.code === formData.countryCode)?.flag} 
-                              alt={COUNTRY_CODES.find(c => c.code === formData.countryCode)?.country}
+                              src={COUNTRY_CODES.find(c => c.id === formData.countryId)?.flag} 
+                              alt={COUNTRY_CODES.find(c => c.id === formData.countryId)?.country}
                               className="w-6 h-4 object-cover rounded"
                             />
-                            <span>{formData.countryCode}</span>
+                            <span>{COUNTRY_CODES.find(c => c.id === formData.countryId)?.code}</span>
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
@@ -512,10 +513,14 @@ const ForgotPassword = () => {
                     <div className="country-dropdown absolute left-3 top-20 bg-white border border-gray-200 rounded-lg shadow-lg overflow-y-auto z-[9999] w-96 min-w-max">
                       {COUNTRY_CODES.map((country) => (
                         <button
-                          key={country.code}
+                          key={country.id}
                           type="button"
                           onClick={() => {
-                            setFormData(prev => ({ ...prev, countryCode: country.code }));
+                            setFormData(prev => ({ 
+                              ...prev, 
+                              countryCode: country.code,
+                              countryId: country.id
+                            }));
                             setShowCountryDropdown(false);
                           }}
                           className="w-full px-6 py-2 text-left hover:bg-gray-50 flex items-center text-sm transition-colors duration-150"
