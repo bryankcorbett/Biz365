@@ -22,13 +22,63 @@ const ForgotPassword = () => {
   const [countdown, setCountdown] = useState(0);
   const [otpSent, setOtpSent] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  
+  // Animation states
+  const [isExiting, setIsExiting] = useState(false);
+  const [showLeftElements, setShowLeftElements] = useState({
+    mainTitle: false,
+    description: false,
+    features: false
+  });
+  const [showRightElements, setShowRightElements] = useState({
+    welcomeText: false,
+    phoneInput: false,
+    otpInput: false,
+    resendButton: false,
+    submitButton: false,
+    navigationLinks: false
+  });
+  
   const navigate = useNavigate();
   const { showToast } = useToast();
 
-  // Animate form on mount
+  // Reset animation states and start entrance animations
   useEffect(() => {
-    const timer = setTimeout(() => setIsFormVisible(true), 100);
-    return () => clearTimeout(timer);
+    // Reset all animation states
+    setIsExiting(false);
+    setShowLeftElements({
+      mainTitle: false,
+      description: false,
+      features: false
+    });
+    setShowRightElements({
+      welcomeText: false,
+      phoneInput: false,
+      otpInput: false,
+      resendButton: false,
+      submitButton: false,
+      navigationLinks: false
+    });
+
+    // Start entrance animations after a brief delay
+    const timers = [];
+    
+    // Left panel elements appear first (from left)
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, mainTitle: true })), 100));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, description: true })), 200));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, features: true })), 300));
+    
+    // Right panel elements appear one by one (from right)
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: true })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, phoneInput: true })), 500));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInput: true })), 600));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendButton: true })), 700));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, submitButton: true })), 800));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, navigationLinks: true })), 900));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
   }, []);
 
   // Countdown timer for OTP resend
@@ -52,6 +102,64 @@ const ForgotPassword = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showCountryDropdown]);
+
+  // Handle exit animations when navigating to login
+  const handleNavigateToLogin = (e) => {
+    e.preventDefault();
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, navigationLinks: false })), 0));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, submitButton: false })), 100));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendButton: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInput: false })), 300));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, phoneInput: false })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 500));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, features: false })), 600));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, description: false })), 700));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, mainTitle: false })), 800));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.LOGIN);
+    }, 900));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
+
+  // Handle exit animations when navigating to signup
+  const handleNavigateToSignup = (e) => {
+    e.preventDefault();
+    if (isExiting) return; // Prevent multiple clicks during animation
+    
+    setIsExiting(true);
+    
+    // Exit animations in reverse order
+    const timers = [];
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, navigationLinks: false })), 0));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, submitButton: false })), 100));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, resendButton: false })), 200));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, otpInput: false })), 300));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, phoneInput: false })), 400));
+    timers.push(setTimeout(() => setShowRightElements(prev => ({ ...prev, welcomeText: false })), 500));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, features: false })), 600));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, description: false })), 700));
+    timers.push(setTimeout(() => setShowLeftElements(prev => ({ ...prev, mainTitle: false })), 800));
+    
+    // Navigate after animations complete
+    timers.push(setTimeout(() => {
+      navigate(ROUTES.SIGNUP);
+    }, 900));
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  };
 
   // Handle input changes with animation
   const handleInputChange = (e) => {
@@ -187,27 +295,50 @@ const ForgotPassword = () => {
             <div className="absolute -top-24 -left-10 h-72 w-72 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute -bottom-24 -right-10 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
             <div className="relative z-10 flex flex-col justify-center space-y-1">
-              <h1 className="text-4xl font-semibold leading-tight mb-8 px-4">
-                Turn everyday customers 
-                <h1>into raving fans.</h1>
-              </h1>
-              <p className="text-gray-300 text-lg px-6">
-                BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
-              </p>
-              <ul className="space-y-3 text-gray-200 px-6">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  NFC/QR review capture that just works
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  Auto-routes unhappy customers to private help
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
-                  One dashboard. All platforms. Zero chaos.
-                </li>
-              </ul>
+              {/* Main Title */}
+              <div className={`transition-all duration-500 ease-out ${
+                showLeftElements.mainTitle 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <h1 className="text-4xl font-semibold leading-tight mb-8 px-4">
+                  Turn everyday customers 
+                  <h1>into raving fans.</h1>
+                </h1>
+              </div>
+              
+              {/* Description */}
+              <div className={`transition-all duration-500 ease-out ${
+                showLeftElements.description 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <p className="text-gray-300 text-lg px-6">
+                  BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
+                </p>
+              </div>
+              
+              {/* Features List */}
+              <div className={`transition-all duration-500 ease-out ${
+                showLeftElements.features 
+                  ? 'translate-x-0 opacity-100' 
+                  : '-translate-x-full opacity-0'
+              }`}>
+                <ul className="space-y-3 text-gray-200 px-6">
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    NFC/QR review capture that just works
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    Auto-routes unhappy customers to private help
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-white"></span>
+                    One dashboard. All platforms. Zero chaos.
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
 
@@ -216,8 +347,12 @@ const ForgotPassword = () => {
             <div className="rounded-xl px-5 text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
               <div className="p-1 flex flex-col justify-between min-h-[350px]">
                 {/* Header */}
-                <div className="text-center mb-2">
-                  <p className="mt-1 text-lg font-bold text-gray-700 dark:text-gray-400 mt-10">
+                <div className={`text-center mb-2 transition-all duration-500 ease-out ${
+                  showRightElements.welcomeText 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-full opacity-0'
+                }`}>
+                  <p className="mt-10 text-lg font-bold text-gray-700 dark:text-gray-400">
                     {step === 1 
                       ? 'Enter your mobile number to receive OTP' 
                       : `OTP sent to ${formData.countryCode} ${formData.phoneNumber}`
@@ -226,9 +361,14 @@ const ForgotPassword = () => {
                 </div>
 
                 {/* Form */}
-                <form onSubmit={otpSent ? handleOTPSubmit : handlePhoneSubmit} className="space-y-2">
+                <div className="relative">
+                  <form onSubmit={otpSent ? handleOTPSubmit : handlePhoneSubmit} className="space-y-2">
                     {/* Mobile Number Field */}
-                    <div className="space-y-2">
+                    <div className={`space-y-2 transition-all duration-500 ease-out ${
+                      showRightElements.phoneInput 
+                        ? 'translate-x-0 opacity-100' 
+                        : 'translate-x-full opacity-0'
+                    }`}>
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-4">
                         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -253,35 +393,6 @@ const ForgotPassword = () => {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
                           </button>
-                          
-                          {showCountryDropdown && (
-                            <div className="country-dropdown absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-y-auto z-30 w-96 min-w-max">
-                              {COUNTRY_CODES.map((country) => (
-                                <button
-                                  key={country.code}
-                                  type="button"
-                                  onClick={() => {
-                                    setFormData(prev => ({ ...prev, countryCode: country.code }));
-                                    setShowCountryDropdown(false);
-                                  }}
-                                  className="w-full px-6 py-2 text-left hover:bg-gray-50 flex items-center text-sm transition-colors duration-150"
-                                >
-                                  <div className="flex items-center gap-10 flex-1">
-                                    <img 
-                                      src={country.flag} 
-                                      alt={country.country}
-                                      className="w-6 h-4 object-cover rounded flex-shrink-0"
-                                    />
-                                    <div className="flex items-center gap-20">
-                                      <span className="font-medium">{country.code}</span>
-                                      <span className="text-gray-500 text-xs">{country.ambre}</span>
-                                    </div>
-                                  </div>
-                                  <span className="text-gray-600 font-medium flex-shrink-0">{country.country}</span>
-                                </button>
-                              ))}
-                            </div>
-                          )}
                         </div>
                         
                         <input
@@ -300,13 +411,19 @@ const ForgotPassword = () => {
                           maxLength={15}
                         />
                       </div>
+                      
+                      
                       {errors.phoneNumber && (
                         <p className="text-sm text-red-600">{errors.phoneNumber}</p>
                       )}
                     </div>
 
                     {/* OTP Field - Always visible */}
-                    <div className="space-y-1.5">
+                    <div className={`space-y-1.5 transition-all duration-500 ease-out ${
+                      showRightElements.otpInput 
+                        ? 'translate-x-0 opacity-100' 
+                        : 'translate-x-full opacity-0'
+                    }`}>
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                         <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -335,7 +452,11 @@ const ForgotPassword = () => {
 
                     {/* Resend OTP - Show when OTP is sent */}
                     {otpSent && (
-                      <div className="text-center">
+                      <div className={`text-center transition-all duration-500 ease-out ${
+                        showRightElements.resendButton 
+                          ? 'translate-x-0 opacity-100' 
+                          : 'translate-x-full opacity-0'
+                      }`}>
                         <button
                           type="button"
                           onClick={handleResendOTP}
@@ -348,7 +469,11 @@ const ForgotPassword = () => {
                     )}
 
                     {/* Buttons in Flex */}
-                    <div className="flex gap-2">
+                    <div className={`flex gap-2 transition-all duration-500 ease-out ${
+                      showRightElements.submitButton 
+                        ? 'translate-x-0 opacity-100' 
+                        : 'translate-x-full opacity-0'
+                    }`}>
                       <button 
                         className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-black text-white shadow-lg hover:shadow-xl hover:scale-[1.02] hover:bg-gray-800 active:bg-gray-900 transition-all duration-200 px-4 py-2 flex-1 h-11 font-medium" 
                         type="submit" 
@@ -359,22 +484,59 @@ const ForgotPassword = () => {
                     </div>
 
                     {/* Navigation Links */}
-                    <div className="flex items-center justify-center gap-4 px-4 mt-4">
-                      <Link 
-                        to={ROUTES.LOGIN} 
-                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
+                    <div className={`flex items-center justify-center gap-4 px-4 mt-4 transition-all duration-500 ease-out ${
+                      showRightElements.navigationLinks 
+                        ? 'translate-x-0 opacity-100' 
+                        : 'translate-x-full opacity-0'
+                    }`}>
+                      <button 
+                        onClick={handleNavigateToLogin}
+                        disabled={isExiting}
+                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-transparent p-0 border-0 shadow-none focus-visible:outline-none focus-visible:ring-0"
                       >
                         Back to Login
-                      </Link>
+                      </button>
                       <span className="text-gray-400">|</span>
-                      <Link 
-                        to={ROUTES.SIGNUP} 
-                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors"
+                      <button 
+                        onClick={handleNavigateToSignup}
+                        disabled={isExiting}
+                        className="text-sm text-gray-900 dark:text-gray-100 hover:underline font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-transparent p-0 border-0 shadow-none focus-visible:outline-none focus-visible:ring-0"
                       >
                         Sign up for free
-                      </Link>
+                      </button>
                     </div>
                   </form>
+                  
+                  {/* Country Dropdown - Positioned outside form to avoid clipping */}
+                  {showCountryDropdown && (
+                    <div className="country-dropdown absolute left-3 top-20 bg-white border border-gray-200 rounded-lg shadow-lg overflow-y-auto z-[9999] w-96 min-w-max">
+                      {COUNTRY_CODES.map((country) => (
+                        <button
+                          key={country.code}
+                          type="button"
+                          onClick={() => {
+                            setFormData(prev => ({ ...prev, countryCode: country.code }));
+                            setShowCountryDropdown(false);
+                          }}
+                          className="w-full px-6 py-2 text-left hover:bg-gray-50 flex items-center text-sm transition-colors duration-150"
+                        >
+                          <div className="flex items-center gap-10 flex-1">
+                            <img 
+                              src={country.flag} 
+                              alt={country.country}
+                              className="w-6 h-4 object-cover rounded flex-shrink-0"
+                            />
+                            <div className="flex items-center gap-20">
+                              <span className="font-medium">{country.code}</span>
+                              <span className="text-gray-500 text-xs">{country.ambre}</span>
+                            </div>
+                          </div>
+                          <span className="text-gray-600 font-medium flex-shrink-0">{country.country}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
               </div>
             </div>
