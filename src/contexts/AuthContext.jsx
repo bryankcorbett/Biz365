@@ -8,6 +8,7 @@ const initialState = {
   isAuthenticated: false,
   isLoading: true,
   error: null,
+  apiUnavailable: false, // Track if API is unavailable
 };
 
 // Action types for reducer
@@ -21,10 +22,13 @@ const authReducer = (state, action) => {
         user: action.payload,
         isAuthenticated: true,
         isLoading: false,
-        error: null
+        error: null,
+        apiUnavailable: false
       };
     case 'SET_ERROR':
       return { ...state, error: action.payload, isLoading: false };
+    case 'SET_API_UNAVAILABLE':
+      return { ...state, apiUnavailable: true, isLoading: false, error: null };
     case 'CLEAR_ERROR':
       return { ...state, error: null };
     case 'LOGOUT':
@@ -33,7 +37,8 @@ const authReducer = (state, action) => {
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        error: null
+        error: null,
+        apiUnavailable: false
       };
     case 'SET_AUTHENTICATED':
       return { ...state, isAuthenticated: action.payload };
@@ -49,25 +54,33 @@ const AuthContext = createContext(undefined);
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // Check localStorage for existing authentication
+  // Check authentication status on app load
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const token = localStorage.getItem('auth_token');
-        const userData = localStorage.getItem('user_data');
+        // Always call /api/auth/me to check authentication status
+        const response = await authService.getCurrentUser();
         
-        if (token && userData) {
-          // Verify token is still valid by calling /api/auth/me
-          const response = await authService.getCurrentUser();
+        // 200 → set user → allow /dashboard
+        if (response.ok && response.user) {
           dispatch({ type: 'SET_USER', payload: response.user });
         } else {
           dispatch({ type: 'SET_LOADING', payload: false });
         }
       } catch (error) {
-        // Token is invalid, clear storage
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('user_data');
-        dispatch({ type: 'SET_LOADING', payload: false });
+        console.error('Auth check failed:', error);
+        
+        // Handle different error types
+        if (error.message && error.message.includes('401')) {
+          // 401 → show /login (do not auto-loop)
+          dispatch({ type: 'SET_LOADING', payload: false });
+        } else if (error.message && (error.message.includes('404') || error.message.includes('500'))) {
+          // 404/5xx → show "Auth API unavailable" banner
+          dispatch({ type: 'SET_API_UNAVAILABLE' });
+        } else {
+          // Other errors → show login
+          dispatch({ type: 'SET_LOADING', payload: false });
+        }
       }
     };
 
@@ -80,10 +93,20 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'CLEAR_ERROR' });
 
+      // Wait for login response and Set-Cookie
       const response = await authService.login(credentials.email, credentials.password);
       
-      // Update state with user data from response
-      dispatch({ type: 'SET_USER', payload: response.user });
+      // Wait a moment for cookie to be set
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Re-fetch user data to ensure cookie is working
+      const userResponse = await authService.getCurrentUser();
+      
+      if (userResponse.ok && userResponse.user) {
+        dispatch({ type: 'SET_USER', payload: userResponse.user });
+      } else {
+        throw new Error('Failed to verify authentication after login');
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Login failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });

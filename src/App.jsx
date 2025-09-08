@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Corementors } from './screens/Corementors/Corementors';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ToastProvider } from './components/ToastProvider';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -11,13 +11,17 @@ import OnboardingStep1 from './pages/onboarding/Step1';
 import OnboardingStep2 from './pages/onboarding/Step2';
 import OnboardingStep3 from './pages/onboarding/Step3';
 import ProtectedRoute from './components/ProtectedRoute';
+import ApiUnavailableBanner from './components/ApiUnavailableBanner';
 
-function App() {
+// Component to show API unavailable banner when needed
+const AppContent = () => {
+  const { apiUnavailable } = useAuth();
+  
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <Router>
-          <Routes>
+    <>
+      {apiUnavailable && <ApiUnavailableBanner />}
+      <Router>
+        <Routes>
             {/* Main Landing Page */}
             <Route path="/" element={<Corementors />} />
             
@@ -69,6 +73,15 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
+      </>
+    );
+  };
+
+function App() {
+  return (
+    <AuthProvider>
+      <ToastProvider>
+        <AppContent />
       </ToastProvider>
     </AuthProvider>
   );
