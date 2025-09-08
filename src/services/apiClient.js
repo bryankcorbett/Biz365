@@ -1,4 +1,6 @@
 // API Client for Biz365
+import errorLogger from './errorLogger';
+
 const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || 'https://api.biz365.ai';
 
@@ -58,6 +60,12 @@ class ApiClient {
                     if (d && typeof d.error === 'string') return d.error;
                     try { return JSON.stringify(d); } catch { return String(d); }
                 };
+                
+                // Log errors for monitoring
+                if (response.status >= 400) {
+                    errorLogger.logError(endpoint, response.status, normalize(data));
+                }
+                
                 throw new Error(normalize(data));
             }
 
