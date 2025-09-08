@@ -157,7 +157,8 @@ export const API_ENDPOINTS = {
     OTP_RESEND: '/api/otp/resend',
     GOOGLE: '/api/auth/google',
     APPLE: '/api/auth/apple',
-    ME: '/api/auth/me'
+    ME: '/api/auth/me',
+    HEALTH: '/api/auth/health'
   },
   USER: {
     ONBOARDING_STATUS: '/api/user/onboarding-status',

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ROUTES } from '../constants';
 import authService from '../services/authService';
+import healthService from '../services/healthService';
 
 // Auth state types
 const initialState = {
@@ -58,6 +59,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
+        // First check API health
+        await healthService.checkHealth();
+        
         // Always call /api/auth/me to check authentication status
         const response = await authService.getCurrentUser();
         
@@ -85,6 +89,14 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkAuthStatus();
+    
+    // Start periodic health checks
+    healthService.startHealthChecks();
+    
+    // Cleanup on unmount
+    return () => {
+      healthService.stopHealthChecks();
+    };
   }, []);
 
   // Login function
