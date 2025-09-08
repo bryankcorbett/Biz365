@@ -102,8 +102,8 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated && user) {
       if (user.onboardingCompleted) {
-        // User completed onboarding - go to external dashboard
-        window.location.href = ROUTES.DASHBOARD;
+        // User completed onboarding - go to local dashboard first, then external
+        navigate('/dashboard', { replace: true });
       } else {
         // User needs to complete onboarding
         if (next && next.startsWith('/onboarding/')) {
@@ -295,8 +295,8 @@ const Login = () => {
     }
 
     try {
-      // Redirect to external dashboard instead of using auth flow
-      window.location.href = ROUTES.DASHBOARD;
+      // Actually call the login API
+      await login(formData);
     } catch (error) {
       console.error('Login failed:', error);
       const msg = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Something went wrong');

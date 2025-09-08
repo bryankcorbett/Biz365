@@ -15,6 +15,12 @@ class AuthService {
         password
       });
 
+      // Store token in localStorage for persistence
+      if (response.token) {
+        localStorage.setItem('auth_token', response.token);
+        localStorage.setItem('user_data', JSON.stringify(response.user || {}));
+      }
+
       return response;
     } catch (error) {
       throw new Error(error.message || 'Login failed. Please check your credentials.');
@@ -118,7 +124,9 @@ class AuthService {
       // Even if server logout fails, clear local storage
       console.warn('Server logout failed:', error.message);
     } finally {
-      // No localStorage to clear
+      // Clear localStorage
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_data');
     }
   }
 
@@ -129,7 +137,8 @@ class AuthService {
 
   // Check if user is authenticated
   isAuthenticated() {
-    return false; // Always return false - no localStorage
+    const token = localStorage.getItem('auth_token');
+    return !!token; // Return true if token exists
   }
 
   // Get stored user data

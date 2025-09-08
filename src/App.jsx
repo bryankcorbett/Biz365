@@ -30,6 +30,24 @@ function App() {
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             
+            {/* Protected Dashboard Route */}
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                  <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+                    <h1 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Dashboard!</h1>
+                    <p className="text-gray-600 mb-4">You are successfully authenticated.</p>
+                    <button 
+                      onClick={() => window.location.href = 'https://app.biz365.ai'}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+                    >
+                      Go to Main Dashboard
+                    </button>
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
+
             {/* Protected Onboarding Routes */}
             <Route path="/onboarding/step1" element={
               <ProtectedRoute>

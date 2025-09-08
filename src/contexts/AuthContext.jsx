@@ -49,9 +49,29 @@ const AuthContext = createContext(undefined);
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // No localStorage check - always start fresh
+  // Check localStorage for existing authentication
   useEffect(() => {
-    dispatch({ type: 'SET_LOADING', payload: false });
+    const checkAuthStatus = async () => {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const userData = localStorage.getItem('user_data');
+        
+        if (token && userData) {
+          // Verify token is still valid by calling /api/auth/me
+          const response = await authService.getCurrentUser();
+          dispatch({ type: 'SET_USER', payload: response.user });
+        } else {
+          dispatch({ type: 'SET_LOADING', payload: false });
+        }
+      } catch (error) {
+        // Token is invalid, clear storage
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_data');
+        dispatch({ type: 'SET_LOADING', payload: false });
+      }
+    };
+
+    checkAuthStatus();
   }, []);
 
   // Login function
