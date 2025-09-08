@@ -50,7 +50,14 @@ class ApiClient {
             }
 
             if (!response.ok) {
-                throw new Error(data.message || data || `HTTP error! status: ${response.status}`);
+                const normalize = (d) => {
+                    if (!d) return `HTTP error! status: ${response.status}`;
+                    if (typeof d === 'string') return d;
+                    if (d && typeof d.message === 'string') return d.message;
+                    if (d && typeof d.error === 'string') return d.error;
+                    try { return JSON.stringify(d); } catch { return String(d); }
+                };
+                throw new Error(normalize(data));
             }
 
             return data;
@@ -114,7 +121,14 @@ class ApiClient {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                const normalize = (d) => {
+                    if (!d) return `HTTP error! status: ${response.status}`;
+                    if (typeof d === 'string') return d;
+                    if (d && typeof d.message === 'string') return d.message;
+                    if (d && typeof d.error === 'string') return d.error;
+                    try { return JSON.stringify(d); } catch { return String(d); }
+                };
+                throw new Error(normalize(data));
             }
 
             return data;

@@ -299,6 +299,8 @@ const Login = () => {
       window.location.href = ROUTES.DASHBOARD;
     } catch (error) {
       console.error('Login failed:', error);
+      const msg = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Something went wrong');
+      showToast('error', msg);
     }
   };
 

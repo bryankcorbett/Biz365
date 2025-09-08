@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import Button from './shared/Button';
 
+const toText = (m) => {
+  if (typeof m === 'string') return m;
+  if (m && typeof m.message === 'string') return m.message;
+  try { return JSON.stringify(m); } catch { return String(m); }
+};
+
 const ToastContext = createContext(undefined);
 
 export const ToastProvider = ({ children }) => {
@@ -106,7 +112,7 @@ const Toast = ({ toast, onRemove }) => {
   return (
     <div className={getToastStyles()}>
       {getIcon()}
-      <div className="flex-1 text-sm font-medium">{message}</div>
+      <div className="flex-1 text-sm font-medium">{toText(message)}</div>
       <button
         onClick={() => onRemove(id)}
         className="ml-3 text-gray-400 hover:text-gray-600 transition-colors"

@@ -216,6 +216,8 @@ const VerifyOTP = () => {
       showToast('success', SUCCESS_MESSAGES.OTP_VERIFIED);
     } catch (error) {
       console.error('OTP verification failed:', error);
+      const msg = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Something went wrong');
+      showToast('error', msg);
     }
   };
 

@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
       // Update state with user data from response
       dispatch({ type: 'SET_USER', payload: response.user });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Login failed';
+      const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Login failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
       throw error;
     } finally {
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.signup(userData);
       return response;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Signup failed';
+      const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Signup failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
       throw error;
     } finally {
@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }) => {
       // Update state with user data from response
       dispatch({ type: 'SET_USER', payload: response.user });
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'OTP verification failed';
+      const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'OTP verification failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
       throw error;
     } finally {

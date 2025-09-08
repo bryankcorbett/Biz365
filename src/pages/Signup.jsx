@@ -412,7 +412,8 @@ const Signup = () => {
       handleNavigateToVerifyOTP();
     } catch (error) {
       console.error('Signup failed:', error);
-      showToast('error', error.message || 'Signup failed. Please try again.');
+      const msg = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Signup failed. Please try again.');
+      showToast('error', msg);
     }
   };
 
