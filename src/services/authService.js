@@ -15,7 +15,7 @@ class AuthService {
         password
       });
 
-      // Store token in localStorage for persistence
+      // Store token in localStorage for fallback (cookie is primary)
       if (response.token) {
         localStorage.setItem('auth_token', response.token);
         localStorage.setItem('user_data', JSON.stringify(response.user || {}));
@@ -136,9 +136,12 @@ class AuthService {
   }
 
   // Check if user is authenticated
+  // Note: With cookie-based auth, we can't check authentication client-side
+  // The server will return 401 if not authenticated
   isAuthenticated() {
-    const token = localStorage.getItem('auth_token');
-    return !!token; // Return true if token exists
+    // Always return true - let the server determine authentication status
+    // This prevents redirect loops when using cookie-based auth
+    return true;
   }
 
   // Get stored user data

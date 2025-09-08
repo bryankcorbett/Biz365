@@ -33,6 +33,7 @@ class ApiClient {
         const url = `${this.baseURL}${endpoint}`;
         const config = {
             headers: this.getHeaders(options.includeAuth !== false),
+            credentials: 'include', // Include cookies for cross-subdomain auth
             ...options,
         };
 
@@ -112,6 +113,7 @@ class ApiClient {
             headers: {
                 Authorization: `Bearer ${this.getAuthToken()}`,
             },
+            credentials: 'include', // Include cookies for cross-subdomain auth
             body: formData,
             ...options,
         };
