@@ -336,7 +336,7 @@ const Login = () => {
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-16 px-4">Access your BizTag 
+                <h2 className="text-2xl sm:text-4xl font-bold text-white mb-10 px-4">Access your BizTag 
                   dashboard</h2>
               </div>
               
@@ -346,8 +346,9 @@ const Login = () => {
                   ? 'translate-x-0 opacity-100' 
                   : '-translate-x-full opacity-0'
               }`}>
-                <h3 className="text-2xl font-semibold leading-tight">
-                  Turn everyday customers into raving fans.
+                <h3 className="text-2xl font-semibold leading-tight mb-4">
+                  Turn everyday customers 
+                  <h3>into raving fans.</h3>
                 </h3>
                 <p className="text-gray-300 text-base">
                   BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
@@ -372,7 +373,7 @@ const Login = () => {
 
           {/* Right Panel - White Login Form */}
           <div className="flex items-center">
-            <div className="rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
+            <div className="px-6 rounded-xl text-card-foreground border-0 shadow-xl bg-white/70 dark:bg-white/5 backdrop-blur-md w-full">
               <div className="p-1 flex flex-col justify-start min-h-[300px]">
                 
 
