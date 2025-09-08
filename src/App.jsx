@@ -17,6 +17,9 @@ import ApiUnavailableBanner from './components/ApiUnavailableBanner';
 const AppContent = () => {
   const { apiUnavailable } = useAuth();
   
+  // Force rebuild marker
+  console.log('App rebuilt at:', new Date().toISOString());
+  
   return (
     <>
       {apiUnavailable && <ApiUnavailableBanner />}
