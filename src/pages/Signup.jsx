@@ -288,12 +288,14 @@ const Signup = () => {
     if (!validateForm()) return;
     try {
       const signupData = {
-        ...formData,
-        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        organizationName: `${formData.firstName} ${formData.lastName}'s Organization`,
         mobile: `${formData.countryCode}${formData.mobile}`
       };
-      delete signupData.firstName;
-      delete signupData.lastName;
+      
       await signup(signupData);
       showToast('success', SUCCESS_MESSAGES.SIGNUP_SUCCESS);
       setSignupSuccess(true);

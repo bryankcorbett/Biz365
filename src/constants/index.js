@@ -131,8 +131,8 @@ export const INDIAN_STATES = [
 
 // API Configuration
 export const API_CONFIG = {
-  BASE_URL: 'https://api.biz365.ai',
-  DASHBOARD_URL: 'https://app.biz365.ai'
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
+  DASHBOARD_URL: 'https://db.biz365.ai'
 };
 
 // OAuth Configuration
@@ -150,15 +150,15 @@ export const OAUTH_CONFIG = {
 // API endpoints
 export const API_ENDPOINTS = {
   AUTH: {
-    SIGNUP: '/api/auth/signup',
+    SIGNUP: '/api/auth/register',
     LOGIN: '/api/auth/login',
     LOGOUT: '/api/auth/logout',
-    OTP_VERIFY: '/api/otp/verify',
-    OTP_RESEND: '/api/otp/resend',
+    OTP_VERIFY: '/api/auth/verify-otp',
+    OTP_RESEND: '/api/auth/resend-otp',
     GOOGLE: '/api/auth/google',
     APPLE: '/api/auth/apple',
     ME: '/api/auth/me',
-    HEALTH: '/api/auth/health'
+    HEALTH: '/health'
   },
   USER: {
     ONBOARDING_STATUS: '/api/user/onboarding-status',
