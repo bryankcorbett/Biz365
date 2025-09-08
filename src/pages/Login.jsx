@@ -31,7 +31,7 @@ const Login = () => {
   });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { isLoading, error, clearError, isAuthenticated, user } = useAuth();
+  const { isLoading, error, clearError, isAuthenticated, user, login } = useAuth();
   const { showToast } = useToast();
 
   // Get next parameter for redirect after login
