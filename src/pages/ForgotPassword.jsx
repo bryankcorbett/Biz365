@@ -303,8 +303,7 @@ const ForgotPassword = () => {
                   : '-translate-x-full opacity-0'
               }`}>
                 <h1 className="text-4xl font-semibold leading-tight mb-8 px-4">
-                  Turn everyday customers 
-                  <h1>into raving fans.</h1>
+                  Turn everyday customers into raving fans.
                 </h1>
               </div>
               

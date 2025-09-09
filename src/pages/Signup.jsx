@@ -401,8 +401,7 @@ const Signup = () => {
                   : '-translate-x-full opacity-0'
               }`}>
                 <h3 className="text-2xl font-semibold leading-tight mb-8">
-                  Turn everyday customers
-                  <h3>into raving fans.</h3>
+                  Turn everyday customers into raving fans.
                 </h3>
                 <p className="text-gray-300 text-base">
                   BizTag helps you collect, respond, and showcase reviews—without breaking your flow.
