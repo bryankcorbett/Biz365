@@ -1,0 +1,150 @@
+{
+  "nodes": [
+    {
+      "id": "src/screens/Corementors/Corementors.jsx",
+      "label": "Corementors",
+      "routes": [
+        "/",
+        "/corementors"
+      ],
+      "dataModelId": "1:308",
+      "isRoot": true
+    },
+    {
+      "id": "src/pages/Login.jsx",
+      "label": "Login",
+      "routes": [
+        "/login"
+      ]
+    },
+    {
+      "id": "src/pages/Signup.jsx",
+      "label": "Signup",
+      "routes": [
+        "/signup"
+      ]
+    },
+    {
+      "id": "src/pages/VerifyOTP.jsx",
+      "label": "VerifyOTP",
+      "routes": [
+        "/verify-otp"
+      ]
+    },
+    {
+      "id": "src/pages/ForgotPassword.jsx",
+      "label": "ForgotPassword",
+      "routes": [
+        "/forgot-password"
+      ]
+    },
+    {
+      "id": "src/components/ProtectedRoute.jsx",
+      "label": "ProtectedRoute",
+      "routes": [
+        "/dashboard",
+        "/onboarding/step1",
+        "/onboarding/step2",
+        "/onboarding/step3"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "src/screens/Corementors/Corementors.jsx:133:14-to-src/pages/Login.jsx",
+      "source": "src/screens/Corementors/Corementors.jsx",
+      "target": "src/pages/Login.jsx",
+      "data": {
+        "viaRoute": "/login",
+        "trigger": {
+          "element": "<StarBorder\n                as=\"a\"\n                href=\"/login\"\n                className=\"custom-class\"\n                color=\"#ffffff\"\n                speed=\"2s\"\n                onClick={() => window.location.href = '/login'}\n              >\n                Log in\n              </StarBorder>",
+          "line": 133,
+          "endLine": 142,
+          "column": 14,
+          "endColumn": 27,
+          "sourceFile": "src/screens/Corementors/Corementors.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/screens/Corementors/Corementors.jsx:155:18-to-src/pages/Signup.jsx",
+      "source": "src/screens/Corementors/Corementors.jsx",
+      "target": "src/pages/Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a\n                    href=\"/signup\"\n                  >\n                    <span className=\"[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomwhite text-xs sm:text-sm tracking-[0] leading-[18px] sm:leading-[22.4px] whitespace-nowrap\">\n                      <span className=\"hidden sm:inline\">Try it for free</span>\n                      <span className=\"sm:hidden\">Try free</span>\n                    </span>\n                  </a>",
+          "line": 155,
+          "endLine": 162,
+          "column": 18,
+          "endColumn": 22,
+          "sourceFile": "src/screens/Corementors/Corementors.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/screens/Corementors/sections/HeroSection/HeroSection.jsx:316:14-to-src/pages/Signup.jsx",
+      "source": "src/screens/Corementors/Corementors.jsx",
+      "target": "src/pages/Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a\n              href=\"/signup\"\n                className=\"inline-flex items-center gap-2 [font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] text-wwwsightfulcomwhite\"\n            >\n              Get Started\n              <ArrowRight className=\"w-5 h-5\" />\n              </a>",
+          "line": 316,
+          "endLine": 322,
+          "column": 14,
+          "endColumn": 18,
+          "sourceFile": "src/screens/Corementors/sections/HeroSection/HeroSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/screens/Corementors/sections/PricingSection/PricingSection.jsx:178:22-to-src/pages/Signup.jsx",
+      "source": "src/screens/Corementors/Corementors.jsx",
+      "target": "src/pages/Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a href=\"/signup\" className=\"flex items-center justify-center gap-2 pt-[11px] pb-3 px-6\">\n                        <span className=\"font-medium text-sm\">Get Started</span>\n                        <ArrowRightIcon className=\"w-5 h-5\" />\n                      </a>",
+          "line": 178,
+          "endLine": 181,
+          "column": 22,
+          "endColumn": 26,
+          "sourceFile": "src/screens/Corementors/sections/PricingSection/PricingSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/screens/Corementors/sections/FooterSection/FooterSection.jsx:114:21-to-src/pages/Signup.jsx",
+      "source": "src/screens/Corementors/Corementors.jsx",
+      "target": "src/pages/Signup.jsx",
+      "data": {
+        "viaRoute": "/signup",
+        "trigger": {
+          "element": "<a href=\"/signup\">\n                       <span className=\"[font-family:'Inter',Helvetica] font-medium text-black text-sm tracking-[0] leading-[22.4px] whitespace-nowrap\">\n                         Try it for free\n                       </span>\n                     </a>",
+          "line": 114,
+          "endLine": 118,
+          "column": 21,
+          "endColumn": 25,
+          "sourceFile": "src/screens/Corementors/sections/FooterSection/FooterSection.jsx"
+        }
+      }
+    },
+    {
+      "id": "src/pages/Login.jsx:106:8-to-src/components/ProtectedRoute.jsx",
+      "source": "src/pages/Login.jsx",
+      "target": "src/components/ProtectedRoute.jsx",
+      "data": {
+        "viaRoute": "/dashboard",
+        "trigger": {
+          "element": "navigate('/dashboard', { replace: true })",
+          "line": 106,
+          "endLine": 106,
+          "column": 8,
+          "endColumn": 49,
+          "sourceFile": "src/pages/Login.jsx"
+        }
+      }
+    }
+  ]
+}
