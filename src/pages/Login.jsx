@@ -239,85 +239,54 @@ const Login = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden relative bg-black">
-      {/* Animated Neon Border Around Screen Edges */}
+      {/* Neon Ring Around Screen Edges */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Top Border */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-pulse-slow">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-shimmer"></div>
-          <div className="absolute inset-0 shadow-[0_0_20px_rgba(147,51,234,0.8),0_0_40px_rgba(79,70,229,0.6),0_0_60px_rgba(236,72,153,0.4)]"></div>
+        {/* Outer Neon Border */}
+        <div className="absolute inset-2 rounded-lg border-4 border-transparent bg-gradient-to-r from-purple-500 via-cyan-400 to-pink-500 p-1 animate-pulse-slow">
+          <div className="w-full h-full bg-black rounded-lg"></div>
         </div>
         
-        {/* Bottom Border */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent animate-pulse-slow" style={{ animationDelay: '1s' }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-shimmer" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_20px_rgba(236,72,153,0.8),0_0_40px_rgba(147,51,234,0.6),0_0_60px_rgba(79,70,229,0.4)]"></div>
+        {/* Inner Glow Ring */}
+        <div className="absolute inset-4 rounded-lg border-2 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-400 p-1 animate-pulse-subtle" style={{ animationDelay: '1s' }}>
+          <div className="w-full h-full bg-transparent rounded-lg"></div>
         </div>
         
-        {/* Left Border */}
-        <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-transparent via-blue-500 to-transparent animate-pulse-slow" style={{ animationDelay: '0.5s' }}>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-400 to-transparent animate-shimmer" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_20px_rgba(79,70,229,0.8),0_0_40px_rgba(147,51,234,0.6),0_0_60px_rgba(236,72,153,0.4)]"></div>
+        {/* Animated Corner Highlights */}
+        <div className="absolute top-2 left-2 w-16 h-16">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(147,51,234,0.8)]"></div>
+        </div>
+        <div className="absolute top-2 right-2 w-16 h-16">
+          <div className="absolute inset-0 bg-gradient-to-bl from-cyan-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(6,182,212,0.8)]" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+        <div className="absolute bottom-2 left-2 w-16 h-16">
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(59,130,246,0.8)]" style={{ animationDelay: '1s' }}></div>
+        </div>
+        <div className="absolute bottom-2 right-2 w-16 h-16">
+          <div className="absolute inset-0 bg-gradient-to-tl from-pink-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(236,72,153,0.8)]" style={{ animationDelay: '1.5s' }}></div>
         </div>
         
-        {/* Right Border */}
-        <div className="absolute top-0 bottom-0 right-0 w-1 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-pulse-slow" style={{ animationDelay: '1.5s' }}>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-400 to-transparent animate-shimmer" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_20px_rgba(6,182,212,0.8),0_0_40px_rgba(236,72,153,0.6),0_0_60px_rgba(147,51,234,0.4)]"></div>
+        {/* Traveling Light Effect */}
+        <div className="absolute inset-2 rounded-lg overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute right-0 top-0 w-1 h-full bg-gradient-to-b from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '3s' }}></div>
         </div>
-
-        {/* Corner Accents */}
-        <div className="absolute top-0 left-0 w-8 h-8">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-transparent rounded-br-full animate-pulse-subtle"></div>
-          <div className="absolute inset-0 shadow-[0_0_30px_rgba(147,51,234,0.9)]"></div>
-        </div>
-        <div className="absolute top-0 right-0 w-8 h-8">
-          <div className="absolute inset-0 bg-gradient-to-bl from-cyan-500 to-transparent rounded-bl-full animate-pulse-subtle" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_30px_rgba(6,182,212,0.9)]"></div>
-        </div>
-        <div className="absolute bottom-0 left-0 w-8 h-8">
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-transparent rounded-tr-full animate-pulse-subtle" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_30px_rgba(59,130,246,0.9)]"></div>
-        </div>
-        <div className="absolute bottom-0 right-0 w-8 h-8">
-          <div className="absolute inset-0 bg-gradient-to-tl from-pink-500 to-transparent rounded-tl-full animate-pulse-subtle" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute inset-0 shadow-[0_0_30px_rgba(236,72,153,0.9)]"></div>
-        </div>
-
-        {/* Floating Particles */}
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-white rounded-full animate-float opacity-60"
-            style={{
-              left: `${10 + (i * 8)}%`,
-              top: `${15 + (i * 6)}%`,
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: `${3 + (i * 0.2)}s`,
-            }}
-          />
-        ))}
-
-        {/* Subtle Grid Pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '30px 30px'
-          }}
-        />
+        
+        {/* Subtle Inner Glow */}
+        <div className="absolute inset-8 rounded-lg bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 animate-pulse-subtle"></div>
       </div>
+
+      {/* Animated Neon Border Around Screen Edges */}
 
       {/* Main Content - Centered */}
       <div className="relative z-10 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           {/* Login Card */}
-          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/30 p-8 relative overflow-hidden">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/30 p-8 relative overflow-hidden max-w-md w-full">
             {/* Card Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 rounded-3xl"></div>
-            <div className="absolute inset-0 border border-gradient-to-r from-purple-500/20 via-cyan-500/20 to-pink-500/20 rounded-3xl"></div>
+            <div className="absolute inset-0 rounded-3xl shadow-[inset_0_0_20px_rgba(147,51,234,0.3)]"></div>
             
             <div className="relative z-10">
               {/* Logo */}
@@ -615,6 +584,11 @@ const Login = () => {
         @keyframes pulse-subtle {
           0%, 100% { opacity: 0.6; }
           50% { opacity: 1; }
+        }
+        
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
         }
       `}</style>
     </div>
