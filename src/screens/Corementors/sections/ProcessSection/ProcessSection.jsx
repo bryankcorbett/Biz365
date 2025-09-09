@@ -96,6 +96,7 @@ export const ProcessSection = () => {
                 PROCESS
               </span>
           </Badge>
+          </Badge>
 
           <div className="flex flex-col items-center w-full">
             <h2 className="bg-[linear-gradient(0deg,rgba(0,0,0,1)_34%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Inter',Helvetica] font-medium text-[52.9px] text-center tracking-[-0.56px] leading-[67.2px]">
