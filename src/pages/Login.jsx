@@ -238,50 +238,67 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative bg-black">
-      {/* Neon Ring Around Screen Edges */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Main Neon Border - Thick and Visible */}
+    <div className="h-screen w-screen overflow-hidden relative bg-white">
+      {/* Neon Ring Border - Fixed positioning and visibility */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {/* Top Border */}
         <div 
-          className="absolute inset-0 rounded-lg"
+          className="absolute top-0 left-0 right-0 h-2"
           style={{
-            background: 'linear-gradient(45deg, #9333ea, #06b6d4, #ec4899, #9333ea)',
-            padding: '6px',
-            animation: 'neon-pulse 3s ease-in-out infinite'
+            background: 'linear-gradient(90deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
+            backgroundSize: '400% 100%',
+            animation: 'neon-flow 4s linear infinite',
+            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
           }}
-        >
-          <div className="w-full h-full bg-black rounded-lg"></div>
-        </div>
+        />
         
-        {/* Inner Neon Glow */}
+        {/* Bottom Border */}
         <div 
-          className="absolute inset-3 rounded-lg"
+          className="absolute bottom-0 left-0 right-0 h-2"
           style={{
-            background: 'linear-gradient(225deg, #06b6d4, #ec4899, #9333ea, #06b6d4)',
-            padding: '3px',
-            animation: 'neon-pulse 2s ease-in-out infinite reverse'
+            background: 'linear-gradient(270deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
+            backgroundSize: '400% 100%',
+            animation: 'neon-flow 4s linear infinite reverse',
+            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
           }}
-        >
-          <div className="w-full h-full bg-transparent rounded-lg"></div>
-        </div>
+        />
         
-        {/* Corner Glow Effects */}
-        <div className="absolute top-0 left-0 w-24 h-24 bg-purple-500 rounded-full blur-xl opacity-60 animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 right-0 w-24 h-24 bg-pink-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-      </div>
+        {/* Left Border */}
+        <div 
+          className="absolute top-0 bottom-0 left-0 w-2"
+          style={{
+            background: 'linear-gradient(180deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
+            backgroundSize: '100% 400%',
+            animation: 'neon-flow-vertical 4s linear infinite',
+            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
+          }}
+        />
+        
+        {/* Right Border */}
+        <div 
+          className="absolute top-0 bottom-0 right-0 w-2"
+          style={{
+            background: 'linear-gradient(0deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
+            backgroundSize: '100% 400%',
+            animation: 'neon-flow-vertical 4s linear infinite reverse',
+            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
+          }}
+        />
 
-      {/* Animated Neon Border Around Screen Edges */}
+        {/* Corner Glow Effects */}
+        <div className="absolute top-0 left-0 w-8 h-8 bg-purple-500 rounded-full blur-xl opacity-80 animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-8 h-8 bg-cyan-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-0 left-0 w-8 h-8 bg-pink-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 right-0 w-8 h-8 bg-orange-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+      </div>
 
       {/* Main Content - Centered */}
       <div className="relative z-10 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           {/* Login Card */}
-          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl shadow-purple-500/20 border border-white/30 p-8 relative overflow-hidden max-w-md w-full">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200 p-8 relative overflow-hidden max-w-md w-full">
             {/* Card Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 rounded-3xl"></div>
-            <div className="absolute inset-0 rounded-3xl shadow-[inset_0_0_20px_rgba(147,51,234,0.3)]"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-transparent to-cyan-50/50 rounded-3xl"></div>
             
             <div className="relative z-10">
               {/* Logo */}
@@ -303,10 +320,10 @@ const Login = () => {
                   ? 'translate-y-0 opacity-100' 
                   : 'translate-y-8 opacity-0'
               }`}>
-                <h1 className="bg-[linear-gradient(0deg,rgba(0,0,0,1)_34%,rgba(255,255,255,1)_100%)] [-webkit-background-clip:text] bg-clip-text [-webkit-text-fill-color:transparent] [text-fill-color:transparent] [font-family:'Inter',Helvetica] font-medium text-2xl tracking-[-0.3px] leading-tight mb-2">
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">
                   Welcome Back
                 </h1>
-                <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm">
                   Sign in to your dashboard
                 </p>
               </div>
@@ -321,7 +338,7 @@ const Login = () => {
                 <button 
                   onClick={handleGoogleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-white rounded-xl overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border-2 border-gray-200 hover:bg-gray-50 hover:shadow-lg hover:scale-105 hover:border-gray-300 transition-all duration-300"
+                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-white rounded-xl border-2 border-gray-200 hover:bg-gray-50 hover:shadow-lg hover:scale-105 hover:border-gray-300 transition-all duration-300 shadow-sm"
                 >
                   <div className="mr-2" aria-hidden="true">
                     {isGoogleLoading ? (
@@ -340,7 +357,7 @@ const Login = () => {
                       </svg>
                     )}
                   </div>
-                  <span className="[font-family:'Inter',Helvetica] font-medium text-gray-800 text-sm tracking-[0] leading-[18px]">
+                  <span className="font-medium text-gray-800 text-sm">
                     {isGoogleLoading ? 'Signing in...' : 'Google'}
                   </span>
                 </button>
@@ -349,21 +366,21 @@ const Login = () => {
                 <button 
                   onClick={handleAppleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-black rounded-xl overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-gray-800 hover:scale-105 transition-all duration-300"
+                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-black rounded-xl hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg"
                 >
                   <div className="mr-2" aria-hidden="true">
                     {isAppleLoading ? (
-                      <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
                     ) : (
-                      <svg width="14" height="17" viewBox="0 0 384 512" fill="currentColor">
-                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" fill="white"></path>
+                      <svg width="14" height="17" viewBox="0 0 384 512" fill="white">
+                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
                       </svg>
                     )}
                   </div>
-                  <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[18px]">
+                  <span className="font-medium text-white text-sm">
                     {isAppleLoading ? 'Signing in...' : 'Apple'}
                   </span>
                 </button>
@@ -379,7 +396,7 @@ const Login = () => {
                   <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
                 </div>
                 <div className="relative flex justify-center">
-                  <span className="bg-white px-4 text-xs uppercase tracking-wider text-gray-500 [font-family:'Inter',Helvetica] font-medium">
+                  <span className="bg-white px-4 text-xs uppercase tracking-wider text-gray-500 font-medium">
                     or use email
                   </span>
                 </div>
@@ -393,7 +410,7 @@ const Login = () => {
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-8 opacity-0'
                 }`}>
-                  <label className="[font-family:'Inter',Helvetica] font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
+                  <label className="font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
                     <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -403,7 +420,7 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
-                    className="w-full px-4 py-3 bg-white/90 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md [font-family:'Inter',Helvetica] text-sm"
+                    className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md text-sm"
                     placeholder="you@business.com"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -425,7 +442,7 @@ const Login = () => {
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-8 opacity-0'
                 }`}>
-                  <label className="[font-family:'Inter',Helvetica] font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
+                  <label className="font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
                     <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                       <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -436,7 +453,7 @@ const Login = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      className="w-full px-4 py-3 bg-white/90 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md pr-12 [font-family:'Inter',Helvetica] text-sm"
+                      className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md pr-12 text-sm"
                       placeholder="••••••••"
                       value={formData.password}
                       onChange={handleInputChange}
@@ -484,11 +501,11 @@ const Login = () => {
                       type="checkbox" 
                       className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 hover:border-gray-400 transition-all duration-200 w-4 h-4" 
                     />
-                    <span className="text-gray-600 [font-family:'Inter',Helvetica] font-normal">Remember me</span>
+                    <span className="text-gray-600 font-normal">Remember me</span>
                   </label>
                   <Link
                     to={ROUTES.FORGOT_PASSWORD}
-                    className="[font-family:'Inter',Helvetica] font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
+                    className="font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
                   >
                     Forgot password?
                   </Link>
@@ -501,7 +518,7 @@ const Login = () => {
                     : 'translate-y-8 opacity-0'
                 }`}>
                   <button
-                    className="w-full inline-flex items-center justify-center gap-2 pt-3 pb-3 px-6 h-auto bg-black rounded-xl overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-gray-800 hover:scale-105 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group"
+                    className="w-full inline-flex items-center justify-center gap-2 pt-3 pb-3 px-6 h-auto bg-black rounded-xl hover:bg-gray-800 hover:scale-105 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group shadow-lg"
                     type="submit"
                     disabled={isLoading}
                   >
@@ -521,7 +538,7 @@ const Login = () => {
                         </>
                       ) : (
                         <>
-                          <span className="[font-family:'Inter',Helvetica] font-medium text-white text-sm tracking-[0] leading-[18px]">
+                          <span className="font-medium text-white text-sm">
                             Sign in
                           </span>
                           <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -540,11 +557,11 @@ const Login = () => {
                   ? 'translate-y-0 opacity-100' 
                   : 'translate-y-8 opacity-0'
               }`}>
-                <p className="[font-family:'Inter',Helvetica] font-normal text-gray-600 text-sm">
+                <p className="font-normal text-gray-600 text-sm">
                   Don't have an account?{' '}
                   <Link 
                     to={ROUTES.SIGNUP}
-                    className="[font-family:'Inter',Helvetica] font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
+                    className="font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
                   >
                     Create one
                   </Link>
@@ -555,41 +572,23 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Subtle Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 pointer-events-none"></div>
-      
-      {/* Additional CSS for enhanced animations */}
+      {/* CSS Animations */}
       <style>{`
+        @keyframes neon-flow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes neon-flow-vertical {
+          0% { background-position: 50% 0%; }
+          50% { background-position: 50% 100%; }
+          100% { background-position: 50% 0%; }
+        }
+        
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33% { transform: translateY(-10px) rotate(120deg); }
-          66% { transform: translateY(5px) rotate(240deg); }
-        }
-        
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.8; }
-        }
-        
-        @keyframes pulse-subtle {
-          0%, 100% { opacity: 0.6; }
-          50% { opacity: 1; }
-        }
-        
-        @keyframes neon-pulse {
-          0%, 100% { 
-            filter: brightness(1) saturate(1);
-            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5), 0 0 40px rgba(6, 182, 212, 0.3), 0 0 60px rgba(236, 72, 153, 0.2);
-          }
-          50% { 
-            filter: brightness(1.2) saturate(1.3);
-            box-shadow: 0 0 30px rgba(147, 51, 234, 0.8), 0 0 60px rgba(6, 182, 212, 0.6), 0 0 90px rgba(236, 72, 153, 0.4);
-          }
         }
       `}</style>
     </div>
