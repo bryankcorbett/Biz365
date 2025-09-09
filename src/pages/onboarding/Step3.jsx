@@ -378,7 +378,7 @@ const OnboardingStep3 = () => {
       />
       
       {/* Bullet hole animation styles */}
-      <style jsx>{`
+      <style>{`
         @keyframes bulletFlash {
           0% { opacity: 1; transform: scale(0); }
           50% { opacity: 1; transform: scale(1); }
