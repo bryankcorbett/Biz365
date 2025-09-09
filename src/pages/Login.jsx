@@ -241,40 +241,35 @@ const Login = () => {
     <div className="h-screen w-screen overflow-hidden relative bg-black">
       {/* Neon Ring Around Screen Edges */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Outer Neon Border */}
-        <div className="absolute inset-2 rounded-lg border-4 border-transparent bg-gradient-to-r from-purple-500 via-cyan-400 to-pink-500 p-1 animate-pulse-slow">
+        {/* Main Neon Border - Thick and Visible */}
+        <div 
+          className="absolute inset-0 rounded-lg"
+          style={{
+            background: 'linear-gradient(45deg, #9333ea, #06b6d4, #ec4899, #9333ea)',
+            padding: '6px',
+            animation: 'neon-pulse 3s ease-in-out infinite'
+          }}
+        >
           <div className="w-full h-full bg-black rounded-lg"></div>
         </div>
         
-        {/* Inner Glow Ring */}
-        <div className="absolute inset-4 rounded-lg border-2 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-400 p-1 animate-pulse-subtle" style={{ animationDelay: '1s' }}>
+        {/* Inner Neon Glow */}
+        <div 
+          className="absolute inset-3 rounded-lg"
+          style={{
+            background: 'linear-gradient(225deg, #06b6d4, #ec4899, #9333ea, #06b6d4)',
+            padding: '3px',
+            animation: 'neon-pulse 2s ease-in-out infinite reverse'
+          }}
+        >
           <div className="w-full h-full bg-transparent rounded-lg"></div>
         </div>
         
-        {/* Animated Corner Highlights */}
-        <div className="absolute top-2 left-2 w-16 h-16">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(147,51,234,0.8)]"></div>
-        </div>
-        <div className="absolute top-2 right-2 w-16 h-16">
-          <div className="absolute inset-0 bg-gradient-to-bl from-cyan-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(6,182,212,0.8)]" style={{ animationDelay: '0.5s' }}></div>
-        </div>
-        <div className="absolute bottom-2 left-2 w-16 h-16">
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(59,130,246,0.8)]" style={{ animationDelay: '1s' }}></div>
-        </div>
-        <div className="absolute bottom-2 right-2 w-16 h-16">
-          <div className="absolute inset-0 bg-gradient-to-tl from-pink-500/80 to-transparent rounded-lg animate-pulse-slow shadow-[0_0_30px_rgba(236,72,153,0.8)]" style={{ animationDelay: '1.5s' }}></div>
-        </div>
-        
-        {/* Traveling Light Effect */}
-        <div className="absolute inset-2 rounded-lg overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute right-0 top-0 w-1 h-full bg-gradient-to-b from-transparent via-white/60 to-transparent animate-shimmer" style={{ animationDelay: '3s' }}></div>
-        </div>
-        
-        {/* Subtle Inner Glow */}
-        <div className="absolute inset-8 rounded-lg bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 animate-pulse-subtle"></div>
+        {/* Corner Glow Effects */}
+        <div className="absolute top-0 left-0 w-24 h-24 bg-purple-500 rounded-full blur-xl opacity-60 animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 right-0 w-24 h-24 bg-pink-500 rounded-full blur-xl opacity-60 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       {/* Animated Neon Border Around Screen Edges */}
@@ -364,7 +359,7 @@ const Login = () => {
                       </svg>
                     ) : (
                       <svg width="14" height="17" viewBox="0 0 384 512" fill="currentColor">
-                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" fill="white"></path>
                       </svg>
                     )}
                   </div>
@@ -586,9 +581,15 @@ const Login = () => {
           50% { opacity: 1; }
         }
         
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+        @keyframes neon-pulse {
+          0%, 100% { 
+            filter: brightness(1) saturate(1);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5), 0 0 40px rgba(6, 182, 212, 0.3), 0 0 60px rgba(236, 72, 153, 0.2);
+          }
+          50% { 
+            filter: brightness(1.2) saturate(1.3);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.8), 0 0 60px rgba(6, 182, 212, 0.6), 0 0 90px rgba(236, 72, 153, 0.4);
+          }
         }
       `}</style>
     </div>
