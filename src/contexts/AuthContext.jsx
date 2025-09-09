@@ -59,47 +59,31 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        // First check API health
-        await healthService.checkHealth();
+        // Check if we have a stored auth token (mock authentication)
+        const token = localStorage.getItem('auth_token');
+        const userData = localStorage.getItem('user_data');
         
-        // Always call /api/auth/me to check authentication status
-        const response = await authService.getCurrentUser();
-        
-        // 200 → set user → allow /dashboard
-        if (response.ok && response.user) {
-          dispatch({ type: 'SET_USER', payload: response.user });
+        if (token && userData) {
+          try {
+            const user = JSON.parse(userData);
+            dispatch({ type: 'SET_USER', payload: user });
+          } catch (error) {
+            // Invalid stored data, clear it
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            dispatch({ type: 'SET_LOADING', payload: false });
+          }
         } else {
+          // No stored authentication, user needs to login
           dispatch({ type: 'SET_LOADING', payload: false });
         }
       } catch (error) {
         console.error('Auth check failed:', error);
-        
-        // Handle different error types
-        if (error.message && error.message.includes('Failed to fetch')) {
-          // Network error → show "Auth API unavailable" banner
-          dispatch({ type: 'SET_API_UNAVAILABLE' });
-        } else if (error.message && error.message.includes('401')) {
-          // 401 → show /login (do not auto-loop)
-          dispatch({ type: 'SET_LOADING', payload: false });
-        } else if (error.message && (error.message.includes('404') || error.message.includes('500'))) {
-          // 404/5xx → show "Auth API unavailable" banner
-          dispatch({ type: 'SET_API_UNAVAILABLE' });
-        } else {
-          // Other errors → show login
-          dispatch({ type: 'SET_LOADING', payload: false });
-        }
+        dispatch({ type: 'SET_LOADING', payload: false });
       }
     };
 
     checkAuthStatus();
-    
-    // Start periodic health checks
-    healthService.startHealthChecks();
-    
-    // Cleanup on unmount
-    return () => {
-      healthService.stopHealthChecks();
-    };
   }, []);
 
   // Login function
@@ -108,20 +92,22 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'CLEAR_ERROR' });
 
-      // Wait for login response and Set-Cookie
-      const response = await authService.login(credentials.email, credentials.password);
+      // Mock login - simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Wait a moment for cookie to be set
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Mock user data
+      const mockUser = {
+        id: '1',
+        name: credentials.email.split('@')[0],
+        email: credentials.email,
+        onboardingCompleted: false
+      };
       
-      // Re-fetch user data to ensure cookie is working
-      const userResponse = await authService.getCurrentUser();
+      // Store mock auth data
+      localStorage.setItem('auth_token', 'mock-jwt-token');
+      localStorage.setItem('user_data', JSON.stringify(mockUser));
       
-      if (userResponse.ok && userResponse.user) {
-        dispatch({ type: 'SET_USER', payload: userResponse.user });
-      } else {
-        throw new Error('Failed to verify authentication after login');
-      }
+      dispatch({ type: 'SET_USER', payload: mockUser });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Login failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
@@ -137,8 +123,15 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'CLEAR_ERROR' });
 
-      const response = await authService.signup(userData);
-      return response;
+      // Mock signup - simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mock successful signup response
+      return {
+        success: true,
+        message: 'Account created successfully',
+        mobile: userData.mobile
+      };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'Signup failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
@@ -154,10 +147,24 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: 'SET_LOADING', payload: true });
       dispatch({ type: 'CLEAR_ERROR' });
 
-      const response = await authService.verifyOTP(otpData.mobile, otpData.otp);
+      // Mock OTP verification - simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Update state with user data from response
-      dispatch({ type: 'SET_USER', payload: response.user });
+      // Mock user data after OTP verification
+      const mockUser = {
+        id: '1',
+        name: 'John Doe',
+        email: 'user@example.com',
+        mobile: otpData.mobile,
+        isVerified: true,
+        onboardingCompleted: false
+      };
+      
+      // Store mock auth data
+      localStorage.setItem('auth_token', 'mock-jwt-token');
+      localStorage.setItem('user_data', JSON.stringify(mockUser));
+      
+      dispatch({ type: 'SET_USER', payload: mockUser });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : (typeof error === 'string' ? error : 'OTP verification failed');
       dispatch({ type: 'SET_ERROR', payload: errorMessage });
@@ -170,7 +177,9 @@ export const AuthProvider = ({ children }) => {
   // Logout function
   const logout = useCallback(async () => {
     try {
-      await authService.logout();
+      // Clear mock auth data
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_data');
     } catch (error) {
       console.warn('Logout error:', error);
     } finally {
