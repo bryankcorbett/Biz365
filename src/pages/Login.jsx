@@ -358,27 +358,6 @@ const Login = () => {
           />
         ))}
       </div>
-            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
-          }}
-        />
-        
-        {/* Right Border */}
-        <div 
-          className="absolute top-0 bottom-0 right-0 w-2"
-          style={{
-            background: 'linear-gradient(0deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
-            backgroundSize: '100% 400%',
-            animation: 'neon-flow-vertical 4s linear infinite reverse',
-            boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
-          }}
-        />
-
-        {/* Corner Glow Effects */}
-        <div className="absolute top-0 left-0 w-8 h-8 bg-purple-500 rounded-full blur-xl opacity-80 animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-8 h-8 bg-cyan-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-0 left-0 w-8 h-8 bg-pink-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 right-0 w-8 h-8 bg-orange-500 rounded-full blur-xl opacity-80 animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-      </div>
 
       {/* Main Content - Centered */}
       <div className="relative z-10 h-full flex items-center justify-center p-8">
@@ -663,25 +642,42 @@ const Login = () => {
       {/* CSS Animations */}
       <style>{`
         @keyframes neon-flow {
-          @keyframes hero-float {
-            0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-            33% { transform: translate(-50%, -50%) translateY(-20px) rotate(120deg); }
-            66% { transform: translate(-50%, -50%) translateY(10px) rotate(240deg); }
-          }
-          
-          @keyframes hero-pulse {
-            0%, 100% { opacity: 0.6; filter: blur(40px); }
-            50% { opacity: 0.8; filter: blur(30px); }
-          }
-          
-          @keyframes hero-spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-          }
-          
-          @keyframes hero-gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            25% { background-position: 100% 0%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 0% 100%; }
-          }
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes neon-flow-vertical {
+          0% { background-position: 50% 0%; }
+          50% { background-position: 50% 100%; }
+          100% { background-position: 50% 0%; }
+        }
+        
+        @keyframes hero-float {
+          0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
+          33% { transform: translate(-50%, -50%) translateY(-20px) rotate(120deg); }
+          66% { transform: translate(-50%, -50%) translateY(10px) rotate(240deg); }
+        }
+        
+        @keyframes hero-pulse {
+          0%, 100% { opacity: 0.6; filter: blur(40px); }
+          50% { opacity: 0.8; filter: blur(30px); }
+        }
+        
+        @keyframes hero-spin {
+          0% { transform: translate(-50%, -50%) rotate(0deg); }
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes hero-gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          25% { background-position: 100% 0%; }
+          50% { background-position: 100% 100%; }
+          75% { background-position: 0% 100%; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default Login;
