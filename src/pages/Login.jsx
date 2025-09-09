@@ -366,7 +366,10 @@ const Login = () => {
         <div 
           className="absolute top-0 bottom-0 right-0 w-2"
           style={{
-            background: 'linear-gradient(0deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #9333ea)',
+            background: 'linear-gradient(0deg, #9333ea, #06b6d4, #ec4899, #f59e0b, #
+        }
+  )
+}9333ea)',
             backgroundSize: '100% 400%',
             animation: 'neon-flow-vertical 4s linear infinite reverse',
             boxShadow: '0 0 20px rgba(147, 51, 234, 0.8), 0 0 40px rgba(6, 182, 212, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)'
