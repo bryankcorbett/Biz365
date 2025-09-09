@@ -595,7 +595,7 @@ const Login = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900 pointer-events-none"></div>
       
       {/* Additional CSS for enhanced animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
