@@ -84,12 +84,12 @@ export const MainContentSection = () => {
             <div className="flex relative w-full items-center justify-center translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:400ms]">
               <div className="flex flex-col items-start relative">
                 <Button
+                  className="h-auto inline-flex items-center justify-center pt-[11px] pb-3 px-6 bg-wwwsightfulcomblack rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-wwwsightfulcomblack/90 transition-colors"
                   asChild
-                  className="h-auto flex items-center justify-center pt-[11px] pb-3 px-6 relative bg-wwwsightfulcomblack rounded-[10px] overflow-hidden shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] hover:bg-wwwsightfulcomblack/90 transition-colors"
                 >
                   <a
                     href="/signup"
-                    className="gap-2 flex items-center relative"
+                    className="gap-2 flex items-center justify-center w-full"
                   >
                     <div className="flex flex-col items-start relative">
                       <div className="flex flex-col items-start relative w-full">

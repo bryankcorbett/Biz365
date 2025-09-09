@@ -78,8 +78,7 @@ export const ProjectsSection = () => {
                 {projectTabs.map((tab, index) => (
                   <Button
                     key={index}
-                    variant="ghost"
-                    className={`h-11 px-[157px] py-[13.8px] bg-orbai-templateframerwebsitewild-sand rounded-lg overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-4px_#00000005,0px_13.65px_13.65px_-3.33px_#0000000d,0px_6.87px_6.87px_-2.67px_#00000012,0px_3.62px_3.62px_-2px_#00000012,0px_1.81px_1.81px_-1.33px_#00000014,0px_0.71px_0.71px_-0.67px_#00000014] hover:bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 group ${!tab.active ? "opacity-50" : ""}`}
+                    className={`h-11 px-[157px] py-[13.8px] bg-orbai-templateframerwebsitewild-sand rounded-[10px] overflow-hidden shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] hover:bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 group ${!tab.active ? "opacity-50" : ""}`}
                     onClick={() => setActiveProject(index)}
                   >
                     <span className="[font-family:'Inter',Helvetica] font-medium text-wwwsightfulcomblack text-[11.4px] tracking-[0] leading-[14.4px] whitespace-nowrap">

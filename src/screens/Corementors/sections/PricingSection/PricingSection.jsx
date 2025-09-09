@@ -167,17 +167,20 @@ export const PricingSection = () => {
                   {/* Content filler to equalize */}
                   <div className="flex flex-col flex-grow">
                     <Button
-                      variant={plan.buttonVariant}
-                      className={`w-full h-auto mb-6 rounded-[10px] ${
+                      className={`w-full h-auto inline-flex items-center justify-center pt-[11px] pb-3 px-6 rounded-[10px] overflow-hidden mb-6 shadow-[0px_30px_30px_-3.5px_#00000026,0px_13.65px_13.65px_-2.92px_#00000042,0px_6.87px_6.87px_-2.33px_#0000004c,0px_3.62px_3.62px_-1.75px_#00000054,0px_1.81px_1.81px_-1.17px_#00000057,0px_0.71px_0.71px_-0.58px_#00000059,0px_10px_18px_-3.75px_#3d3d3d40,0px_2.29px_4.12px_-2.5px_#3d3d3da3] transition-colors ${
                         plan.popular
-                          ? "bg-black text-white"
-                          : "bg-orbai-templateframerwebsitewild-sand text-black border"
+                          ? "bg-wwwsightfulcomblack hover:bg-wwwsightfulcomblack/90"
+                          : "bg-orbai-templateframerwebsitewild-sand hover:bg-orbai-templateframerwebsitewild-sand/90 border border-neutral-100"
                       }`}
                       asChild
                     >
-                      <a href="/signup" className="flex items-center justify-center gap-2 pt-[11px] pb-3 px-6">
-                        <span className="font-medium text-sm">Get Started</span>
-                        <ArrowRightIcon className="w-5 h-5" />
+                      <a href="/signup" className="flex items-center justify-center gap-2 w-full">
+                        <span className={`[font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] ${
+                          plan.popular ? "text-wwwsightfulcomwhite" : "text-wwwsightfulcomblack"
+                        }`}>Get Started</span>
+                        <ArrowRightIcon className={`w-5 h-5 ${
+                          plan.popular ? "text-wwwsightfulcomwhite" : "text-wwwsightfulcomblack"
+                        }`} />
                       </a>
                     </Button>
 

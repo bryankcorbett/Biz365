@@ -196,7 +196,7 @@ export const ServicesSection = () => {
         {/* Header Section (as-is) */}
         <header className="flex flex-col min-w-0 max-w-[700px] items-center justify-center gap-[15px] w-full translate-y-[-1rem] animate-fade-in opacity-0">
           <Badge
-            variant="outline"
+            variant="premium"
             className="inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-orbai-templateframerwebsitewild-sand rounded-[60px] shadow-[inset_0px_3px_1px_#ffffff,0px_30px_30px_-3.25px_#0000000d,0px_13.65px_13.65px_-2.71px_#00000014,0px_6.87px_6.87px_-2.17px_#00000017,0px_3.62px_3.62px_-1.62px_#00000017,0px_1.81px_1.81px_-1.08px_#00000017,0px_0.71px_0.71px_-0.54px_#0000001a] border-neutral-100"
           >
             <div className="flex flex-col w-4 h-5 items-start">
