@@ -20,7 +20,7 @@ const LoginPulseButton = ({
 }) => {
   return (
     <>
-      <style jsx>{`
+      <style>{`
         .login-pulse-btn {
           background-color: white;
           color: black;

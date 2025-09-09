@@ -75,7 +75,10 @@ export const AuthProvider = ({ children }) => {
         console.error('Auth check failed:', error);
         
         // Handle different error types
-        if (error.message && error.message.includes('401')) {
+        if (error.message && error.message.includes('Failed to fetch')) {
+          // Network error → show "Auth API unavailable" banner
+          dispatch({ type: 'SET_API_UNAVAILABLE' });
+        } else if (error.message && error.message.includes('401')) {
           // 401 → show /login (do not auto-loop)
           dispatch({ type: 'SET_LOADING', payload: false });
         } else if (error.message && (error.message.includes('404') || error.message.includes('500'))) {
