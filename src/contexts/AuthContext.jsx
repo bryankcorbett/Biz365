@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import { ROUTES } from '../constants';
-import authService from '../services/authService';
-import healthService from '../services/healthService';
 
 // Auth state types
 const initialState = {
@@ -78,7 +76,7 @@ export const AuthProvider = ({ children }) => {
           dispatch({ type: 'SET_LOADING', payload: false });
         }
       } catch (error) {
-        console.error('Auth check failed:', error);
+        console.warn('Auth check completed with local storage only:', error);
         dispatch({ type: 'SET_LOADING', payload: false });
       }
     };
