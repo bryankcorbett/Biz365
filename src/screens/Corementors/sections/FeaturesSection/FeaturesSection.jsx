@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
-import ScrollAnimatedFeatures from "../../../../components/ScrollAnimatedFeatures";
+import HorizontalScrollFeatures from "../../../../components/HorizontalScrollFeatures";
 
 /* -------------------- In-view hook -------------------- */
 const useInView = (options) => {
@@ -230,15 +230,55 @@ export const FeaturesSection = () => {
         </header>
 
         {/* Alternating Cards (auto) */}
-        <ScrollAnimatedFeatures className="flex flex-col gap-10 mb-[46px]">
+        <HorizontalScrollFeatures className="mb-[46px]">
           {featuresData.map((feature, idx) => {
-            const imageLeft = idx % 2 === 0; // first card left
-            const origin = imageLeft ? (idx % 4 === 0 ? "tl" : "bl") : (idx % 4 === 1 ? "tr" : "br");
+            const imageLeft = idx % 2 === 0;
             return (
-              <FeatureCard key={feature.id} feature={feature} imageLeft={imageLeft} />
+              <Card key={feature.id} className="w-full h-full bg-white rounded-[24px] overflow-hidden shadow-[0_24px_48px_-20px_rgba(0,0,0,0.18)] border-0">
+                <CardContent className="p-6 md:p-10 h-full flex flex-col justify-center">
+                  <div className={`grid items-center gap-8 md:gap-10 md:grid-cols-2 h-full ${imageLeft ? "md:[&>.media]:order-2" : ""}`}>
+                    {/* TEXT */}
+                    <div className="min-w-0 flex flex-col gap-6">
+                      <h3 className="text-[22px] md:text-[26px] leading-tight tracking-[-0.02em] text-gray-900 font-semibold">
+                        {feature.title}
+                      </h3>
+                      <div className="text-[15.5px] md:text-[16.5px] leading-7 text-gray-700 text-left space-y-3">
+                        {feature.description.split("\n").map((line, i) => (
+                          <div key={`${feature.id}-${i}`} className="animate-fade-in" style={{ animationDelay: `${i * 200}ms` }}>
+                            {line}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* IMAGE */}
+                    <div className="media justify-self-center content-center">
+                      <div className="group w-full md:w-[420px] lg:w-[460px] shrink-0">
+                        <div
+                          className="rounded-[22px] p-[2px]"
+                          style={{ background: "linear-gradient(135deg, rgba(0,0,0,0.15), rgba(255,255,255,0.25))" }}
+                        >
+                          <div className="rounded-[20px] overflow-hidden bg-white shadow-[0_22px_40px_-18px_rgba(0,0,0,0.28)]">
+                            <div className="w-full aspect-[16/9]">
+                              <img
+                                src={feature.graphicSrc}
+                                alt="feature visual"
+                                className="w-full h-full object-cover select-none filter grayscale group-hover:grayscale-0 transition duration-500 ease-in-out group-hover:scale-[1.02]"
+                                draggable={false}
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
-        </ScrollAnimatedFeatures>
+        </HorizontalScrollFeatures>
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-4 justify-center">
