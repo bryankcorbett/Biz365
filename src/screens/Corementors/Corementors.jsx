@@ -6,7 +6,7 @@ import { ComparisonSection } from "./sections/ComparisonSection/ComparisonSectio
 import { DesktopViewSection } from "./sections/DesktopViewSection/DesktopViewSection";
 import { FeaturesSection } from "./sections/FeaturesSection/FeaturesSection";
 import { FounderNoteSection } from "./sections/FounderNoteSection/FounderNoteSection";
-import { HeroSection } from "./sections/HeroSection/HeroSection";
+import HeroSection from "./sections/HeroSection/HeroSection";
 import { MainContentSection } from "./sections/MainContentSection/MainContentSection";
 import { PricingSection } from "./sections/PricingSection/PricingSection";
 import { ProcessSection } from "./sections/ProcessSection/ProcessSection";
