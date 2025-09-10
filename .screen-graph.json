@@ -99,15 +99,15 @@
       }
     },
     {
-      "id": "src/screens/Corementors/sections/PricingSection/PricingSection.jsx:178:22-to-src/pages/Signup.jsx",
+      "id": "src/screens/Corementors/sections/PricingSection/PricingSection.jsx:177:22-to-src/pages/Signup.jsx",
       "source": "src/screens/Corementors/Corementors.jsx",
       "target": "src/pages/Signup.jsx",
       "data": {
         "viaRoute": "/signup",
         "trigger": {
-          "element": "<a href=\"/signup\" className=\"flex items-center justify-center gap-2 pt-[11px] pb-3 px-6\">\n                        <span className=\"font-medium text-sm\">Get Started</span>\n                        <ArrowRightIcon className=\"w-5 h-5\" />\n                      </a>",
-          "line": 178,
-          "endLine": 181,
+          "element": "<a href=\"/signup\" className=\"flex items-center justify-center gap-2 w-full\">\n                        <span className={`[font-family:'Inter',Helvetica] font-medium text-sm tracking-[0] leading-[22.4px] ${\n                          plan.popular ? \"text-wwwsightfulcomwhite\" : \"text-wwwsightfulcomblack\"\n                        }`}>Get Started</span>\n                        <ArrowRightIcon className={`w-5 h-5 ${\n                          plan.popular ? \"text-wwwsightfulcomwhite\" : \"text-wwwsightfulcomblack\"\n                        }`} />\n                      </a>",
+          "line": 177,
+          "endLine": 184,
           "column": 22,
           "endColumn": 26,
           "sourceFile": "src/screens/Corementors/sections/PricingSection/PricingSection.jsx"
@@ -131,15 +131,15 @@
       }
     },
     {
-      "id": "src/pages/Login.jsx:106:8-to-src/components/ProtectedRoute.jsx",
+      "id": "src/pages/Login.jsx:82:8-to-src/components/ProtectedRoute.jsx",
       "source": "src/pages/Login.jsx",
       "target": "src/components/ProtectedRoute.jsx",
       "data": {
         "viaRoute": "/dashboard",
         "trigger": {
           "element": "navigate('/dashboard', { replace: true })",
-          "line": 106,
-          "endLine": 106,
+          "line": 82,
+          "endLine": 82,
           "column": 8,
           "endColumn": 49,
           "sourceFile": "src/pages/Login.jsx"
