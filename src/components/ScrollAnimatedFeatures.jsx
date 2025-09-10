@@ -142,7 +142,7 @@ const ScrollAnimatedFeatures = ({ children, className = '' }) => {
         return child;
       })}
       
-      <style jsx>{`
+      <style>{`
         .scroll-animated-features {
           perspective: 1000px;
         }
