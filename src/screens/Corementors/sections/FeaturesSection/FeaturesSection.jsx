@@ -3,6 +3,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
+import ScrollAnimatedFeatures from "../../../../components/ScrollAnimatedFeatures";
 
 /* -------------------- In-view hook -------------------- */
 const useInView = (options) => {
@@ -229,17 +230,15 @@ export const FeaturesSection = () => {
         </header>
 
         {/* Alternating Cards (auto) */}
-        <div className="flex flex-col gap-10 mb-[46px]">
+        <ScrollAnimatedFeatures className="flex flex-col gap-10 mb-[46px]">
           {featuresData.map((feature, idx) => {
             const imageLeft = idx % 2 === 0; // first card left
             const origin = imageLeft ? (idx % 4 === 0 ? "tl" : "bl") : (idx % 4 === 1 ? "tr" : "br");
             return (
-              <RevealOnScroll origin={origin} key={feature.id}>
-                <FeatureCard feature={feature} imageLeft={imageLeft} />
-              </RevealOnScroll>
+              <FeatureCard key={feature.id} feature={feature} imageLeft={imageLeft} />
             );
           })}
-        </div>
+        </ScrollAnimatedFeatures>
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-4 justify-center">
