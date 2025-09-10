@@ -240,10 +240,10 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative bg-black">
+    <div className="h-screen w-screen overflow-hidden relative bg-white">
       {/* Dynamic Orb Background - Full Screen */}
       <OrbBackground 
-        hue={280}
+        hue={0}
         hoverIntensity={0.6}
         rotateOnHover={true}
         forceHoverState={false}
@@ -272,7 +272,7 @@ const Login = () => {
                   : '-translate-y-4 opacity-0 scale-95'
               }`}>
                 <img 
-                  src="https://ik.imagekit.io/corementorid/white_full_glow_biz365.png?updatedAt=1757074799715" 
+                  src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
                   alt="Biz365 Logo"
                   className="h-12 w-auto"
                 />
@@ -284,10 +284,10 @@ const Login = () => {
                   ? 'translate-y-0 opacity-100' 
                   : '-translate-y-4 opacity-0'
               }`}>
-                <h1 className="text-2xl font-bold text-white mb-1">
+                <h1 className="text-2xl font-bold text-black mb-1">
                   Welcome Back
                 </h1>
-                <p className="text-white/80 text-sm">
+                <p className="text-black/70 text-sm">
                   Sign in to continue
                 </p>
               </div>
@@ -302,7 +302,7 @@ const Login = () => {
                 <button 
                   onClick={handleGoogleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg border border-white/30"
+                  className="w-12 h-12 bg-black/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/20 hover:scale-110 transition-all duration-300 shadow-lg border border-black/20"
                 >
                   {isGoogleLoading ? (
                     <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
@@ -325,7 +325,7 @@ const Login = () => {
                 <button 
                   onClick={handleAppleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="w-12 h-12 bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black hover:scale-110 transition-all duration-300 shadow-lg border border-white/20"
+                  className="w-12 h-12 bg-black/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black hover:scale-110 transition-all duration-300 shadow-lg border border-black/30"
                 >
                   {isAppleLoading ? (
                     <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -348,10 +348,10 @@ const Login = () => {
               }`}>
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                    <div className="w-full h-px bg-gradient-to-r from-transparent via-black/30 to-transparent"></div>
                   </div>
                   <div className="relative flex justify-center">
-                    <span className="bg-transparent px-3 text-xs uppercase tracking-wider text-white/70 font-medium">
+                    <span className="bg-transparent px-3 text-xs uppercase tracking-wider text-black/60 font-medium">
                       or
                     </span>
                   </div>
@@ -361,14 +361,14 @@ const Login = () => {
               {/* Form Container - Center Circle */}
               <form onSubmit={handleSubmit} className="absolute inset-0 flex flex-col items-center justify-center">
                 
-                {/* Email Field - Left Arc */}
-                <div className={`absolute top-1/2 left-16 transform -translate-y-8 w-48 transition-all duration-700 ease-out ${
+                {/* Email Field - Upper Center */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-12 w-64 transition-all duration-700 ease-out ${
                   showElements.emailInput 
                     ? 'translate-x-0 opacity-100' 
                     : '-translate-x-4 opacity-0'
                 }`}>
                   <div className="space-y-1">
-                    <label className="text-white/90 text-xs font-medium flex items-center gap-1">
+                    <label className="text-black/80 text-xs font-medium flex items-center gap-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -378,26 +378,26 @@ const Login = () => {
                     <input
                       type="email"
                       name="email"
-                      className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg focus:outline-none focus:border-white/60 focus:ring-2 focus:ring-white/20 transition-all duration-300 text-white placeholder-white/60 text-sm hover:bg-white/30"
+                      className="w-full px-3 py-2 bg-black/10 backdrop-blur-sm border border-black/20 rounded-lg focus:outline-none focus:border-black/40 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/50 text-sm hover:bg-black/15"
                       placeholder="your@email.com"
                       value={formData.email}
                       onChange={handleInputChange}
                       disabled={isLoading}
                     />
                     {errors.email && (
-                      <p className="text-red-300 text-xs">{errors.email}</p>
+                      <p className="text-red-600 text-xs">{errors.email}</p>
                     )}
                   </div>
                 </div>
 
-                {/* Password Field - Right Arc */}
-                <div className={`absolute top-1/2 right-16 transform -translate-y-8 w-48 transition-all duration-700 ease-out ${
+                {/* Password Field - Lower Center */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-2 w-64 transition-all duration-700 ease-out ${
                   showElements.passwordInput 
                     ? 'translate-x-0 opacity-100' 
                     : 'translate-x-4 opacity-0'
                 }`}>
                   <div className="space-y-1">
-                    <label className="text-white/90 text-xs font-medium flex items-center gap-1">
+                    <label className="text-black/80 text-xs font-medium flex items-center gap-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -408,7 +408,7 @@ const Login = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
-                        className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg focus:outline-none focus:border-white/60 focus:ring-2 focus:ring-white/20 transition-all duration-300 text-white placeholder-white/60 pr-8 text-sm hover:bg-white/30"
+                        className="w-full px-3 py-2 bg-black/10 backdrop-blur-sm border border-black/20 rounded-lg focus:outline-none focus:border-black/40 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/50 pr-8 text-sm hover:bg-black/15"
                         placeholder="••••••••"
                         value={formData.password}
                         onChange={handleInputChange}
@@ -417,7 +417,7 @@ const Login = () => {
                       <button 
                         type="button" 
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-200 p-1"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-black/60 hover:text-black transition-colors duration-200 p-1"
                       >
                         {showPassword ? (
                           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -435,27 +435,27 @@ const Login = () => {
                       </button>
                     </div>
                     {errors.password && (
-                      <p className="text-red-300 text-xs">{errors.password}</p>
+                      <p className="text-red-600 text-xs">{errors.password}</p>
                     )}
                   </div>
                 </div>
 
                 {/* Remember Me & Forgot Password - Lower Left & Right */}
-                <div className={`absolute bottom-32 left-1/2 transform -translate-x-1/2 flex items-center justify-between w-80 text-xs transition-all duration-700 ease-out ${
+                <div className={`absolute bottom-28 left-1/2 transform -translate-x-1/2 flex items-center justify-between w-72 text-xs transition-all duration-700 ease-out ${
                   showElements.rememberForgot 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-4 opacity-0'
                 }`}>
-                  <label className="flex items-center gap-2 text-white/80">
+                  <label className="flex items-center gap-2 text-black/70">
                     <input 
                       type="checkbox" 
-                      className="rounded border-white/30 bg-white/20 text-purple-400 focus:ring-purple-400/50 w-3 h-3" 
+                      className="rounded border-black/30 bg-black/10 text-purple-600 focus:ring-purple-400/50 w-3 h-3" 
                     />
                     <span className="text-xs">Remember</span>
                   </label>
                   <Link
                     to={ROUTES.FORGOT_PASSWORD}
-                    className="text-white/80 hover:text-white hover:underline transition-colors duration-200 text-xs"
+                    className="text-black/70 hover:text-black hover:underline transition-colors duration-200 text-xs"
                   >
                     Forgot password?
                   </Link>
@@ -468,19 +468,19 @@ const Login = () => {
                     : 'translate-y-4 opacity-0 scale-95'
                 }`}>
                   <button
-                    className="w-32 h-10 bg-white/90 backdrop-blur-sm rounded-full text-black font-semibold text-sm hover:bg-white hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg border border-white/30 relative overflow-hidden group"
+                    className="w-32 h-10 bg-black/80 backdrop-blur-sm rounded-full text-white font-semibold text-sm hover:bg-black hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg border border-black/30 relative overflow-hidden group"
                     type="submit"
                     disabled={isLoading}
                   >
                     {isLoading && (
-                      <div className="absolute inset-0 bg-white/80 rounded-full">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/10 to-transparent animate-shimmer rounded-full" />
+                      <div className="absolute inset-0 bg-black/90 rounded-full">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-full" />
                       </div>
                     )}
                     <div className="relative flex items-center justify-center gap-1">
                       {isLoading ? (
                         <>
-                          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                          <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
@@ -504,11 +504,11 @@ const Login = () => {
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-4 opacity-0'
                 }`}>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-black/60 text-xs">
                     New to Biz365?{' '}
                     <Link 
                       to={ROUTES.SIGNUP}
-                      className="text-white hover:text-white/80 hover:underline transition-colors duration-200 font-medium"
+                      className="text-black hover:text-black/80 hover:underline transition-colors duration-200 font-medium"
                     >
                       Create Account
                     </Link>
@@ -520,24 +520,24 @@ const Login = () => {
               {/* Circular Grid Lines for Visual Structure */}
               <div className="absolute inset-0 pointer-events-none">
                 {/* Concentric circles for visual guidance */}
-                <div className="absolute inset-8 rounded-full border border-white/10"></div>
-                <div className="absolute inset-16 rounded-full border border-white/5"></div>
-                <div className="absolute inset-24 rounded-full border border-white/5"></div>
+                <div className="absolute inset-8 rounded-full border border-black/10"></div>
+                <div className="absolute inset-16 rounded-full border border-black/5"></div>
+                <div className="absolute inset-24 rounded-full border border-black/5"></div>
                 
                 {/* Radial lines for sectioning */}
-                <div className="absolute top-1/2 left-1/2 w-px h-32 bg-gradient-to-b from-white/10 to-transparent transform -translate-x-1/2 -translate-y-16"></div>
-                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-r from-white/10 to-transparent transform -translate-y-1/2 -translate-x-16"></div>
-                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-l from-white/10 to-transparent transform -translate-y-1/2 translate-x-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-px h-32 bg-gradient-to-b from-black/10 to-transparent transform -translate-x-1/2 -translate-y-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-r from-black/10 to-transparent transform -translate-y-1/2 -translate-x-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-l from-black/10 to-transparent transform -translate-y-1/2 translate-x-16"></div>
               </div>
 
             </div>
           </div>
 
           {/* Outer Glow Ring */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-xl animate-pulse-slow"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/30 via-blue-500/30 to-pink-500/30 blur-xl animate-pulse-slow"></div>
           
           {/* Perfect Circle Border */}
-          <div className="absolute inset-0 rounded-full border-2 border-white/30 shadow-2xl"></div>
+          <div className="absolute inset-0 rounded-full border-2 border-black/20 shadow-2xl"></div>
         </div>
       </div>
 
@@ -546,7 +546,7 @@ const Login = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-white/60 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-black/40 rounded-full animate-float"
             style={{
               left: `${30 + (i * 5)}%`,
               top: `${20 + (i * 6)}%`,
