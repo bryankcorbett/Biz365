@@ -15,7 +15,7 @@ const Login = () => {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isAppleLoading, setIsAppleLoading] = useState(false);
   
-  // Animation states
+  // Animation states for circular elements
   const [showElements, setShowElements] = useState({
     logo: false,
     title: false,
@@ -46,9 +46,10 @@ const Login = () => {
     }
   }, []);
 
-  // Start entrance animations
+  // Start circular entrance animations
   useEffect(() => {
     const timers = [];
+    // Animate from center outward in a circular pattern
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, logo: true })), 100));
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, title: true })), 200));
     timers.push(setTimeout(() => setShowElements(prev => ({ ...prev, socialButtons: true })), 300));
@@ -239,265 +240,256 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative">
-      {/* Dynamic Orb Background */}
+    <div className="h-screen w-screen overflow-hidden relative bg-black">
+      {/* Dynamic Orb Background - Full Screen */}
       <OrbBackground 
         hue={280}
-        hoverIntensity={0.4}
+        hoverIntensity={0.6}
         rotateOnHover={true}
         forceHoverState={false}
+        className="fixed inset-0 w-full h-full"
       />
 
-      {/* Main Content - Centered */}
-      <div className="relative z-10 h-full flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
-          {/* Login Card */}
-          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-8 relative overflow-hidden max-w-md w-full">
-            {/* Card Glow Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-transparent to-pink-50/30 rounded-3xl"></div>
-            
-            <div className="relative z-10">
-              {/* Logo */}
-              <div className={`text-center mb-6 transition-all duration-700 ease-out ${
+      {/* Circular Login Container */}
+      <div className="relative z-10 h-full flex items-center justify-center p-4">
+        {/* Circular Boundary Container */}
+        <div className="relative w-[500px] h-[500px] max-w-[90vmin] max-h-[90vmin]">
+          {/* Perfect Circle Mask */}
+          <div 
+            className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
+            style={{
+              clipPath: 'circle(50% at 50% 50%)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+            }}
+          >
+            {/* Inner Circle Content */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+              
+              {/* Logo - Top Center */}
+              <div className={`absolute top-12 left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${
                 showElements.logo 
                   ? 'translate-y-0 opacity-100 scale-100' 
-                  : 'translate-y-8 opacity-0 scale-95'
+                  : '-translate-y-4 opacity-0 scale-95'
               }`}>
                 <img 
-                  src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
+                  src="https://ik.imagekit.io/corementorid/white_full_glow_biz365.png?updatedAt=1757074799715" 
                   alt="Biz365 Logo"
-                  className="h-12 w-auto mx-auto mb-3"
+                  className="h-12 w-auto"
                 />
               </div>
 
-              {/* Title */}
-              <div className={`text-center mb-6 transition-all duration-700 ease-out ${
+              {/* Welcome Text - Upper Center */}
+              <div className={`absolute top-28 left-1/2 transform -translate-x-1/2 text-center transition-all duration-700 ease-out ${
                 showElements.title 
                   ? 'translate-y-0 opacity-100' 
-                  : 'translate-y-8 opacity-0'
+                  : '-translate-y-4 opacity-0'
               }`}>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-2xl font-bold text-white mb-1">
                   Welcome Back
                 </h1>
-                <p className="text-gray-600">
-                  Sign in to your dashboard
+                <p className="text-white/80 text-sm">
+                  Sign in to continue
                 </p>
               </div>
 
-              {/* Social Login Buttons */}
-              <div className={`flex gap-3 mb-6 transition-all duration-700 ease-out ${
+              {/* Social Buttons - Upper Arc */}
+              <div className={`absolute top-44 left-1/2 transform -translate-x-1/2 flex gap-3 transition-all duration-700 ease-out ${
                 showElements.socialButtons 
-                  ? 'translate-y-0 opacity-100' 
-                  : 'translate-y-8 opacity-0'
+                  ? 'translate-y-0 opacity-100 scale-100' 
+                  : '-translate-y-4 opacity-0 scale-95'
               }`}>
                 {/* Google Button */}
                 <button 
                   onClick={handleGoogleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-white rounded-xl border-2 border-gray-200 hover:bg-gray-50 hover:shadow-lg hover:scale-105 hover:border-gray-300 transition-all duration-300 shadow-sm"
+                  className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg border border-white/30"
                 >
-                  <div className="mr-2" aria-hidden="true">
-                    {isGoogleLoading ? (
-                      <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                    ) : (
-                      <svg width="16" height="16" viewBox="0 0 18 18">
-                        <g fill="none" fillRule="evenodd">
-                          <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path>
-                          <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path>
-                          <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path>
-                          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"></path>
-                        </g>
-                      </svg>
-                    )}
-                  </div>
-                  <span className="font-medium text-gray-800 text-sm">
-                    {isGoogleLoading ? 'Signing in...' : 'Google'}
-                  </span>
+                  {isGoogleLoading ? (
+                    <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 18 18">
+                      <g fill="none" fillRule="evenodd">
+                        <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path>
+                        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path>
+                        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"></path>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"></path>
+                      </g>
+                    </svg>
+                  )}
                 </button>
 
                 {/* Apple Button */}
                 <button 
                   onClick={handleAppleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="flex-1 inline-flex items-center justify-center gap-2 pt-3 pb-3 px-4 h-auto bg-black rounded-xl hover:bg-gray-800 hover:scale-105 transition-all duration-300 shadow-lg"
+                  className="w-12 h-12 bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black hover:scale-110 transition-all duration-300 shadow-lg border border-white/20"
                 >
-                  <div className="mr-2" aria-hidden="true">
-                    {isAppleLoading ? (
-                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                      </svg>
-                    ) : (
-                      <svg width="14" height="17" viewBox="0 0 384 512" fill="white">
-                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
-                      </svg>
-                    )}
-                  </div>
-                  <span className="font-medium text-white text-sm">
-                    {isAppleLoading ? 'Signing in...' : 'Apple'}
-                  </span>
+                  {isAppleLoading ? (
+                    <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="19" viewBox="0 0 384 512" fill="white">
+                      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+                    </svg>
+                  )}
                 </button>
               </div>
 
-              {/* Separator */}
-              <div className={`relative mb-6 transition-all duration-700 ease-out ${
+              {/* Separator - Center */}
+              <div className={`absolute top-60 left-1/2 transform -translate-x-1/2 w-32 transition-all duration-700 ease-out ${
                 showElements.separator 
                   ? 'translate-y-0 opacity-100' 
-                  : 'translate-y-8 opacity-0'
+                  : 'translate-y-4 opacity-0'
               }`}>
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="bg-white px-4 text-xs uppercase tracking-wider text-gray-500 font-medium">
-                    or use email
-                  </span>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                  </div>
+                  <div className="relative flex justify-center">
+                    <span className="bg-transparent px-3 text-xs uppercase tracking-wider text-white/70 font-medium">
+                      or
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Email Field */}
-                <div className={`space-y-2 transition-all duration-700 ease-out ${
+              {/* Form Container - Center Circle */}
+              <form onSubmit={handleSubmit} className="absolute inset-0 flex flex-col items-center justify-center">
+                
+                {/* Email Field - Left Arc */}
+                <div className={`absolute top-1/2 left-16 transform -translate-y-8 w-48 transition-all duration-700 ease-out ${
                   showElements.emailInput 
-                    ? 'translate-y-0 opacity-100' 
-                    : 'translate-y-8 opacity-0'
+                    ? 'translate-x-0 opacity-100' 
+                    : '-translate-x-4 opacity-0'
                 }`}>
-                  <label className="font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
-                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                    </svg>
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="w-full px-4 py-3 bg-white/80 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md text-sm backdrop-blur-sm"
-                    placeholder="you@business.com"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    disabled={isLoading}
-                  />
-                  {errors.email && (
-                    <p className="text-red-600 text-sm flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <div className="space-y-1">
+                    <label className="text-white/90 text-xs font-medium flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                       </svg>
-                      {errors.email}
-                    </p>
-                  )}
-                </div>
-
-                {/* Password Field */}
-                <div className={`space-y-2 transition-all duration-700 ease-out ${
-                  showElements.passwordInput 
-                    ? 'translate-y-0 opacity-100' 
-                    : 'translate-y-8 opacity-0'
-                }`}>
-                  <label className="font-medium text-gray-700 text-sm leading-none flex items-center gap-2">
-                    <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    Password
-                  </label>
-                  <div className="relative">
+                      Email
+                    </label>
                     <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      className="w-full px-4 py-3 bg-white/80 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md pr-12 text-sm backdrop-blur-sm"
-                      placeholder="••••••••"
-                      value={formData.password}
+                      type="email"
+                      name="email"
+                      className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg focus:outline-none focus:border-white/60 focus:ring-2 focus:ring-white/20 transition-all duration-300 text-white placeholder-white/60 text-sm hover:bg-white/30"
+                      placeholder="your@email.com"
+                      value={formData.email}
                       onChange={handleInputChange}
                       disabled={isLoading}
                     />
-                    <button 
-                      type="button" 
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1"
-                      aria-label={showPassword ? "Hide password" : "Show password"}
-                    >
-                      {showPassword ? (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                          <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                          <line x1="2" x2="22" y1="2" y2="22"></line>
-                        </svg>
-                      ) : (
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
-                          <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                      )}
-                    </button>
+                    {errors.email && (
+                      <p className="text-red-300 text-xs">{errors.email}</p>
+                    )}
                   </div>
-                  {errors.password && (
-                    <p className="text-red-600 text-sm flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
-                      {errors.password}
-                    </p>
-                  )}
                 </div>
 
-                {/* Remember me and Forgot password */}
-                <div className={`flex items-center justify-between text-sm transition-all duration-700 ease-out ${
+                {/* Password Field - Right Arc */}
+                <div className={`absolute top-1/2 right-16 transform -translate-y-8 w-48 transition-all duration-700 ease-out ${
+                  showElements.passwordInput 
+                    ? 'translate-x-0 opacity-100' 
+                    : 'translate-x-4 opacity-0'
+                }`}>
+                  <div className="space-y-1">
+                    <label className="text-white/90 text-xs font-medium flex items-center gap-1">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                      </svg>
+                      Password
+                    </label>
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        className="w-full px-3 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg focus:outline-none focus:border-white/60 focus:ring-2 focus:ring-white/20 transition-all duration-300 text-white placeholder-white/60 pr-8 text-sm hover:bg-white/30"
+                        placeholder="••••••••"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        disabled={isLoading}
+                      />
+                      <button 
+                        type="button" 
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-200 p-1"
+                      >
+                        {showPassword ? (
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                            <line x1="2" x2="22" y1="2" y2="22"></line>
+                          </svg>
+                        ) : (
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                    {errors.password && (
+                      <p className="text-red-300 text-xs">{errors.password}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Remember Me & Forgot Password - Lower Left & Right */}
+                <div className={`absolute bottom-32 left-1/2 transform -translate-x-1/2 flex items-center justify-between w-80 text-xs transition-all duration-700 ease-out ${
                   showElements.rememberForgot 
                     ? 'translate-y-0 opacity-100' 
-                    : 'translate-y-8 opacity-0'
+                    : 'translate-y-4 opacity-0'
                 }`}>
-                  <label className="flex items-center gap-2">
+                  <label className="flex items-center gap-2 text-white/80">
                     <input 
                       type="checkbox" 
-                      className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 hover:border-gray-400 transition-all duration-200 w-4 h-4" 
+                      className="rounded border-white/30 bg-white/20 text-purple-400 focus:ring-purple-400/50 w-3 h-3" 
                     />
-                    <span className="text-gray-600 font-normal">Remember me</span>
+                    <span className="text-xs">Remember</span>
                   </label>
                   <Link
                     to={ROUTES.FORGOT_PASSWORD}
-                    className="font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
+                    className="text-white/80 hover:text-white hover:underline transition-colors duration-200 text-xs"
                   >
                     Forgot password?
                   </Link>
                 </div>
 
-                {/* Sign In Button */}
-                <div className={`transition-all duration-700 ease-out ${
+                {/* Sign In Button - Bottom Center */}
+                <div className={`absolute bottom-20 left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${
                   showElements.signInButton 
-                    ? 'translate-y-0 opacity-100' 
-                    : 'translate-y-8 opacity-0'
+                    ? 'translate-y-0 opacity-100 scale-100' 
+                    : 'translate-y-4 opacity-0 scale-95'
                 }`}>
                   <button
-                    className="w-full inline-flex items-center justify-center gap-2 pt-3 pb-3 px-6 h-auto bg-black rounded-xl hover:bg-gray-800 hover:scale-105 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden group shadow-lg"
+                    className="w-32 h-10 bg-white/90 backdrop-blur-sm rounded-full text-black font-semibold text-sm hover:bg-white hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg border border-white/30 relative overflow-hidden group"
                     type="submit"
                     disabled={isLoading}
                   >
                     {isLoading && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-black">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+                      <div className="absolute inset-0 bg-white/80 rounded-full">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/10 to-transparent animate-shimmer rounded-full" />
                       </div>
                     )}
-                    <div className="relative flex items-center justify-center gap-2">
+                    <div className="relative flex items-center justify-center gap-1">
                       {isLoading ? (
                         <>
-                          <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                          <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                          Signing in...
+                          <span className="text-xs">Signing in...</span>
                         </>
                       ) : (
                         <>
-                          <span className="font-medium text-white text-sm">
-                            Sign in
-                          </span>
-                          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <span>Sign In</span>
+                          <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>
                         </>
@@ -505,28 +497,104 @@ const Login = () => {
                     </div>
                   </button>
                 </div>
+
+                {/* Create Account Link - Bottom */}
+                <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center transition-all duration-700 ease-out ${
+                  showElements.createAccount 
+                    ? 'translate-y-0 opacity-100' 
+                    : 'translate-y-4 opacity-0'
+                }`}>
+                  <p className="text-white/70 text-xs">
+                    New to Biz365?{' '}
+                    <Link 
+                      to={ROUTES.SIGNUP}
+                      className="text-white hover:text-white/80 hover:underline transition-colors duration-200 font-medium"
+                    >
+                      Create Account
+                    </Link>
+                  </p>
+                </div>
+
               </form>
 
-              {/* Create Account Link */}
-              <div className={`mt-6 text-center transition-all duration-700 ease-out ${
-                showElements.createAccount 
-                  ? 'translate-y-0 opacity-100' 
-                  : 'translate-y-8 opacity-0'
-              }`}>
-                <p className="font-normal text-gray-600 text-sm">
-                  Don't have an account?{' '}
-                  <Link 
-                    to={ROUTES.SIGNUP}
-                    className="font-medium text-gray-800 hover:text-purple-600 hover:underline transition-colors duration-200"
-                  >
-                    Create one
-                  </Link>
-                </p>
+              {/* Circular Grid Lines for Visual Structure */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Concentric circles for visual guidance */}
+                <div className="absolute inset-8 rounded-full border border-white/10"></div>
+                <div className="absolute inset-16 rounded-full border border-white/5"></div>
+                <div className="absolute inset-24 rounded-full border border-white/5"></div>
+                
+                {/* Radial lines for sectioning */}
+                <div className="absolute top-1/2 left-1/2 w-px h-32 bg-gradient-to-b from-white/10 to-transparent transform -translate-x-1/2 -translate-y-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-r from-white/10 to-transparent transform -translate-y-1/2 -translate-x-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-l from-white/10 to-transparent transform -translate-y-1/2 translate-x-16"></div>
               </div>
+
             </div>
           </div>
+
+          {/* Outer Glow Ring */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-xl animate-pulse-slow"></div>
+          
+          {/* Perfect Circle Border */}
+          <div className="absolute inset-0 rounded-full border-2 border-white/30 shadow-2xl"></div>
         </div>
       </div>
+
+      {/* Floating Particles Around the Orb */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white/60 rounded-full animate-float"
+            style={{
+              left: `${30 + (i * 5)}%`,
+              top: `${20 + (i * 6)}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${3 + (i * 0.3)}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Custom Styles for Circular Design */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          33% { transform: translateY(-10px) rotate(120deg); }
+          66% { transform: translateY(5px) rotate(240deg); }
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        .animate-float {
+          animation: float 4s ease-in-out infinite;
+        }
+        
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+        
+        .animate-shimmer {
+          animation: shimmer 2s ease-in-out infinite;
+        }
+        
+        /* Ensure perfect circle on all screen sizes */
+        @media (max-width: 640px) {
+          .circular-container {
+            width: 90vmin;
+            height: 90vmin;
+          }
+        }
+      `}</style>
     </div>
   );
 };
