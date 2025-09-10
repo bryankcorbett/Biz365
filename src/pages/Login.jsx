@@ -244,7 +244,7 @@ const Login = () => {
       {/* Dynamic Orb Background - Full Screen */}
       <OrbBackground 
         hue={0}
-        hoverIntensity={0.6}
+        hoverIntensity={0.3}
         rotateOnHover={true}
         forceHoverState={false}
         className="fixed inset-0 w-full h-full"
@@ -253,20 +253,20 @@ const Login = () => {
       {/* Circular Login Container */}
       <div className="relative z-10 h-full flex items-center justify-center p-4">
         {/* Circular Boundary Container */}
-        <div className="relative w-[500px] h-[500px] max-w-[90vmin] max-h-[90vmin]">
+        <div className="relative w-[600px] h-[600px] max-w-[90vmin] max-h-[90vmin]">
           {/* Perfect Circle Mask */}
           <div 
-            className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
+            className="absolute inset-0 rounded-full bg-white/95 backdrop-blur-xl border border-black/10 shadow-2xl"
             style={{
               clipPath: 'circle(50% at 50% 50%)',
-              backdropFilter: 'blur(20px) saturate(180%)',
+              backdropFilter: 'blur(40px) saturate(120%)',
             }}
           >
             {/* Inner Circle Content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-12">
               
               {/* Logo - Top Center */}
-              <div className={`absolute top-12 left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${
+              <div className={`absolute top-16 left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${
                 showElements.logo 
                   ? 'translate-y-0 opacity-100 scale-100' 
                   : '-translate-y-4 opacity-0 scale-95'
@@ -274,26 +274,26 @@ const Login = () => {
                 <img 
                   src="https://ik.imagekit.io/corementorid/black_full_glow_biz365.png?updatedAt=1757074822500" 
                   alt="Biz365 Logo"
-                  className="h-12 w-auto"
+                  className="h-16 w-auto"
                 />
               </div>
 
               {/* Welcome Text - Upper Center */}
-              <div className={`absolute top-28 left-1/2 transform -translate-x-1/2 text-center transition-all duration-700 ease-out ${
+              <div className={`absolute top-36 left-1/2 transform -translate-x-1/2 text-center transition-all duration-700 ease-out ${
                 showElements.title 
                   ? 'translate-y-0 opacity-100' 
                   : '-translate-y-4 opacity-0'
               }`}>
-                <h1 className="text-2xl font-bold text-black mb-1">
+                <h1 className="text-3xl font-bold text-black mb-2">
                   Welcome Back
                 </h1>
-                <p className="text-black/70 text-sm">
+                <p className="text-black/60 text-base">
                   Sign in to continue
                 </p>
               </div>
 
               {/* Social Buttons - Upper Arc */}
-              <div className={`absolute top-44 left-1/2 transform -translate-x-1/2 flex gap-3 transition-all duration-700 ease-out ${
+              <div className={`absolute top-52 left-1/2 transform -translate-x-1/2 flex gap-4 transition-all duration-700 ease-out ${
                 showElements.socialButtons 
                   ? 'translate-y-0 opacity-100 scale-100' 
                   : '-translate-y-4 opacity-0 scale-95'
@@ -302,15 +302,15 @@ const Login = () => {
                 <button 
                   onClick={handleGoogleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="w-12 h-12 bg-black/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black/20 hover:scale-110 transition-all duration-300 shadow-lg border border-black/20"
+                  className="w-14 h-14 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white hover:scale-110 transition-all duration-300 shadow-lg border border-black/20"
                 >
                   {isGoogleLoading ? (
-                    <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
                   ) : (
-                    <svg width="20" height="20" viewBox="0 0 18 18">
+                    <svg width="24" height="24" viewBox="0 0 18 18">
                       <g fill="none" fillRule="evenodd">
                         <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"></path>
                         <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"></path>
@@ -325,15 +325,15 @@ const Login = () => {
                 <button 
                   onClick={handleAppleLogin}
                   disabled={isGoogleLoading || isAppleLoading}
-                  className="w-12 h-12 bg-black/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black hover:scale-110 transition-all duration-300 shadow-lg border border-black/30"
+                  className="w-14 h-14 bg-black/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-black hover:scale-110 transition-all duration-300 shadow-lg border border-black/30"
                 >
                   {isAppleLoading ? (
-                    <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-6 w-6 text-white" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
                   ) : (
-                    <svg width="16" height="19" viewBox="0 0 384 512" fill="white">
+                    <svg width="18" height="22" viewBox="0 0 384 512" fill="white">
                       <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
                     </svg>
                   )}
@@ -341,17 +341,17 @@ const Login = () => {
               </div>
 
               {/* Separator - Center */}
-              <div className={`absolute top-60 left-1/2 transform -translate-x-1/2 w-32 transition-all duration-700 ease-out ${
+              <div className={`absolute top-72 left-1/2 transform -translate-x-1/2 w-40 transition-all duration-700 ease-out ${
                 showElements.separator 
                   ? 'translate-y-0 opacity-100' 
                   : 'translate-y-4 opacity-0'
               }`}>
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-black/30 to-transparent"></div>
+                    <div className="w-full h-px bg-gradient-to-r from-transparent via-black/20 to-transparent"></div>
                   </div>
                   <div className="relative flex justify-center">
-                    <span className="bg-transparent px-3 text-xs uppercase tracking-wider text-black/60 font-medium">
+                    <span className="bg-white/90 px-4 text-xs uppercase tracking-wider text-black/50 font-medium">
                       or
                     </span>
                   </div>
@@ -362,14 +362,14 @@ const Login = () => {
               <form onSubmit={handleSubmit} className="absolute inset-0 flex flex-col items-center justify-center">
                 
                 {/* Email Field - Upper Center */}
-                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-12 w-64 transition-all duration-700 ease-out ${
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-16 w-72 transition-all duration-700 ease-out ${
                   showElements.emailInput 
                     ? 'translate-x-0 opacity-100' 
-                    : '-translate-x-4 opacity-0'
+                    : 'translate-y-4 opacity-0'
                 }`}>
-                  <div className="space-y-1">
-                    <label className="text-black/80 text-xs font-medium flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="space-y-2">
+                    <label className="text-black/70 text-sm font-medium flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                       </svg>
@@ -378,27 +378,27 @@ const Login = () => {
                     <input
                       type="email"
                       name="email"
-                      className="w-full px-3 py-2 bg-black/10 backdrop-blur-sm border border-black/20 rounded-lg focus:outline-none focus:border-black/40 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/50 text-sm hover:bg-black/15"
+                      className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-black/20 rounded-xl focus:outline-none focus:border-black/50 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/40 text-base hover:bg-white/90 shadow-sm"
                       placeholder="your@email.com"
                       value={formData.email}
                       onChange={handleInputChange}
                       disabled={isLoading}
                     />
                     {errors.email && (
-                      <p className="text-red-600 text-xs">{errors.email}</p>
+                      <p className="text-red-600 text-sm">{errors.email}</p>
                     )}
                   </div>
                 </div>
 
-                {/* Password Field - Lower Center */}
-                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-2 w-64 transition-all duration-700 ease-out ${
+                {/* Password Field - Center */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-0 w-72 transition-all duration-700 ease-out ${
                   showElements.passwordInput 
                     ? 'translate-x-0 opacity-100' 
-                    : 'translate-x-4 opacity-0'
+                    : 'translate-y-4 opacity-0'
                 }`}>
-                  <div className="space-y-1">
-                    <label className="text-black/80 text-xs font-medium flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="space-y-2">
+                    <label className="text-black/70 text-sm font-medium flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                       </svg>
@@ -408,7 +408,7 @@ const Login = () => {
                       <input
                         type={showPassword ? "text" : "password"}
                         name="password"
-                        className="w-full px-3 py-2 bg-black/10 backdrop-blur-sm border border-black/20 rounded-lg focus:outline-none focus:border-black/40 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/50 pr-8 text-sm hover:bg-black/15"
+                        className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-black/20 rounded-xl focus:outline-none focus:border-black/50 focus:ring-2 focus:ring-black/10 transition-all duration-300 text-black placeholder-black/40 pr-12 text-base hover:bg-white/90 shadow-sm"
                         placeholder="••••••••"
                         value={formData.password}
                         onChange={handleInputChange}
@@ -417,17 +417,17 @@ const Login = () => {
                       <button 
                         type="button" 
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-black/60 hover:text-black transition-colors duration-200 p-1"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-black/50 hover:text-black transition-colors duration-200 p-1"
                       >
                         {showPassword ? (
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
                             <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
                             <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
                             <line x1="2" x2="22" y1="2" y2="22"></line>
                           </svg>
                         ) : (
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
                             <circle cx="12" cy="12" r="3"></circle>
                           </svg>
@@ -435,61 +435,61 @@ const Login = () => {
                       </button>
                     </div>
                     {errors.password && (
-                      <p className="text-red-600 text-xs">{errors.password}</p>
+                      <p className="text-red-600 text-sm">{errors.password}</p>
                     )}
                   </div>
                 </div>
 
-                {/* Remember Me & Forgot Password - Lower Left & Right */}
-                <div className={`absolute bottom-28 left-1/2 transform -translate-x-1/2 flex items-center justify-between w-72 text-xs transition-all duration-700 ease-out ${
+                {/* Remember Me & Forgot Password - Lower Center */}
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-20 flex items-center justify-between w-72 text-sm transition-all duration-700 ease-out ${
                   showElements.rememberForgot 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-4 opacity-0'
                 }`}>
-                  <label className="flex items-center gap-2 text-black/70">
+                  <label className="flex items-center gap-2 text-black/60">
                     <input 
                       type="checkbox" 
-                      className="rounded border-black/30 bg-black/10 text-purple-600 focus:ring-purple-400/50 w-3 h-3" 
+                      className="rounded border-black/30 bg-white/80 text-purple-600 focus:ring-purple-400/50 w-4 h-4" 
                     />
-                    <span className="text-xs">Remember</span>
+                    <span className="text-sm">Remember</span>
                   </label>
                   <Link
                     to={ROUTES.FORGOT_PASSWORD}
-                    className="text-black/70 hover:text-black hover:underline transition-colors duration-200 text-xs"
+                    className="text-black/60 hover:text-black hover:underline transition-colors duration-200 text-sm"
                   >
                     Forgot password?
                   </Link>
                 </div>
 
                 {/* Sign In Button - Bottom Center */}
-                <div className={`absolute bottom-20 left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-out ${
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-32 transition-all duration-700 ease-out ${
                   showElements.signInButton 
                     ? 'translate-y-0 opacity-100 scale-100' 
                     : 'translate-y-4 opacity-0 scale-95'
                 }`}>
                   <button
-                    className="w-32 h-10 bg-black/80 backdrop-blur-sm rounded-full text-white font-semibold text-sm hover:bg-black hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg border border-black/30 relative overflow-hidden group"
+                    className="w-40 h-12 bg-black/90 backdrop-blur-sm rounded-full text-white font-semibold text-base hover:bg-black hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg border border-black/30 relative overflow-hidden group"
                     type="submit"
                     disabled={isLoading}
                   >
                     {isLoading && (
-                      <div className="absolute inset-0 bg-black/90 rounded-full">
+                      <div className="absolute inset-0 bg-black rounded-full">
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer rounded-full" />
                       </div>
                     )}
-                    <div className="relative flex items-center justify-center gap-1">
+                    <div className="relative flex items-center justify-center gap-2">
                       {isLoading ? (
                         <>
-                          <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                          <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                          <span className="text-xs">Signing in...</span>
+                          <span className="text-sm">Signing in...</span>
                         </>
                       ) : (
                         <>
                           <span>Sign In</span>
-                          <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>
                         </>
@@ -499,16 +499,16 @@ const Login = () => {
                 </div>
 
                 {/* Create Account Link - Bottom */}
-                <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center transition-all duration-700 ease-out ${
+                <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-48 text-center transition-all duration-700 ease-out ${
                   showElements.createAccount 
                     ? 'translate-y-0 opacity-100' 
                     : 'translate-y-4 opacity-0'
                 }`}>
-                  <p className="text-black/60 text-xs">
+                  <p className="text-black/50 text-sm">
                     New to Biz365?{' '}
                     <Link 
                       to={ROUTES.SIGNUP}
-                      className="text-black hover:text-black/80 hover:underline transition-colors duration-200 font-medium"
+                      className="text-black/70 hover:text-black hover:underline transition-colors duration-200 font-medium"
                     >
                       Create Account
                     </Link>
@@ -520,24 +520,24 @@ const Login = () => {
               {/* Circular Grid Lines for Visual Structure */}
               <div className="absolute inset-0 pointer-events-none">
                 {/* Concentric circles for visual guidance */}
-                <div className="absolute inset-8 rounded-full border border-black/10"></div>
-                <div className="absolute inset-16 rounded-full border border-black/5"></div>
-                <div className="absolute inset-24 rounded-full border border-black/5"></div>
+                <div className="absolute inset-12 rounded-full border border-black/5"></div>
+                <div className="absolute inset-20 rounded-full border border-black/3"></div>
+                <div className="absolute inset-28 rounded-full border border-black/3"></div>
                 
                 {/* Radial lines for sectioning */}
-                <div className="absolute top-1/2 left-1/2 w-px h-32 bg-gradient-to-b from-black/10 to-transparent transform -translate-x-1/2 -translate-y-16"></div>
-                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-r from-black/10 to-transparent transform -translate-y-1/2 -translate-x-16"></div>
-                <div className="absolute top-1/2 left-1/2 w-32 h-px bg-gradient-to-l from-black/10 to-transparent transform -translate-y-1/2 translate-x-16"></div>
+                <div className="absolute top-1/2 left-1/2 w-px h-40 bg-gradient-to-b from-black/5 to-transparent transform -translate-x-1/2 -translate-y-20"></div>
+                <div className="absolute top-1/2 left-1/2 w-40 h-px bg-gradient-to-r from-black/5 to-transparent transform -translate-y-1/2 -translate-x-20"></div>
+                <div className="absolute top-1/2 left-1/2 w-40 h-px bg-gradient-to-l from-black/5 to-transparent transform -translate-y-1/2 translate-x-20"></div>
               </div>
 
             </div>
           </div>
 
           {/* Outer Glow Ring */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/30 via-blue-500/30 to-pink-500/30 blur-xl animate-pulse-slow"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-xl animate-pulse-slow"></div>
           
           {/* Perfect Circle Border */}
-          <div className="absolute inset-0 rounded-full border-2 border-black/20 shadow-2xl"></div>
+          <div className="absolute inset-0 rounded-full border-2 border-black/10 shadow-2xl"></div>
         </div>
       </div>
 
@@ -546,7 +546,7 @@ const Login = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-black/40 rounded-full animate-float"
+            className="absolute w-1 h-1 bg-black/20 rounded-full animate-float"
             style={{
               left: `${30 + (i * 5)}%`,
               top: `${20 + (i * 6)}%`,
