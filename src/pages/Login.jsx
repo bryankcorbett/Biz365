@@ -3,6 +3,7 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ToastProvider';
 import { ROUTES, SUCCESS_MESSAGES, OAUTH_CONFIG, API_CONFIG } from '../constants';
+import OrbBackground from '../components/OrbBackground';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -238,133 +239,20 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div className="h-screen w-screen overflow-hidden relative bg-white">
-      {/* Hero Section Orb Background - Same as hero section */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="w-[120vw] h-[120vw] max-w-[1400px] max-h-[1400px] rounded-full"
-            style={{
-              background: `
-                radial-gradient(
-                  circle at center,
-                  transparent 15%,
-                  rgba(156, 39, 176, 0.15) 25%,
-                  rgba(79, 70, 229, 0.2) 35%,
-                  rgba(236, 72, 153, 0.15) 45%,
-                  rgba(156, 39, 176, 0.1) 55%,
-                  transparent 75%
-                )
-              `,
-              filter: 'blur(40px)',
-              animation: 'hero-float 12s ease-in-out infinite, hero-pulse 8s ease-in-out infinite'
-            }}
-          />
-        </div>
-
-        {/* Secondary rotating gradient */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="w-[100vw] h-[100vw] max-w-[1200px] max-h-[1200px] rounded-full"
-            style={{
-              background: `
-                conic-gradient(
-                  from 0deg,
-                  transparent,
-                  rgba(156, 39, 176, 0.2),
-                  rgba(79, 70, 229, 0.25),
-                  rgba(236, 72, 153, 0.2),
-                  transparent
-                )
-              `,
-              filter: 'blur(30px)',
-              animation: 'hero-spin 25s linear infinite'
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Neon Rectangle Border - Matches hero section colors with padding */}
-      <div className="fixed inset-0 pointer-events-none z-40 p-16">
-        {/* Main Neon Rectangle */}
-        <div 
-          className="w-full h-full rounded-3xl relative"
-          style={{
-            background: `
-              linear-gradient(45deg, 
-                rgba(156, 39, 176, 0.8), 
-                rgba(79, 70, 229, 0.8), 
-                rgba(236, 72, 153, 0.8), 
-                rgba(156, 39, 176, 0.8)
-              )
-            `,
-            backgroundSize: '400% 400%',
-            animation: 'hero-gradient-shift 6s ease-in-out infinite',
-            padding: '4px',
-            boxShadow: `
-              0 0 30px rgba(156, 39, 176, 0.6),
-              0 0 60px rgba(79, 70, 229, 0.4),
-              0 0 90px rgba(236, 72, 153, 0.3),
-              inset 0 0 30px rgba(255, 255, 255, 0.1)
-            `
-          }}
-        >
-          {/* Inner transparent area */}
-          <div className="w-full h-full bg-transparent rounded-3xl"></div>
-        </div>
-
-        {/* Secondary Inner Ring */}
-        <div 
-          className="absolute inset-20 rounded-2xl"
-          style={{
-            background: `
-              linear-gradient(225deg, 
-                rgba(79, 70, 229, 0.6), 
-                rgba(236, 72, 153, 0.6), 
-                rgba(156, 39, 176, 0.6)
-              )
-            `,
-            backgroundSize: '300% 300%',
-            animation: 'hero-gradient-shift 8s ease-in-out infinite reverse',
-            padding: '2px',
-            boxShadow: `
-              0 0 20px rgba(79, 70, 229, 0.4),
-              0 0 40px rgba(236, 72, 153, 0.3),
-              0 0 60px rgba(156, 39, 176, 0.2)
-            `
-          }}
-        >
-          <div className="w-full h-full bg-transparent rounded-2xl"></div>
-        </div>
-
-        {/* Corner Accent Glows - Hero section colors */}
-        <div className="absolute top-12 left-12 w-8 h-8 bg-purple-600 rounded-full blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute top-12 right-12 w-8 h-8 bg-indigo-500 rounded-full blur-xl opacity-70 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-12 left-12 w-8 h-8 bg-pink-500 rounded-full blur-xl opacity-70 animate-pulse" style={{ animationDelay: '4s' }}></div>
-        <div className="absolute bottom-12 right-12 w-8 h-8 bg-purple-500 rounded-full blur-xl opacity-70 animate-pulse" style={{ animationDelay: '3s' }}></div>
-
-        {/* Floating Particles - Hero section style */}
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 rounded-full"
-            style={{
-              background: i % 3 === 0 ? 'rgba(156, 39, 176, 0.6)' : i % 3 === 1 ? 'rgba(79, 70, 229, 0.6)' : 'rgba(236, 72, 153, 0.6)',
-              left: `${20 + (i * 7)}%`,
-              top: `${15 + (i * 6)}%`,
-              animation: `hero-float ${4 + (i * 0.3)}s ease-in-out infinite ${i * 0.2}s`,
-              boxShadow: '0 0 10px currentColor'
-            }}
-          />
-        ))}
-      </div>
+    <div className="h-screen w-screen overflow-hidden relative">
+      {/* Dynamic Orb Background */}
+      <OrbBackground 
+        hue={280}
+        hoverIntensity={0.4}
+        rotateOnHover={true}
+        forceHoverState={false}
+      />
 
       {/* Main Content - Centered */}
       <div className="relative z-10 h-full flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           {/* Login Card */}
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 p-8 relative overflow-hidden max-w-md w-full">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-8 relative overflow-hidden max-w-md w-full">
             {/* Card Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-transparent to-pink-50/30 rounded-3xl"></div>
             
@@ -388,10 +276,10 @@ const Login = () => {
                   ? 'translate-y-0 opacity-100' 
                   : 'translate-y-8 opacity-0'
               }`}>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   Welcome Back
                 </h1>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600">
                   Sign in to your dashboard
                 </p>
               </div>
@@ -488,7 +376,7 @@ const Login = () => {
                   <input
                     type="email"
                     name="email"
-                    className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md text-sm"
+                    className="w-full px-4 py-3 bg-white/80 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md text-sm backdrop-blur-sm"
                     placeholder="you@business.com"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -521,7 +409,7 @@ const Login = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md pr-12 text-sm"
+                      className="w-full px-4 py-3 bg-white/80 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-100 transition-all duration-300 text-gray-800 placeholder-gray-500 hover:bg-white hover:border-gray-300 hover:shadow-md pr-12 text-sm backdrop-blur-sm"
                       placeholder="••••••••"
                       value={formData.password}
                       onChange={handleInputChange}
@@ -639,46 +527,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {/* CSS Animations */}
-      <style>{`
-        @keyframes neon-flow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes neon-flow-vertical {
-          0% { background-position: 50% 0%; }
-          50% { background-position: 50% 100%; }
-          100% { background-position: 50% 0%; }
-        }
-        
-        @keyframes hero-float {
-          0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-          33% { transform: translate(-50%, -50%) translateY(-20px) rotate(120deg); }
-          66% { transform: translate(-50%, -50%) translateY(10px) rotate(240deg); }
-        }
-        
-        @keyframes hero-pulse {
-          0%, 100% { opacity: 0.6; filter: blur(40px); }
-          50% { opacity: 0.8; filter: blur(30px); }
-        }
-        
-        @keyframes hero-spin {
-          0% { transform: translate(-50%, -50%) rotate(0deg); }
-          100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        @keyframes hero-gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          25% { background-position: 100% 0%; }
-          50% { background-position: 100% 100%; }
-          75% { background-position: 0% 100%; }
-        }
-      `}</style>
-      </div>
-    </>
+    </div>
   );
 };
 
